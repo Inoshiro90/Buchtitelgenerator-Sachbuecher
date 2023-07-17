@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+
+<script>
+// input fields and buttons
+const numQuestsField = document.createElement('input');
+numQuestsField.type = 'number';
+numQuestsField.style.margin = '10px';
+numQuestsField.style.width = '50px';
+
+const btnGenerate = document.createElement('button');
+btnGenerate.style.margin = '10px';
+btnGenerate.textContent = 'Generieren';
+
+const btnClear = document.createElement('button');
+btnClear.textContent = 'Löschen';
+btnClear.style.margin = '10px';
+
+// Begriffe und Abschnitte für den Buchtitelgenerator
+const handwerke = ["Alchemisten", "Apotheker", "Architekten", "Auftragsmörder", "Bäcker", "Banditen", "Bankiers", "Barbaren", "Barden", "Bauern", "Bettler", "Bischöfe", "Bogenmacher", "Bogenschützen", "Boten", "Brauer", "Bürgermeister", "Butler", "Diener", "Diplomaten", "Edelsteinschneider", "Fallensteller", "Fischer", "Forstwirte", "Fremdenführer", "Gärtner", "Gelehrte", "Generäle", "Gerber", "Gladiatoren", "Glasbläser", "Goldschmiede", "Graveure", "Hebammen", "Heiler", "Hellseher", "Herolde", "Hufschmiede", "Hundedresseure", "Ingenieure", "Inquisitoren", "Jagdaufseher", "Jäger", "Juweliere", "Kapitäne", "Kartographen", "Kerzenmacher", "Kleriker", "Knechte", "Köche", "Kräuterkundler", "Krieger", "Künstler", "Kuriere", "Kürschner", "Kutscher", "Laternenanzünder", "Lederarbeiter", "Lehrer", "Magier", "Metzger", "Mönche", "Orakel", "Investigatoren", "Priester", "Rechtsanwälte", "Runenschmiede", "Rüstungsschmiede", "Sattler", "Schäfer", "Schauspieler", "Schmiede", "Schmuggler", "Schneider", "Schreiber", "Schreiner", "Schurken", "Seeleute", "Seher", "Sekretäre", "Silberschmiede", "Soldaten", "Steinmetze", "Theaterautoren", "Tierdressuren", "Töpfer", "Torwächter", "Totengräber", "Unterhaltungskünstler", "Wachmänner", "Wächter", "Waffenschmiede", "Wagenbauer", "Waldläufer", "Weber", "Weise", "Wirte", "Wissenshüter", "Zauberer", "Zimmerleute"];
+const völker = ["Aarakocra", "Astralelfen", "Autognome", "Beschützer-Aasimar", "Blasselfen", "Bullywugs", "Chromatische Drachgenblütige", "Dämmerungselfen", "Derros", "Dhampire", "Drachlingsblütige Drachenblütige", "Dunkelelfen", "Dunkelzwerge", "Echsenmenschen", "Edelstein-Drachenblütige", "Eladrin", "Erd-Genasi", "Feen", "Felsengnome", "Feuer-Genasi", "Feuermolche", "Firbolg", "Flinkläufer-Wandler", "Gebirgzwerge", "Gefallene Aasimar", "Geißel-Aasimar", "Geisterwaisen-Halblinge", "Giff", "Githyanki", "Githzerai", "Gnolle", "Goblins", "Goliaths", "Grimlocks", "Grottenschrate", "Grung", "Hadozees", "Halbdrachen", "Halbelfen", "Halb-Orks", "Harengon", "Hexenblütigen", "Hobgoblins", "Hochelfen", "Hügelzwerge", "Kalashtar", "Kender", "Kenkus", "Kobolde", "Kraul", "Kriegsgeschmiedeten", "Kua-Toas", "Langzahn-Wandler", "Lavakinder", "Leichtfuß-Halblinge", "Leoniden", "Locathah", "Lotusden-Halblinge", "Loxodon", "Luft-Genasi", "Lykanthropen", "Mazer", "Meereselfen", "Meervolk", "Menschen", "Metallische Drachenblütige", "Minotauren", "Mischlingsvolk", "Nagpa", "Nilbogs", "Orks", "Orog", "Plasmoide", "Quaggoth", "Ravenit-Drachenblütige", "Sahuagine", "Satyren", "Saurianer", "Shadar-Kai", "Simic-Hybride", "Stämmige Halblinge", "Tabaxi", "Thri-Kreen", "Tiefengnome", "Tieflinge", "Tierhaut-Wandler", "Tortle", "Tritons", "Troglodyten", "Uhlen", "Vedalken", "Verdan", "Waldelfen", "Waldgnome", "Wasser-Genasi", "Wechselbälger", "Wiedergeborenen", "Wildläufer-Wandler", "Yuan-Ti", "Zentauren"];
+const monster = ["Abberationen", "Tiere", "Himmlische", "Konstrukte", "Drachen", "Elementare", "Feenwesen", "Unholde", "Riesen", "Humanoide", "Monstrositäten", "Schlicke", "Pflanzen", "Untote"];
+const präfixe = ["","Aberrante", "Abgewandelte", "Abnormale", "Abweichende", "Akroamatische", "Aktuelle", "Allgemeine", "Alltägliche", "Ältere", "Alternative", "Andere", "Anerkannte", "Anspruchsvolle", "Aufgedeckte", "Ausgefallene", "Außergewöhnliche", "Banale", "Beliebte", "Berüchtigte", "Berühmt-berüchtigte", "Berühmte", "Besondere", "Betörende", "Bizarre", "Dilettantische", "Dissonante", "Divergente", "Durchschnittliche", "Eigenartige", "Einfache", "Eingeschränkte", "Einzigartige", "Eklektische", "Elegante", "Erhabene", "Erwähnenswerte", "Esoterische", "Falsche", "Frühe", "Gefeierte", "Gegensätzliche", "Gegenwärtige", "Gemischte", "Generelle", "Geringe", "Große", "Größere", "Herausragende", "Hervorragende", "Heterogene", "Klassische", "Kleinere", "Knappe", "Komische", "Komplexe", "Legendäre", "Letztere", "Mäßige", "Moderne", "Modische", "Neoterische", "Neuzeitliche", "Normale", "Obskure", "Orphische", "Orthodoxe", "Quintessenzielle", "Radikale", "Reguläre", "Seltene", "Seltsame", "Sonstige", "Späte", "Spezielle", "Tiefgründige", "Transzendente", "Trennende", "Triviale", "Typische", "Überlegene", "Ultimative", "Umständliche", "Unbedeutende", "Unbekannte", "Unentdeckte", "Ungeordnete", "Ungewöhnliche", "Unpopuläre", "Unstimmige", "Unverzichtbare", "Verfeinerte", "Verlorene", "Verschiedene", "Verschleierte", "Versteckte", "Vertraute", "Vielfältige", "Wiedergefundene", "Zeitgenössische"];
+const klassen = ["Barbaren", "Barden", "Druiden", "Hexenmeister", "Kämpfer", "Kleriker", "Magier", "Mönche", "Paladine", "Schurken", "Waldläufer", "Zauberer", "Magieschmiede", "Blutjäger"];
+const regionen = ["Grat der Welt", "Grat der Welt", "Königreich der Vielpfeile", "Königreich der Vielpfeile", "Lauerwald", "Lauerwald", "Niewinterwald", "Niewinterwald", "Immermoor", "Immermoor", "Schwertberge", "Schwertberge", "Sternenhügel", "Sternenhügel", "Hoher Wald", "Hoher Wald", "Kalter Wald", "Kalter Wald", "Eisgipfel", "Eisgipfel", "Netherberge", "Netherberge", "Armwald", "Armwald", "Weiter Wald", "Weiter Wald", "Graugipfelberge", "Graugipfelberge", "Südwald", "Südwald", "Hochmoor", "Hochmoor", "Schlangenhügel", "Schlangenhügel", "Marsch von Chelimber", "Marsch von Chelimber", "Gefrorene See", "Gefrorene See", "Hohes Eis", "Hohes Eis", "Ebene der Stehenden Steine", "Ebene der Stehenden Steine", "Anauroch", "Anauroch", "Graumantelhügel", "Graumantelhügel", "Wüstmund-Berge", "Wüstmund-Berge", "Sonnenuntergangsberge", "Sonnenuntergangsberge", "Sturmhörner", "Sturmhörner", "Hullack-Wald", "Hullack-Wald", "Greifenden Wälder", "Greifenden Wälder", "Cormyr", "Cormyr", "Drachensee", "Drachensee", "Riesenlauf-Berge", "Riesenlauf-Berge", "Schneeflockenberge", "Schneeflockenberge", "Riesensteppe", "Riesensteppe", "Shilmistawald", "Shilmistawald", "Wald von Thethir", "Wald von Thethir", "Amn", "Amn", "Nelanther", "Nelanther", "Scharfzahnwald", "Scharfzahnwald", "Manielwald", "Manielwald", "Elturgard", "Elturgard", "Tirelta-Hügel", "Tirelta-Hügel", "Felder der Toten", "Felder der Toten", "Weite Hügel", "Weite Hügel", "Trollklauen", "Trollklauen", "Trollbarkenwald", "Trollbarkenwald", "Schwertküste", "Schwertküste", "Norddunkelwald", "Norddunkelwald", "Najara", "Najara", "Wald des Wyrms", "Wald des Wyrms", "Nebelwald", "Nebelwald"];
+const gegenstände = ["Abakusse", "Abdeckbare Laternen", "Amulette", "Angelausrüstungen", "Armbrustbolzen", "Armbrustbolzenbehälter", "Blasrohrpfeile", "Blattpapiere", "Blendlaternen", "Brechstangen", "Bücher", "Decken", "Drei-Schritt-Stangen", "Eibenzauberstäbe", "Eimer", "Eisenkeile", "Eisentöpfe", "Embleme", "Enterhaken", "Fackeln", "Fangeisen", "Fässer", "Feine Kleidung", "Ferngläser", "Fläschchen Tinte", "Flaschen mit Alchemistenfeuer", "Flaschen Öl", "Flaschenzüge", "Gegengiftphiole", "Gewöhnliche Kleidung", "Giftphiole", "Glasflaschen", "Glocken", "Hämmer", "Handschellen", "Hanfseile", "Heilerausrüstungen", "Heiltränke", "Holzstäbe", "Kaufmannswagen", "Kerzen", "Ketten", "Kisten", "Kletterausrüstungen", "Kletterhaken", "Köcher", "Körbe", "Kostüme", "Krähenfüße", "Kreide", "Kristalle", "Kugeln", "Lampen", "Leitern", "Materialkomponentenbeutel", "Metallkügelchen", "Mistelzweigsprösslinge", "Pergamentblätter", "Pfeile", "Phiole", "Phiole Parfüm", "Phiole Säure", "Reisegeschirr", "Reisekleidungen", "Reliquien", "Roben", "Rucksäcke", "Ruten", "Säcke", "Sanduhren", "Schaufeln", "Schlafsäcke", "Schleuderkugeln", "Schlösser", "Schneeschuhe", "Schreibfedern", "Schriftrollenbehälter", "Seidenseile", "Seifen", "Siegelringe", "Siegelwachse", "Signalpfeifen", "Spitzhacken", "Stäbe", "Stahlspiegel", "Tagesrationen", "Taschen", "Tonhumpen", "Tonkrüge oder Kannen", "Totems", "Tragbare Rammbocks", "Trinkschläuche", "Vergrößerungsgläser", "Vorschlaghämmer", "Weihwasser", "Wetzsteine", "Zauberbücher", "Zauberstäbe", "Zelte", "Zunderkästchen"];
+const schulenDerMagie = ["Schutzmagie", "Alchemie", "Betörung", "Außergewöhnliches", "Arkanes", "Arkane Wissenschaften", "Magieschmiedung", "Astrology", "Voraussagung", "Kampfmagie", "Verwünschung", "Verheißungen", "Bindung", "Gesänge", "Verzauberungen", "Chemie", "Beschwörungsmagie", "Beschwörung", "Beugung", "Flüche und Heilung", "Dämoniasmus", "Teufelsmagie", "Betrugsmagie", "Erkenntnismagie", "Verführung", "Verführungsmagie", "Verzauberung", "Esoterik", "Hervorrufung", "Experementierung", "Glamour", "Scheinmagie", "Hermetik", "Hexhandwerk", "Verhexungen", "Verborgene Mächte", "Illusionismus", "Illusionen", "Immateriuem", "Anrufungen", "Unbeschreibliches", "Ungreifbares", "Hexensprühce", "Taschenspielertricks", "Magie", "Magnetismus", "Malediktion", "Wunder", "Metaphysisches", "Mojo", "Mummenschanz", "Mysterien", "Mystische Künste", "Naturphilosophie", "Nekromantie", "Nichtrationalität", "Okkultismus", "Orakel", "Paranormales", "Phänomene", "Philosophie", "Platonik", "Macht", "Vorahnung", "Taschenspielerei", "Überirdisches", "Zweites Auge", "Schatten", "Zauberei", "Weissagung", "Zauberwirken", "Zauberhandwerk", "Zauber", "Zauberweben", "Zauberkunst", "Spirituelle Kunst", "Fremdes", "Herbeirufung", "Supernale Reiche", "Übernatürliches", "Übernatürliche Künste", "Übernatürlichkeit", "Sympathisierende Magie", "Technomantie", "Telestik", "Thaumaturgie", "Theurgie", "Transzendenz", "Transzendental", "Transmundanisch", "Transmutation", "Trickserei", "Übersinnlichkeit", "Kriegsmagie", "Hexenmeisterei", "Magie weben", "Komisches", "Hexenwerk", "Hexerei", "Magierkunst"];
+const windrichtungen = ['Norden', 'Süden', 'Osten', 'Westen'];
+const beliebiges = ['Magie', 'Abenteuer', 'Geheimnisse'];
+
+// Funktion, um einen zufälligen Text aus einem Array auszuwählen
+function getRandomText(arr) {
+  const index = Math.floor(Math.random() * arr.length);
+  return arr[index];
+}
+
+// generate book title function
+function generateBookTitle() {
+  const Handwerk = getRandomText(handwerke);
+  const Volk = getRandomText(völker);
+  const Monster = getRandomText(monster);
+  const Präfix = getRandomText(präfixe);
+  const Klasse = getRandomText(klassen);
+  const Region = getRandomText(regionen);
+  const Gegenstand = getRandomText(gegenstände);
+  const SchulederMagie = getRandomText(schulenDerMagie);
+  const Windrichtung = getRandomText(windrichtungen);
+  const Beliebiges = getRandomText(beliebiges);
+
+  const bookTitleIdeas = [
+    `${Handwerk} der ${Volk}`,
+    `${Monster} seziert`,
+    `${Präfix} ${Klasse} von ${Region}`,
+    `${Präfix} ${Klasse} der ${Volk}`,
+    `${Präfix} ${Gegenstand}`,
+    `${Präfix} ${Gegenstand} aus Legenden`,
+    `${Präfix} ${Gegenstand} der ${Volk}`,
+    `${Präfix} ${SchulederMagie} Zauber der ${Volk}`,
+    `${Präfix} ${Monster}`,
+    `${Präfix} ${Beliebiges}: Eine Geschichte`,
+    `${Präfix} Fähigkeiten der ${Klasse}`,
+    `${Präfix} Artefakte der ${Volk}`,
+    `${Präfix} Gottheiten der ${Volk}`,
+    `${Präfix} Fakten über ${Beliebiges}`,
+    `${Präfix} Helden der ${Volk}`,
+    `${Präfix} Helden aus ${Region}`,
+    // Füge hier die restlichen Buchtitel-Ideen ein...
+  ];
+
+  return getRandomText(bookTitleIdeas);
+}
+
+// on-click events
+btnGenerate.addEventListener('click', (event) => {
+  event.preventDefault();
+
+  // clear existing results
+  const container = document.getElementById('container');
+  container.querySelectorAll('li').forEach((li) => li.remove());
+
+  const numQuests = parseInt(numQuestsField.value);
+
+  for (let i = 0; i < numQuests; i++) {
+    const bookTitle = generateBookTitle();
+
+    const li = document.createElement('li');
+    li.textContent = bookTitle;
+    container.appendChild(li);
+  }
+});
+
+btnClear.addEventListener('click', (event) => {
+  event.preventDefault();
+
+  // clear existing results
+  const container = document.getElementById('container');
+  container.querySelectorAll('li').forEach((li) => li.remove());
+});
+
+// append elements to the document body
+document.body.appendChild(document.createTextNode('Anzahl der Buchtitel: '));
+document.body.appendChild(numQuestsField);
+document.body.appendChild(btnGenerate);
+document.body.appendChild(btnClear);
+
+// create a container for the results
+const container = document.createElement('ul');
+container.id = 'container';
+document.body.appendChild(container);
+
+</script>
+
+</body>
+</html>
