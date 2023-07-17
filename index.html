@@ -29,8 +29,16 @@ const klassen = ["Barbaren", "Barden", "Druiden", "Hexenmeister", "Kämpfer", "K
 const regionen = ["Grat der Welt", "Grat der Welt", "Königreich der Vielpfeile", "Königreich der Vielpfeile", "Lauerwald", "Lauerwald", "Niewinterwald", "Niewinterwald", "Immermoor", "Immermoor", "Schwertberge", "Schwertberge", "Sternenhügel", "Sternenhügel", "Hoher Wald", "Hoher Wald", "Kalter Wald", "Kalter Wald", "Eisgipfel", "Eisgipfel", "Netherberge", "Netherberge", "Armwald", "Armwald", "Weiter Wald", "Weiter Wald", "Graugipfelberge", "Graugipfelberge", "Südwald", "Südwald", "Hochmoor", "Hochmoor", "Schlangenhügel", "Schlangenhügel", "Marsch von Chelimber", "Marsch von Chelimber", "Gefrorene See", "Gefrorene See", "Hohes Eis", "Hohes Eis", "Ebene der Stehenden Steine", "Ebene der Stehenden Steine", "Anauroch", "Anauroch", "Graumantelhügel", "Graumantelhügel", "Wüstmund-Berge", "Wüstmund-Berge", "Sonnenuntergangsberge", "Sonnenuntergangsberge", "Sturmhörner", "Sturmhörner", "Hullack-Wald", "Hullack-Wald", "Greifenden Wälder", "Greifenden Wälder", "Cormyr", "Cormyr", "Drachensee", "Drachensee", "Riesenlauf-Berge", "Riesenlauf-Berge", "Schneeflockenberge", "Schneeflockenberge", "Riesensteppe", "Riesensteppe", "Shilmistawald", "Shilmistawald", "Wald von Thethir", "Wald von Thethir", "Amn", "Amn", "Nelanther", "Nelanther", "Scharfzahnwald", "Scharfzahnwald", "Manielwald", "Manielwald", "Elturgard", "Elturgard", "Tirelta-Hügel", "Tirelta-Hügel", "Felder der Toten", "Felder der Toten", "Weite Hügel", "Weite Hügel", "Trollklauen", "Trollklauen", "Trollbarkenwald", "Trollbarkenwald", "Schwertküste", "Schwertküste", "Norddunkelwald", "Norddunkelwald", "Najara", "Najara", "Wald des Wyrms", "Wald des Wyrms", "Nebelwald", "Nebelwald"];
 const gegenstände = ["Abakusse", "Abdeckbare Laternen", "Amulette", "Angelausrüstungen", "Armbrustbolzen", "Armbrustbolzenbehälter", "Blasrohrpfeile", "Blattpapiere", "Blendlaternen", "Brechstangen", "Bücher", "Decken", "Drei-Schritt-Stangen", "Eibenzauberstäbe", "Eimer", "Eisenkeile", "Eisentöpfe", "Embleme", "Enterhaken", "Fackeln", "Fangeisen", "Fässer", "Feine Kleidung", "Ferngläser", "Fläschchen Tinte", "Flaschen mit Alchemistenfeuer", "Flaschen Öl", "Flaschenzüge", "Gegengiftphiole", "Gewöhnliche Kleidung", "Giftphiole", "Glasflaschen", "Glocken", "Hämmer", "Handschellen", "Hanfseile", "Heilerausrüstungen", "Heiltränke", "Holzstäbe", "Kaufmannswagen", "Kerzen", "Ketten", "Kisten", "Kletterausrüstungen", "Kletterhaken", "Köcher", "Körbe", "Kostüme", "Krähenfüße", "Kreide", "Kristalle", "Kugeln", "Lampen", "Leitern", "Materialkomponentenbeutel", "Metallkügelchen", "Mistelzweigsprösslinge", "Pergamentblätter", "Pfeile", "Phiole", "Phiole Parfüm", "Phiole Säure", "Reisegeschirr", "Reisekleidungen", "Reliquien", "Roben", "Rucksäcke", "Ruten", "Säcke", "Sanduhren", "Schaufeln", "Schlafsäcke", "Schleuderkugeln", "Schlösser", "Schneeschuhe", "Schreibfedern", "Schriftrollenbehälter", "Seidenseile", "Seifen", "Siegelringe", "Siegelwachse", "Signalpfeifen", "Spitzhacken", "Stäbe", "Stahlspiegel", "Tagesrationen", "Taschen", "Tonhumpen", "Tonkrüge oder Kannen", "Totems", "Tragbare Rammbocks", "Trinkschläuche", "Vergrößerungsgläser", "Vorschlaghämmer", "Weihwasser", "Wetzsteine", "Zauberbücher", "Zauberstäbe", "Zelte", "Zunderkästchen"];
 const schulenDerMagie = ["Schutzmagie", "Alchemie", "Betörung", "Außergewöhnliches", "Arkanes", "Arkane Wissenschaften", "Magieschmiedung", "Astrology", "Voraussagung", "Kampfmagie", "Verwünschung", "Verheißungen", "Bindung", "Gesänge", "Verzauberungen", "Chemie", "Beschwörungsmagie", "Beschwörung", "Beugung", "Flüche und Heilung", "Dämoniasmus", "Teufelsmagie", "Betrugsmagie", "Erkenntnismagie", "Verführung", "Verführungsmagie", "Verzauberung", "Esoterik", "Hervorrufung", "Experementierung", "Glamour", "Scheinmagie", "Hermetik", "Hexhandwerk", "Verhexungen", "Verborgene Mächte", "Illusionismus", "Illusionen", "Immateriuem", "Anrufungen", "Unbeschreibliches", "Ungreifbares", "Hexensprühce", "Taschenspielertricks", "Magie", "Magnetismus", "Malediktion", "Wunder", "Metaphysisches", "Mojo", "Mummenschanz", "Mysterien", "Mystische Künste", "Naturphilosophie", "Nekromantie", "Nichtrationalität", "Okkultismus", "Orakel", "Paranormales", "Phänomene", "Philosophie", "Platonik", "Macht", "Vorahnung", "Taschenspielerei", "Überirdisches", "Zweites Auge", "Schatten", "Zauberei", "Weissagung", "Zauberwirken", "Zauberhandwerk", "Zauber", "Zauberweben", "Zauberkunst", "Spirituelle Kunst", "Fremdes", "Herbeirufung", "Supernale Reiche", "Übernatürliches", "Übernatürliche Künste", "Übernatürlichkeit", "Sympathisierende Magie", "Technomantie", "Telestik", "Thaumaturgie", "Theurgie", "Transzendenz", "Transzendental", "Transmundanisch", "Transmutation", "Trickserei", "Übersinnlichkeit", "Kriegsmagie", "Hexenmeisterei", "Magie weben", "Komisches", "Hexenwerk", "Hexerei", "Magierkunst"];
-const windrichtungen = ['Norden', 'Süden', 'Osten', 'Westen'];
+const religion = ["Paganismus", "Kirche", "Kult"];
+const windrichtungen = ['nördlichen', "nordöstlichen", 'nordwestlichen', "südlichen", "südöstlichen", "südöstlichen",  'östlichen', 'westlichen'];
 const beliebiges = ['Magie', 'Abenteuer', 'Geheimnisse'];
+const waffe = ["Anderthalbhänder", "Anderthalbhänder", "Beile", "Beile", "Blasrohre", "Blasrohre", "Boomerangs", "Boomerangs", "Dolche", "Dolche", "Dreizacke", "Dreizacke", "Flegel", "Flegel", "Gleven", "Gleven", "Hakenförmige Kurzspeere", "Hakenförmige Kurzspeere", "Handarmbrüste", "Handarmbrüste", "Hellebarden", "Hellebarden", "Hoopaks", "Hoopaks", "Improvisierte Waffen", "Improvisierte Waffen", "Kampfstäbe", "Kampfstäbe", "Knüppel", "Knüppel", "Kriegshacken", "Kriegshacken", "Kriegshämmer", "Kriegshämmer", "Krummsäbel", "Krummsäbel", "Kurzbogen", "Kurzbogen", "Kurzschwerter", "Kurzschwerter", "Langbogen", "Langbogen", "Langschwerter", "Langschwerter", "Lanzen", "Lanzen", "Leichte Armbrüste", "Leichte Armbrüste", "Leichte Repetierarmbrüste", "Leichte Repetierarmbrüste", "Leichte Hämmer", "Leichte Hämmer", "Morgensterne", "Morgensterne", "Netze", "Netze", "Peitschen", "Peitschen", "Piken", "Piken", "Rapier", "Rapier", "Schlagringe", "Schlagringe", "Schleudern", "Schleudern", "Schwere Armbrüste", "Schwere Armbrüste", "Sensen", "Sensen", "Sicheln", "Sicheln", "Speere", "Speere", "Stachelketten", "Stachelketten", "Streitäxte", "Streitäxte", "Streitkolben", "Streitkolben", "Tonfas", "Tonfas", "Übergroße Langbögen", "Übergroße Langbögen", "Wurfpfeile", "Wurfpfeile", "Wurfspeere", "Wurfspeere", "Ylkwae", "Ylkwae", "Zweihandäxte", "Zweihandäxte", "Zweihandhämmer", "Zweihandhämmer", "Zweihandknüppel", "Zweihandknüppel", "Zweihandschwerter", "Zweihandschwerter", "Zweiklingige Krummsäbel", "Zweiklingige Krummsäbel"];
+const ort = ["Amphail", "Amphail", "Ascore", "Ascore", "Baldurs Tor", "Baldurs Tor", "Berdusk", "Berdusk", "Berg Hotenow", "Berg Hotenow", "Boareskyr Brücke", "Boareskyr Brücke", "Burg Drachenspeer", "Burg Drachenspeer", "Burg Hartwick", "Burg Hartwick", "Caer Corwell", "Caer Corwell", "Caer Moray", "Caer Moray", "Caer Westphal", "Caer Westphal", "Dolchfurt", "Dolchfurt", "Dreieber", "Dreieber", "Dunkelfeste", "Dunkelfeste", "Dynnegall", "Dynnegall", "Eisenfeste", "Eisenfeste", "Elturel", "Elturel", "Everaska", "Everaska", "Fernblick", "Fernblick", "Feuerschere", "Feuerschere", "Feuersteinfels", "Feuersteinfels", "Fort Morgenfürst", "Fort Morgenfürst", "Fort Tamal", "Fort Tamal", "Gauntlgrym", "Gauntlgrym", "Großvaterbaum", "Großvaterbaum", "Hartbuckler", "Hartbuckler", "Helms Feste", "Helms Feste", "Immerdar", "Immerdar", "Kerzenfeste", "Kerzenfeste", "Langsattel", "Langsattel", "Menzoberrazan", "Menzoberrazan", "Mirabar", "Mirabar", "Mithralhalle", "Mithralhalle", "Morgurs Hügel", "Morgurs Hügel", "Niewinter", "Niewinter", "Orogoth", "Orogoth", "Phandalin", "Phandalin", "Rabenfels", "Rabenfels", "Rogarsheim", "Rogarsheim", "Scornubel", "Scornubel", "Secomber", "Secomber", "Siedelstein", "Siedelstein", "Silbrigmond", "Silbrigmond", "Soubar", "Soubar", "Ss´thart´tissssun", "Ss´thart´tissssun", "Tiefwasser", "Tiefwasser", "Triel", "Triel", "Trollklauenfurt", "Trollklauenfurt", "Yartar", "Yartar", "Zitadelle Adbar", "Zitadelle Adbar"];
+const gottheit = ["Abbathor", "Arvoreen", "Asmodeus", "Auril", "Azuth", "Baervan Wildwanderer", "Bahgtru", "Bane", "Baravar Mantelschatten", "Berronar Wahrsilber", "Beshaba", "Bhaal", "Bleredd", "Brandobaris", "Callarduran Sanfthände", "Charmalaine", "Chauntea", "Klangeddin Silberbard", "Cyric", "Cyrrollalee", "Deneir", "Dugmaren Leuchtmantel", "Dumathoin", "Eilistraee", "Eldath", "Flandal Stahlhaut", "Gaerdal Eisenhaut", "Garl Glitzergold", "Gelf Dunkelherz", "Ghaunadaur", "Gond", "Gorm Gulthyn", "Grumbar", "Gruumsh", "Gwaeron Windstrom", "Haela Leuchtaxt", "Hanseath", "Helm", "Hoar", "Ilmater", "Ilneval", "Istishia", "Jergal", "Kelemvor", "Keptolo", "Kiaransalee", "Kossuth", "Lathander", "Leira", "Lliira", "Lolth", "Loviatar", "Luthic", "Malar", "Malyk", "Marthammor Duin", "Mask", "Mielikki", "Milil", "Moradin", "Muamman Duathal", "Mya", "Myrkul", "Mystra", "Nebelun", "Oghma", "Rill Schlaudrossel", "Roknar", "Savras", "Segojan Erdrufer", "Selûne", "Selvetarm", "Shar", "Shargaas", "Sharindlar", "Sheela Peryroyl", "Sheyanna Flachssträhne", "Silvanus", "Sune", "Talona", "Talos", "Tempus", "Thard Harr", "Tharmekhûl", "Thautam", "Die rote Ritterin", "Torm", "Tymora", "Tyr", "Ulaa", "Umberlee", "Urdlen", "Urogalan", "Valkauna", "Valkur", "Vhaeraun", "Waukeen", "Yondalla", "Yurtrus", "Zinzerena"];
+const ereignis = ["Abenteuer", "Abstieg", "Aufbruch", "Aufgabe", "Aufstand", "Aufstieg", "Ausbruch", "Auslöschung", "Auslöser", "Bau", "Befreiung", "Belagerung", "Einigung", "Entdeckung", "Entfremdung", "Enthüllung", "Entscheidung", "Entwurzelung", "Erkundung", "Erlösung", "Ermordung", "Ernte", "Eroberung", "Erwachen", "Explosion", "Flammen", "Fluch", "Flucht", "Geburt", "Gefangennahme", "Geheimnis", "Grenzüberschreitung", "Gründung", "Heilung", "Heimkehr", "Herausforderung", "Hinterhalt", "Hochzeit", "Intrige", "Konflikt", "Konfrontation", "Krieg", "Lüge", "Niederlage", "Offenbarung", "Opferung", "Plage", "Prophezeiung", "Rache", "Rebellion", "Rückkehr", "Schicksal", "Schicksalsschlag", "Schicksalswende", "Sieg", "Sonnenfinsternis", "Spaltung", "Stille", "Sturm", "Täuschung", "Tod", "Überleben", "Überraschung", "Umkehr", "Veränderung", "Verat", "Verbannung", "Verbindung", "Verbündung", "Verdammnis", "Verdrängung", "Verfluchung", "Verführung", "Vergebung", "Vergeltung", "Verhandlung", "Verirrung", "Verleumdung", "Verlockung", "Verlust", "Verrat", "Verstoß", "Verstrickung", "Versuchung", "Verwandlung", "Verwundung", "Verzauberung", "Wandel", "Wendepunkt", "Widerstand", "Wiedergeburt", "Wiedergutmachung", "Wiederherstellung", "Wiedersehen", "Wiedervereinigung", "Wunder", "Zeremonie", "Zerstörung", "Zusammenarbeit", "Zusammenbruch"];
+const land = ["Land 1", "Land 2", "Land 3"];
+const domäne = ["Domäne der Adeligen", "Domäne der Arkana", "Domäne der Ausdauer", "Domäne der Dämmerung", "Domäne der Dämonen", "Domäne der Demut", "Domäne der Dunkelheit", "Domäne der Erde", "Domäne der Erneuerung", "Domäne der Familie", "Domäne der Feen", "Domäne der Fertigkeiten", "Domäne der Freiheit", "Domäne der Freude", "Domäne der Geduld", "Domäne der Gemeinschaft", "Domäne der Gerechtigkeit", "Domäne der Gier", "Domäne der Großzügigkeit", "Domäne der Habgier", "Domäne der Handwerkskunst", "Domäne der Heilung", "Domäne der Hoffnung", "Domäne der Illusion", "Domäne der Jagd", "Domäne der Kälte", "Domäne der Keuschheit", "Domäne der Korruption", "Domäne der Liebe", "Domäne der Luft", "Domäne der Lust", "Domäne der Magie", "Domäne der Mäßigung", "Domäne der Nächstenliebe", "Domäne der Natur", "Domäne der Ordnung", "Domäne der Pflanzen", "Domäne der Planung", "Domäne der Qual", "Domäne der Rache", "Domäne der Reise", "Domäne der Runen", "Domäne der Schmiedekunst", "Domäne der Schöpfung", "Domäne der Sonne", "Domäne der Stärke", "Domäne der Tiere", "Domäne der Trägheit", "Domäne der Tyrannei", "Domäne der Vergeltung", "Domäne der Verwöhnung", "Domäne der Völlerei", "Domäne der Wildnis", "Domäne der Zeit", "Domäne der Zerstörung", "Domäne der Zivilisation", "Domäne des Bestialischen", "Domäne des Betrugs", "Domäne des Chaos", "Domäne des Charmes", "Domäne des Diabolischen", "Domäne des Eifers", "Domäne des Feuers", "Domäne des Friedens", "Domäne des Geistes", "Domäne des Gesetzes", "Domäne des Gleichgewichts", "Domäne des Gleißens", "Domäne des Glücks", "Domäne des Grabes", "Domäne des Handels", "Domäne des Hasses", "Domäne des Krieges", "Domäne des Lebens", "Domäne des Leidens", "Domäne des Lichts", "Domäne des Meeres", "Domäne des Mentalismus", "Domäne des Metalls", "Domäne des Mondes", "Domäne des Neids", "Domäne des Ozeans", "Domäne des Portals", "Domäne des Ruhms", "Domäne des Schicksals", "Domäne des Schmerzes", "Domäne des Schutzes", "Domäne des Stolzes", "Domäne des Sturms", "Domäne des Todes", "Domäne des Traums", "Domäne des Untodes", "Domäne des Unwetters", "Domäne des Wahnsinns", "Domäne des Wandels", "Domäne des Wassers", "Domäne des Winters", "Domäne des Wissens", "Domäne des Zaubers", "Domäne des Zorns"];
+const rüstung = ["Armschützer", "Badeanzüge", "Balaclavas", "Beckenhauben", "Beinkleider", "Beinschienen", "Beinwickel", "Benin", "Berks", "Beutel", "Boleros", "Brustpanzer", "Brustplatten", "Büchsen", "Bunthauben", "Büstenhalter", "Camails", "Casquetels", "Chemisen", "Ellenbogenpanzer", "Faltröcke", "Fausthandschuhe", "Fäustlinge", "Gambesons", "Geldbörsen", "Geschlechtsteil-Schütze", "Gewänder", "Gilets", "Große Helme", "Gürtel", "Handschuhe", "Hauberks", "Helme", "Helmbüsche", "Hemden", "Hosen", "Hüftschütze", "Hüte", "Jerkins", "Kaftane", "Kappen", "Kehlkopfschütze", "Kilts", "Kleider", "Knieschoner", "Korsetts", "Krawatten", "Kürisse", "Kurze Jacken", "Kutten", "Lange Jacken", "Lange Stiefel", "Leggings", "Lendenschurze", "Leotards", "Mäntel", "Masken", "Mittellange Jacken", "Morgenmäntel", "Oberschenkelschütze", "Overalls", "Pantaloons", "Parkas", "Pelerinen", "Ponchos", "Pullover", "Roben", "Rondelle", "Rucksäcke", "Sabbatons", "Schals", "Schleppen", "Schlipse", "Schuhe", "Schulterpanzer", "Schulterstücke", "Schürzen", "Shorts", "Socken", "Soutanen", "Stiefel", "Stirnbänder", "Strickjacken", "Strumpfhosen", "Suspensorien", "Tangas", "Taschen", "Taschentücher", "Togen", "Tonlets", "Topfhelme", "Trenchcoats", "Tücher", "Tuniken", "Umhänge", "Unterarmschützer", "Unteröcke", "Wämse", "Westen", "Zwangsjacken"];
 
 // Funktion, um einen zufälligen Text aus einem Array auszuwählen
 function getRandomText(arr) {
@@ -50,26 +58,120 @@ function generateBookTitle() {
   const SchulederMagie = getRandomText(schulenDerMagie);
   const Windrichtung = getRandomText(windrichtungen);
   const Beliebiges = getRandomText(beliebiges);
+  const Religion = getRandomText(religion);
+  const Ort = getRandomText(ort);
+  const Gottheit = getRandomText(gottheit);
+  const Waffe = getRandomText(waffe);
+  const Ereignis = getRandomText(ereignis);
+  const Land = getRandomText(land);
+  const Domäne = getRandomText(domäne);
+  const Rüstung = getRandomText(rüstung);
+
 
   const bookTitleIdeas = [
-    `${Handwerk} der ${Volk}`,
-    `${Monster} seziert`,
-    `${Präfix} ${Klasse} von ${Region}`,
-    `${Präfix} ${Klasse} der ${Volk}`,
-    `${Präfix} ${Gegenstand}`,
-    `${Präfix} ${Gegenstand} aus Legenden`,
-    `${Präfix} ${Gegenstand} der ${Volk}`,
-    `${Präfix} ${SchulederMagie} Zauber der ${Volk}`,
-    `${Präfix} ${Monster}`,
-    `${Präfix} ${Beliebiges}: Eine Geschichte`,
-    `${Präfix} Fähigkeiten der ${Klasse}`,
-    `${Präfix} Artefakte der ${Volk}`,
-    `${Präfix} Gottheiten der ${Volk}`,
-    `${Präfix} Fakten über ${Beliebiges}`,
-    `${Präfix} Helden der ${Volk}`,
-    `${Präfix} Helden aus ${Region}`,
-    // Füge hier die restlichen Buchtitel-Ideen ein...
-  ];
+`${Handwerk} der ${Volk}`,
+`${Monster} seziert`,
+`${Präfix} ${Klasse} von ${Region}`,
+`${Präfix} ${Klasse} der ${Volk}`,
+`${Präfix} ${Gegenstand}`,
+`${Präfix} ${Gegenstand} aus Legenden`,
+`${Präfix} ${Gegenstand} der ${Volk}`,
+`${Präfix} ${SchulederMagie}\-\Zauber der ${Volk}`,
+`${Präfix} ${Monster}`,
+`${Präfix} ${Beliebiges}: Eine Geschichte`,
+`${Präfix} Fähigkeiten der ${Klasse}`,
+`${Präfix} Artefakte der ${Volk}`,
+`${Präfix} Gottheiten der ${Volk}`,
+`${Präfix} Fakten über ${Beliebiges}`,
+`${Präfix} Helden der ${Volk}`,
+`${Präfix} Helden aus ${Ort}`,
+`${Präfix} Sprachen der ${Monster}`,
+`${Präfix} Legenden von ${Beliebiges}`,
+`${Präfix} Wunder von ${Gottheit}`,
+`${Präfix} Gebete an ${Gottheit}`,
+`${Präfix} Riten für ${Klasse}`,
+`${Präfix} Riten der ${Windrichtung} ${Volk}`,
+`${Präfix} Gerüchte aus ${Ort}`,
+`${Präfix} Lieder aus ${Region}`,
+`${Präfix} Zauber der ${SchulederMagie}`,
+`${Präfix} Geschichten aus ${Region}`,
+`${Präfix} Erzählungen der ${Volk}`,
+`${Präfix} Verwendungen für ${Gegenstand} im Kampf`,
+`${Präfix} Nutzen für ${Beliebiges}`,
+`${Präfix} Herrscher über ${Region}`,
+`${Präfix} Herrscher über ${Volk}`,
+`${Präfix} Herrscher über ${Volk}`,
+`${getRandomText(völker)} \-\ ${getRandomText(völker)} Wörterbuch`,
+`${Volk} Lieder`,
+`${Religion} der ${Volk}`,
+`${Waffe} Varianten`,
+`${Beliebiges}: Die unerzählte Wahrheit`,
+`${Beliebiges} für Kinder`,
+`Ein Anfängerhandbuch über ${Beliebiges}`,
+`Eine Begutachtung von ${Waffe}`,
+`Ein Leitfaden zu ${Beliebiges}`,
+`Eine Abhandlung über ${Beliebiges}`,
+`Über ${Beliebiges}`,
+`Berichterstattung über ${Ereignis}`,
+`Eine kurze Geschichte über ${Beliebiges}`,
+`Eine Enzyklopädie über ${Beliebiges}`,
+`Eine Analyse von ${Beliebiges}`,
+`Ein Expose über ${Präfix} ${Beliebiges}`,
+`Atlas von ${Region}`,
+`Eigenschaften von ${Beliebiges}`,
+`Buch der ${Beliebiges}`,
+`${Monster} züchten`,
+`Sammelband mit Fakten über ${Beliebiges}`,
+`Katalog der ${Gegenstand}`,
+`Kodex der ${Beliebiges}`,
+`Kompendium der ${Beliebiges}`,
+`Zusammengestellte Geschichte von ${Beliebiges}`,
+`In Bezug auf ${Beliebiges}`,
+`Kreuzzüchtung von ${Monster}`,
+`Verteidigung gegen ${SchulederMagie}`,
+`Entwicklung der ${Gegenstand}`,
+`Entstehungsgeschichte der ${Gegenstand}`,
+`Ökologie der ${Monster}`,
+`Ökonomie von ${Religion} ${Land}`,
+`Grundlegende ${SchulederMagie}`,
+`Berühmte ${Beliebiges} von ${Region}`,
+`Berühmte Familien von ${Region}`,
+`Glossar der ${Beliebiges}\-\Begriffe`,
+`Ratgeber für ${Klasse}\-\Begriffe`,
+`Wappenkunde von ${Region}`,
+`Hybride der ${Volk}`,
+`Hymnen der ${Volk}`,
+`Anführer von ${Region}`,
+`Lexikon über ${Beliebiges}`,
+`Lebensräume von ${Monster}`,
+`Lebensräume von ${Volk}`,
+`Handbuch der ${Beliebiges}`,
+`Paarungsverhalten der ${Monster}`,
+`Mysterien von ${Region}`,
+`Mythen über ${SchulederMagie}`,
+`Sammelwerk über ${Beliebiges}`,
+`Muster in der Geschichte von ${Beliebiges}`,
+`Praktische Anwendungen für ${SchulederMagie}`,
+`${Beliebiges} betreffend`,
+`Heilende Anwendungen von ${SchulederMagie}`,
+`Rituale der ${Volk}`,
+`Geheimnisse von ${Beliebiges}`,
+`Symbole von ${Gottheit}`,
+`Die vollständige Geschichte von ${Beliebiges}`,
+`Die kompakte Geschichte von ${Beliebiges}`,
+`Der erste ${Klasse}`,
+`Wahrheit und Lüge über ${Beliebiges}`,
+`Foliant der ${Präfix} ${Beliebiges}`,
+`Traditionen der ${Volk}`,
+`Traditionen der ${Klasse}`,
+`Anleitungen zur Verwendung von ${Gegenstand}`,
+`Verwendungszwecke für ${Domäne} in Zeiten des Krieges`,
+`Verwendungszwecke für ${SchulederMagie} in Zeiten des Friedens`,
+`Verwendungszwecke für ${Monster}\-\Teile`,
+`Verwendung von ${Waffe} gegen ${Rüstung}`,
+`Reisen in ${Ort}`,
+`Schriften über ${Beliebiges}`];
+
 
   return getRandomText(bookTitleIdeas);
 }
