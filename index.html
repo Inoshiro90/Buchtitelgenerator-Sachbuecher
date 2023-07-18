@@ -20,6 +20,10 @@ const btnClear = document.createElement('button');
 btnClear.textContent = 'Löschen';
 btnClear.style.margin = '10px';
 
+const btnCopy = document.createElement('button'); // Create the new button
+btnCopy.textContent = 'In Zwischenablage kopieren'; // Set the text for the button
+btnCopy.style.margin = '10px'; // Add some margin to the button    
+
 // Begriffe und Abschnitte für den Buchtitelgenerator
 const handwerke = ["Alchemisten", "Apotheker", "Architekten", "Auftragsmörder", "Bäcker", "Banditen", "Bankiers", "Barbaren", "Barden", "Bauern", "Bettler", "Bischöfe", "Bogenmacher", "Bogenschützen", "Boten", "Brauer", "Bürgermeister", "Butler", "Diener", "Diplomaten", "Edelsteinschneider", "Fallensteller", "Fischer", "Forstwirte", "Fremdenführer", "Gärtner", "Gelehrte", "Generäle", "Gerber", "Gladiatoren", "Glasbläser", "Goldschmiede", "Graveure", "Hebammen", "Heiler", "Hellseher", "Herolde", "Hufschmiede", "Hundedresseure", "Ingenieure", "Inquisitoren", "Jagdaufseher", "Jäger", "Juweliere", "Kapitäne", "Kartographen", "Kerzenmacher", "Kleriker", "Knechte", "Köche", "Kräuterkundler", "Krieger", "Künstler", "Kuriere", "Kürschner", "Kutscher", "Laternenanzünder", "Lederarbeiter", "Lehrer", "Magier", "Metzger", "Mönche", "Orakel", "Investigatoren", "Priester", "Rechtsanwälte", "Runenschmiede", "Rüstungsschmiede", "Sattler", "Schäfer", "Schauspieler", "Schmiede", "Schmuggler", "Schneider", "Schreiber", "Schreiner", "Schurken", "Seeleute", "Seher", "Sekretäre", "Silberschmiede", "Soldaten", "Steinmetze", "Theaterautoren", "Tierdressuren", "Töpfer", "Torwächter", "Totengräber", "Unterhaltungskünstler", "Wachmänner", "Wächter", "Waffenschmiede", "Wagenbauer", "Waldläufer", "Weber", "Weise", "Wirte", "Wissenshüter", "Zauberer", "Zimmerleute"];
 const völker = ["Aarakocra", "Astralelfen", "Autognome", "Beschützer-Aasimar", "Blasselfen", "Bullywugs", "Chromatische Drachgenblütige", "Dämmerungselfen", "Derros", "Dhampire", "Drachlingsblütige Drachenblütige", "Dunkelelfen", "Dunkelzwerge", "Echsenmenschen", "Edelstein-Drachenblütige", "Eladrin", "Erd-Genasi", "Feen", "Felsengnome", "Feuer-Genasi", "Feuermolche", "Firbolg", "Flinkläufer-Wandler", "Gebirgzwerge", "Gefallene Aasimar", "Geißel-Aasimar", "Geisterwaisen-Halblinge", "Giff", "Githyanki", "Githzerai", "Gnolle", "Goblins", "Goliaths", "Grimlocks", "Grottenschrate", "Grung", "Hadozees", "Halbdrachen", "Halbelfen", "Halb-Orks", "Harengon", "Hexenblütigen", "Hobgoblins", "Hochelfen", "Hügelzwerge", "Kalashtar", "Kender", "Kenkus", "Kobolde", "Kraul", "Kriegsgeschmiedeten", "Kua-Toas", "Langzahn-Wandler", "Lavakinder", "Leichtfuß-Halblinge", "Leoniden", "Locathah", "Lotusden-Halblinge", "Loxodon", "Luft-Genasi", "Lykanthropen", "Mazer", "Meereselfen", "Meervolk", "Menschen", "Metallische Drachenblütige", "Minotauren", "Mischlingsvolk", "Nagpa", "Nilbogs", "Orks", "Orog", "Plasmoide", "Quaggoth", "Ravenit-Drachenblütige", "Sahuagine", "Satyren", "Saurianer", "Shadar-Kai", "Simic-Hybride", "Stämmige Halblinge", "Tabaxi", "Thri-Kreen", "Tiefengnome", "Tieflinge", "Tierhaut-Wandler", "Tortle", "Tritons", "Troglodyten", "Uhlen", "Vedalken", "Verdan", "Waldelfen", "Waldgnome", "Wasser-Genasi", "Wechselbälger", "Wiedergeborenen", "Wildläufer-Wandler", "Yuan-Ti", "Zentauren"];
@@ -66,9 +70,10 @@ function getRandomText(arr) {
 function getRandomElementFromArray(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
+// Array, um die generierten Buchtitel zu speichern
+let generatedTitles = [];
 
-
-// Generiere Buchtitel function
+// Funktion zum Generieren eines einzigartigen Buchtitels
 function generateBookTitle() {
   const Handwerk = getRandomText(handwerke);
   const Volk = getRandomText(völker);
@@ -88,8 +93,6 @@ function generateBookTitle() {
   const Land = getRandomText(land);
   const Domäne = getRandomText(domäne);
   const Rüstung = getRandomText(rüstung);
-
-
   const bookTitleIdeas = [
 `${Handwerk} der ${Volk}`,
 `${Monster} seziert`,
@@ -198,6 +201,16 @@ function generateBookTitle() {
   return getRandomText(bookTitleIdeas);
 }
 
+// Copy to clipboard function
+    function copyToClipboard(text) {
+      const tempElement = document.createElement('textarea');
+      tempElement.value = text;
+      document.body.appendChild(tempElement);
+      tempElement.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempElement);
+    }
+    
 // on-click events
 btnGenerate.addEventListener('click', (event) => {
   event.preventDefault();
@@ -225,10 +238,24 @@ btnClear.addEventListener('click', (event) => {
   container.querySelectorAll('li').forEach((li) => li.remove());
 });
 
+  btnCopy.addEventListener('click', (event) => {
+      event.preventDefault();
+      const container = document.getElementById('container');
+      const namesList = container.innerText;
+      
+      if (namesList) {
+        copyToClipboard(namesList);
+        alert('Die Liste wurde in die Zwischenablage kopiert.');
+      } else {
+        alert('Die Liste ist leer.');
+      }
+    });
+    
 // append elements to the document body
 document.body.appendChild(document.createTextNode('Anzahl der Buchtitel: '));
 document.body.appendChild(numQuestsField);
 document.body.appendChild(btnGenerate);
+document.body.appendChild(btnCopy); // Add the copy button
 document.body.appendChild(btnClear);
 
 // create a container for the results
