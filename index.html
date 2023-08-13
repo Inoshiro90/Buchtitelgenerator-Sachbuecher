@@ -1,269 +1,1251 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="utf-8">
-</head>
-<body>
+	<head>
+		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			/* Stil für die Breite des Body-Elements und die Schriftart */
+			body {
+				max-width: 80%;
+				display: inline-block;
+				margin-left: 10%;
+				margin-right: 10%;
+				font-family: 'Arial', sans-serif;
+			}
 
-<script>
-// Eingabefelder und Buttons
-const numQuestsField = document.createElement('input');
-numQuestsField.type = 'number';
-numQuestsField.style.margin = '10px';
-numQuestsField.style.width = '50px';
+			/* Stil für den Button */
+			.collapsible {
+				background-color: #E1E1E1;
+				color: #444;
+				cursor: pointer;
+				padding: 10px;
+				width: 100%;
+				border: none;
+				text-align: left;
+				outline: none;
+				font-size: 16px;
+			}
 
-const btnGenerate = document.createElement('button');
-btnGenerate.style.margin = '10px';
-btnGenerate.textContent = 'Generieren';
+			.collapsible:after {
+				content: '\02795';
+				/* Unicode Zeichen für "plus"-Zeichen (+) */
+				font-size: 13px;
+				color: white;
+				float: right;
+				margin-left: 5px;
+			}
 
-const btnClear = document.createElement('button');
-btnClear.textContent = 'Löschen';
-btnClear.style.margin = '10px';
+			.active:after {
+				content: "\2796";
+				/* Unicode Zeichen für "minus"-Zeichen (-) */
+			}
 
-const btnCopy = document.createElement('button'); // Create the new button
-btnCopy.textContent = 'In Zwischenablage kopieren'; // Set the text for the button
-btnCopy.style.margin = '10px'; // Add some margin to the button    
+			/* Stil für den Inhalt, der standardmäßig ausgeblendet ist */
+			.content {
+				max-height: 0;
+				overflow: hidden;
+				padding: 0 10px;
+				background: #F1F1F1;
+				transition: max-height 0.2s ease-out;
+			}
 
-// Begriffe und Abschnitte für den Buchtitelgenerator
-const handwerke = ["Alchemisten", "Apotheker", "Architekten", "Auftragsmörder", "Bäcker", "Banditen", "Bankiers", "Barbaren", "Barden", "Bauern", "Bettler", "Bischöfe", "Bogenmacher", "Bogenschützen", "Boten", "Brauer", "Bürgermeister", "Butler", "Diener", "Diplomaten", "Edelsteinschneider", "Fallensteller", "Fischer", "Forstwirte", "Fremdenführer", "Gärtner", "Gelehrte", "Generäle", "Gerber", "Gladiatoren", "Glasbläser", "Goldschmiede", "Graveure", "Hebammen", "Heiler", "Hellseher", "Herolde", "Hufschmiede", "Hundedresseure", "Ingenieure", "Inquisitoren", "Jagdaufseher", "Jäger", "Juweliere", "Kapitäne", "Kartographen", "Kerzenmacher", "Kleriker", "Knechte", "Köche", "Kräuterkundler", "Krieger", "Künstler", "Kuriere", "Kürschner", "Kutscher", "Laternenanzünder", "Lederarbeiter", "Lehrer", "Magier", "Metzger", "Mönche", "Orakel", "Investigatoren", "Priester", "Rechtsanwälte", "Runenschmiede", "Rüstungsschmiede", "Sattler", "Schäfer", "Schauspieler", "Schmiede", "Schmuggler", "Schneider", "Schreiber", "Schreiner", "Schurken", "Seeleute", "Seher", "Sekretäre", "Silberschmiede", "Soldaten", "Steinmetze", "Theaterautoren", "Tierdressuren", "Töpfer", "Torwächter", "Totengräber", "Unterhaltungskünstler", "Wachmänner", "Wächter", "Waffenschmiede", "Wagenbauer", "Waldläufer", "Weber", "Weise", "Wirte", "Wissenshüter", "Zauberer", "Zimmerleute"];
-const völker = ["Aarakocra", "Astralelfen", "Autognome", "Beschützer-Aasimar", "Blasselfen", "Bullywugs", "Chromatische Drachgenblütige", "Dämmerungselfen", "Derros", "Dhampire", "Drachlingsblütige Drachenblütige", "Dunkelelfen", "Dunkelzwerge", "Echsenmenschen", "Edelstein-Drachenblütige", "Eladrin", "Erd-Genasi", "Feen", "Felsengnome", "Feuer-Genasi", "Feuermolche", "Firbolg", "Flinkläufer-Wandler", "Gebirgzwerge", "Gefallene Aasimar", "Geißel-Aasimar", "Geisterwaisen-Halblinge", "Giff", "Githyanki", "Githzerai", "Gnolle", "Goblins", "Goliaths", "Grimlocks", "Grottenschrate", "Grung", "Hadozees", "Halbdrachen", "Halbelfen", "Halb-Orks", "Harengon", "Hexenblütigen", "Hobgoblins", "Hochelfen", "Hügelzwerge", "Kalashtar", "Kender", "Kenkus", "Kobolde", "Kraul", "Kriegsgeschmiedeten", "Kua-Toas", "Langzahn-Wandler", "Lavakinder", "Leichtfuß-Halblinge", "Leoniden", "Locathah", "Lotusden-Halblinge", "Loxodon", "Luft-Genasi", "Lykanthropen", "Mazer", "Meereselfen", "Meervolk", "Menschen", "Metallische Drachenblütige", "Minotauren", "Mischlingsvolk", "Nagpa", "Nilbogs", "Orks", "Orog", "Plasmoide", "Quaggoth", "Ravenit-Drachenblütige", "Sahuagine", "Satyren", "Saurianer", "Shadar-Kai", "Simic-Hybride", "Stämmige Halblinge", "Tabaxi", "Thri-Kreen", "Tiefengnome", "Tieflinge", "Tierhaut-Wandler", "Tortle", "Tritons", "Troglodyten", "Uhlen", "Vedalken", "Verdan", "Waldelfen", "Waldgnome", "Wasser-Genasi", "Wechselbälger", "Wiedergeborenen", "Wildläufer-Wandler", "Yuan-Ti", "Zentauren"];
-const monster = ["Abberationen", "Tiere", "Himmlische", "Konstrukte", "Drachen", "Elementare", "Feenwesen", "Unholde", "Riesen", "Humanoide", "Monstrositäten", "Schlicke", "Pflanzen", "Untote"];
-const präfixe = ["","Aberrante", "Abgewandelte", "Abnormale", "Abweichende", "Akroamatische", "Aktuelle", "Allgemeine", "Alltägliche", "Ältere", "Alternative", "Andere", "Anerkannte", "Anspruchsvolle", "Aufgedeckte", "Ausgefallene", "Außergewöhnliche", "Banale", "Beliebte", "Berüchtigte", "Berühmt-berüchtigte", "Berühmte", "Besondere", "Betörende", "Bizarre", "Dilettantische", "Dissonante", "Divergente", "Durchschnittliche", "Eigenartige", "Einfache", "Eingeschränkte", "Einzigartige", "Eklektische", "Elegante", "Erhabene", "Erwähnenswerte", "Esoterische", "Falsche", "Frühe", "Gefeierte", "Gegensätzliche", "Gegenwärtige", "Gemischte", "Generelle", "Geringe", "Große", "Größere", "Herausragende", "Hervorragende", "Heterogene", "Klassische", "Kleinere", "Knappe", "Komische", "Komplexe", "Legendäre", "Letztere", "Mäßige", "Moderne", "Modische", "Neoterische", "Neuzeitliche", "Normale", "Obskure", "Orphische", "Orthodoxe", "Quintessenzielle", "Radikale", "Reguläre", "Seltene", "Seltsame", "Sonstige", "Späte", "Spezielle", "Tiefgründige", "Transzendente", "Trennende", "Triviale", "Typische", "Überlegene", "Ultimative", "Umständliche", "Unbedeutende", "Unbekannte", "Unentdeckte", "Ungeordnete", "Ungewöhnliche", "Unpopuläre", "Unstimmige", "Unverzichtbare", "Verfeinerte", "Verlorene", "Verschiedene", "Verschleierte", "Versteckte", "Vertraute", "Vielfältige", "Wiedergefundene", "Zeitgenössische"];
-const klassen = ["Barbaren", "Barden", "Druiden", "Hexenmeister", "Kämpfer", "Kleriker", "Magier", "Mönche", "Paladine", "Schurken", "Waldläufer", "Zauberer", "Magieschmiede", "Blutjäger"];
-const regionen = ["Grat der Welt", "Grat der Welt", "Königreich der Vielpfeile", "Königreich der Vielpfeile", "Lauerwald", "Lauerwald", "Niewinterwald", "Niewinterwald", "Immermoor", "Immermoor", "Schwertberge", "Schwertberge", "Sternenhügel", "Sternenhügel", "Hoher Wald", "Hoher Wald", "Kalter Wald", "Kalter Wald", "Eisgipfel", "Eisgipfel", "Netherberge", "Netherberge", "Armwald", "Armwald", "Weiter Wald", "Weiter Wald", "Graugipfelberge", "Graugipfelberge", "Südwald", "Südwald", "Hochmoor", "Hochmoor", "Schlangenhügel", "Schlangenhügel", "Marsch von Chelimber", "Marsch von Chelimber", "Gefrorene See", "Gefrorene See", "Hohes Eis", "Hohes Eis", "Ebene der Stehenden Steine", "Ebene der Stehenden Steine", "Anauroch", "Anauroch", "Graumantelhügel", "Graumantelhügel", "Wüstmund-Berge", "Wüstmund-Berge", "Sonnenuntergangsberge", "Sonnenuntergangsberge", "Sturmhörner", "Sturmhörner", "Hullack-Wald", "Hullack-Wald", "Greifenden Wälder", "Greifenden Wälder", "Cormyr", "Cormyr", "Drachensee", "Drachensee", "Riesenlauf-Berge", "Riesenlauf-Berge", "Schneeflockenberge", "Schneeflockenberge", "Riesensteppe", "Riesensteppe", "Shilmistawald", "Shilmistawald", "Wald von Thethir", "Wald von Thethir", "Amn", "Amn", "Nelanther", "Nelanther", "Scharfzahnwald", "Scharfzahnwald", "Manielwald", "Manielwald", "Elturgard", "Elturgard", "Tirelta-Hügel", "Tirelta-Hügel", "Felder der Toten", "Felder der Toten", "Weite Hügel", "Weite Hügel", "Trollklauen", "Trollklauen", "Trollbarkenwald", "Trollbarkenwald", "Schwertküste", "Schwertküste", "Norddunkelwald", "Norddunkelwald", "Najara", "Najara", "Wald des Wyrms", "Wald des Wyrms", "Nebelwald", "Nebelwald"];
-const gegenstände = ["Abakusse", "Abdeckbare Laternen", "Amulette", "Angelausrüstungen", "Armbrustbolzen", "Armbrustbolzenbehälter", "Blasrohrpfeile", "Blattpapiere", "Blendlaternen", "Brechstangen", "Bücher", "Decken", "Drei-Schritt-Stangen", "Eibenzauberstäbe", "Eimer", "Eisenkeile", "Eisentöpfe", "Embleme", "Enterhaken", "Fackeln", "Fangeisen", "Fässer", "Feine Kleidung", "Ferngläser", "Fläschchen Tinte", "Flaschen mit Alchemistenfeuer", "Flaschen Öl", "Flaschenzüge", "Gegengiftphiole", "Gewöhnliche Kleidung", "Giftphiole", "Glasflaschen", "Glocken", "Hämmer", "Handschellen", "Hanfseile", "Heilerausrüstungen", "Heiltränke", "Holzstäbe", "Kaufmannswagen", "Kerzen", "Ketten", "Kisten", "Kletterausrüstungen", "Kletterhaken", "Köcher", "Körbe", "Kostüme", "Krähenfüße", "Kreide", "Kristalle", "Kugeln", "Lampen", "Leitern", "Materialkomponentenbeutel", "Metallkügelchen", "Mistelzweigsprösslinge", "Pergamentblätter", "Pfeile", "Phiole", "Phiole Parfüm", "Phiole Säure", "Reisegeschirr", "Reisekleidungen", "Reliquien", "Roben", "Rucksäcke", "Ruten", "Säcke", "Sanduhren", "Schaufeln", "Schlafsäcke", "Schleuderkugeln", "Schlösser", "Schneeschuhe", "Schreibfedern", "Schriftrollenbehälter", "Seidenseile", "Seifen", "Siegelringe", "Siegelwachse", "Signalpfeifen", "Spitzhacken", "Stäbe", "Stahlspiegel", "Tagesrationen", "Taschen", "Tonhumpen", "Tonkrüge oder Kannen", "Totems", "Tragbare Rammbocks", "Trinkschläuche", "Vergrößerungsgläser", "Vorschlaghämmer", "Weihwasser", "Wetzsteine", "Zauberbücher", "Zauberstäbe", "Zelte", "Zunderkästchen"];
-const schulenDerMagie = ["Schutzmagie", "Alchemie", "Betörung", "Außergewöhnliches", "Arkanes", "Arkane Wissenschaften", "Magieschmiedung", "Astrology", "Voraussagung", "Kampfmagie", "Verwünschung", "Verheißungen", "Bindung", "Gesänge", "Verzauberungen", "Chemie", "Beschwörungsmagie", "Beschwörung", "Beugung", "Flüche und Heilung", "Dämoniasmus", "Teufelsmagie", "Betrugsmagie", "Erkenntnismagie", "Verführung", "Verführungsmagie", "Verzauberung", "Esoterik", "Hervorrufung", "Experementierung", "Glamour", "Scheinmagie", "Hermetik", "Hexhandwerk", "Verhexungen", "Verborgene Mächte", "Illusionismus", "Illusionen", "Immateriuem", "Anrufungen", "Unbeschreibliches", "Ungreifbares", "Hexensprühce", "Taschenspielertricks", "Magie", "Magnetismus", "Malediktion", "Wunder", "Metaphysisches", "Mojo", "Mummenschanz", "Mysterien", "Mystische Künste", "Naturphilosophie", "Nekromantie", "Nichtrationalität", "Okkultismus", "Orakel", "Paranormales", "Phänomene", "Philosophie", "Platonik", "Macht", "Vorahnung", "Taschenspielerei", "Überirdisches", "Zweites Auge", "Schatten", "Zauberei", "Weissagung", "Zauberwirken", "Zauberhandwerk", "Zauber", "Zauberweben", "Zauberkunst", "Spirituelle Kunst", "Fremdes", "Herbeirufung", "Supernale Reiche", "Übernatürliches", "Übernatürliche Künste", "Übernatürlichkeit", "Sympathisierende Magie", "Technomantie", "Telestik", "Thaumaturgie", "Theurgie", "Transzendenz", "Transzendental", "Transmundanisch", "Transmutation", "Trickserei", "Übersinnlichkeit", "Kriegsmagie", "Hexenmeisterei", "Magie weben", "Komisches", "Hexenwerk", "Hexerei", "Magierkunst"];
-const religion = ["Paganismus", "Kirche", "Kult"];
-const windrichtungen = ['nördlichen', "nordöstlichen", 'nordwestlichen', "südlichen", "südöstlichen", "südöstlichen",  'östlichen', 'westlichen'];
-const waffe = ["Anderthalbhänder", "Anderthalbhänder", "Beile", "Beile", "Blasrohre", "Blasrohre", "Boomerangs", "Boomerangs", "Dolche", "Dolche", "Dreizacke", "Dreizacke", "Flegel", "Flegel", "Gleven", "Gleven", "Hakenförmige Kurzspeere", "Hakenförmige Kurzspeere", "Handarmbrüste", "Handarmbrüste", "Hellebarden", "Hellebarden", "Hoopaks", "Hoopaks", "Improvisierte Waffen", "Improvisierte Waffen", "Kampfstäbe", "Kampfstäbe", "Knüppel", "Knüppel", "Kriegshacken", "Kriegshacken", "Kriegshämmer", "Kriegshämmer", "Krummsäbel", "Krummsäbel", "Kurzbogen", "Kurzbogen", "Kurzschwerter", "Kurzschwerter", "Langbogen", "Langbogen", "Langschwerter", "Langschwerter", "Lanzen", "Lanzen", "Leichte Armbrüste", "Leichte Armbrüste", "Leichte Repetierarmbrüste", "Leichte Repetierarmbrüste", "Leichte Hämmer", "Leichte Hämmer", "Morgensterne", "Morgensterne", "Netze", "Netze", "Peitschen", "Peitschen", "Piken", "Piken", "Rapier", "Rapier", "Schlagringe", "Schlagringe", "Schleudern", "Schleudern", "Schwere Armbrüste", "Schwere Armbrüste", "Sensen", "Sensen", "Sicheln", "Sicheln", "Speere", "Speere", "Stachelketten", "Stachelketten", "Streitäxte", "Streitäxte", "Streitkolben", "Streitkolben", "Tonfas", "Tonfas", "Übergroße Langbögen", "Übergroße Langbögen", "Wurfpfeile", "Wurfpfeile", "Wurfspeere", "Wurfspeere", "Ylkwae", "Ylkwae", "Zweihandäxte", "Zweihandäxte", "Zweihandhämmer", "Zweihandhämmer", "Zweihandknüppel", "Zweihandknüppel", "Zweihandschwerter", "Zweihandschwerter", "Zweiklingige Krummsäbel", "Zweiklingige Krummsäbel"];
-const ort = ["Amphail", "Amphail", "Ascore", "Ascore", "Baldurs Tor", "Baldurs Tor", "Berdusk", "Berdusk", "Berg Hotenow", "Berg Hotenow", "Boareskyr Brücke", "Boareskyr Brücke", "Burg Drachenspeer", "Burg Drachenspeer", "Burg Hartwick", "Burg Hartwick", "Caer Corwell", "Caer Corwell", "Caer Moray", "Caer Moray", "Caer Westphal", "Caer Westphal", "Dolchfurt", "Dolchfurt", "Dreieber", "Dreieber", "Dunkelfeste", "Dunkelfeste", "Dynnegall", "Dynnegall", "Eisenfeste", "Eisenfeste", "Elturel", "Elturel", "Everaska", "Everaska", "Fernblick", "Fernblick", "Feuerschere", "Feuerschere", "Feuersteinfels", "Feuersteinfels", "Fort Morgenfürst", "Fort Morgenfürst", "Fort Tamal", "Fort Tamal", "Gauntlgrym", "Gauntlgrym", "Großvaterbaum", "Großvaterbaum", "Hartbuckler", "Hartbuckler", "Helms Feste", "Helms Feste", "Immerdar", "Immerdar", "Kerzenfeste", "Kerzenfeste", "Langsattel", "Langsattel", "Menzoberrazan", "Menzoberrazan", "Mirabar", "Mirabar", "Mithralhalle", "Mithralhalle", "Morgurs Hügel", "Morgurs Hügel", "Niewinter", "Niewinter", "Orogoth", "Orogoth", "Phandalin", "Phandalin", "Rabenfels", "Rabenfels", "Rogarsheim", "Rogarsheim", "Scornubel", "Scornubel", "Secomber", "Secomber", "Siedelstein", "Siedelstein", "Silbrigmond", "Silbrigmond", "Soubar", "Soubar", "Ss´thart´tissssun", "Ss´thart´tissssun", "Tiefwasser", "Tiefwasser", "Triel", "Triel", "Trollklauenfurt", "Trollklauenfurt", "Yartar", "Yartar", "Zitadelle Adbar", "Zitadelle Adbar"];
-const gottheit = ["Abbathor", "Arvoreen", "Asmodeus", "Auril", "Azuth", "Baervan Wildwanderer", "Bahgtru", "Bane", "Baravar Mantelschatten", "Berronar Wahrsilber", "Beshaba", "Bhaal", "Bleredd", "Brandobaris", "Callarduran Sanfthände", "Charmalaine", "Chauntea", "Klangeddin Silberbard", "Cyric", "Cyrrollalee", "Deneir", "Dugmaren Leuchtmantel", "Dumathoin", "Eilistraee", "Eldath", "Flandal Stahlhaut", "Gaerdal Eisenhaut", "Garl Glitzergold", "Gelf Dunkelherz", "Ghaunadaur", "Gond", "Gorm Gulthyn", "Grumbar", "Gruumsh", "Gwaeron Windstrom", "Haela Leuchtaxt", "Hanseath", "Helm", "Hoar", "Ilmater", "Ilneval", "Istishia", "Jergal", "Kelemvor", "Keptolo", "Kiaransalee", "Kossuth", "Lathander", "Leira", "Lliira", "Lolth", "Loviatar", "Luthic", "Malar", "Malyk", "Marthammor Duin", "Mask", "Mielikki", "Milil", "Moradin", "Muamman Duathal", "Mya", "Myrkul", "Mystra", "Nebelun", "Oghma", "Rill Schlaudrossel", "Roknar", "Savras", "Segojan Erdrufer", "Selûne", "Selvetarm", "Shar", "Shargaas", "Sharindlar", "Sheela Peryroyl", "Sheyanna Flachssträhne", "Silvanus", "Sune", "Talona", "Talos", "Tempus", "Thard Harr", "Tharmekhûl", "Thautam", "Die rote Ritterin", "Torm", "Tymora", "Tyr", "Ulaa", "Umberlee", "Urdlen", "Urogalan", "Valkauna", "Valkur", "Vhaeraun", "Waukeen", "Yondalla", "Yurtrus", "Zinzerena"];
-const ereignis = ["Abenteuer", "Abstieg", "Aufbruch", "Aufgabe", "Aufstand", "Aufstieg", "Ausbruch", "Auslöschung", "Auslöser", "Bau", "Befreiung", "Belagerung", "Einigung", "Entdeckung", "Entfremdung", "Enthüllung", "Entscheidung", "Entwurzelung", "Erkundung", "Erlösung", "Ermordung", "Ernte", "Eroberung", "Erwachen", "Explosion", "Flammen", "Fluch", "Flucht", "Geburt", "Gefangennahme", "Geheimnis", "Grenzüberschreitung", "Gründung", "Heilung", "Heimkehr", "Herausforderung", "Hinterhalt", "Hochzeit", "Intrige", "Konflikt", "Konfrontation", "Krieg", "Lüge", "Niederlage", "Offenbarung", "Opferung", "Plage", "Prophezeiung", "Rache", "Rebellion", "Rückkehr", "Schicksal", "Schicksalsschlag", "Schicksalswende", "Sieg", "Sonnenfinsternis", "Spaltung", "Stille", "Sturm", "Täuschung", "Tod", "Überleben", "Überraschung", "Umkehr", "Veränderung", "Verat", "Verbannung", "Verbindung", "Verbündung", "Verdammnis", "Verdrängung", "Verfluchung", "Verführung", "Vergebung", "Vergeltung", "Verhandlung", "Verirrung", "Verleumdung", "Verlockung", "Verlust", "Verrat", "Verstoß", "Verstrickung", "Versuchung", "Verwandlung", "Verwundung", "Verzauberung", "Wandel", "Wendepunkt", "Widerstand", "Wiedergeburt", "Wiedergutmachung", "Wiederherstellung", "Wiedersehen", "Wiedervereinigung", "Wunder", "Zeremonie", "Zerstörung", "Zusammenarbeit", "Zusammenbruch"];
-const land = ["Land 1", "Land 2", "Land 3"];
-const domäne = ["Domäne der Adeligen", "Domäne der Arkana", "Domäne der Ausdauer", "Domäne der Dämmerung", "Domäne der Dämonen", "Domäne der Demut", "Domäne der Dunkelheit", "Domäne der Erde", "Domäne der Erneuerung", "Domäne der Familie", "Domäne der Feen", "Domäne der Fertigkeiten", "Domäne der Freiheit", "Domäne der Freude", "Domäne der Geduld", "Domäne der Gemeinschaft", "Domäne der Gerechtigkeit", "Domäne der Gier", "Domäne der Großzügigkeit", "Domäne der Habgier", "Domäne der Handwerkskunst", "Domäne der Heilung", "Domäne der Hoffnung", "Domäne der Illusion", "Domäne der Jagd", "Domäne der Kälte", "Domäne der Keuschheit", "Domäne der Korruption", "Domäne der Liebe", "Domäne der Luft", "Domäne der Lust", "Domäne der Magie", "Domäne der Mäßigung", "Domäne der Nächstenliebe", "Domäne der Natur", "Domäne der Ordnung", "Domäne der Pflanzen", "Domäne der Planung", "Domäne der Qual", "Domäne der Rache", "Domäne der Reise", "Domäne der Runen", "Domäne der Schmiedekunst", "Domäne der Schöpfung", "Domäne der Sonne", "Domäne der Stärke", "Domäne der Tiere", "Domäne der Trägheit", "Domäne der Tyrannei", "Domäne der Vergeltung", "Domäne der Verwöhnung", "Domäne der Völlerei", "Domäne der Wildnis", "Domäne der Zeit", "Domäne der Zerstörung", "Domäne der Zivilisation", "Domäne des Bestialischen", "Domäne des Betrugs", "Domäne des Chaos", "Domäne des Charmes", "Domäne des Diabolischen", "Domäne des Eifers", "Domäne des Feuers", "Domäne des Friedens", "Domäne des Geistes", "Domäne des Gesetzes", "Domäne des Gleichgewichts", "Domäne des Gleißens", "Domäne des Glücks", "Domäne des Grabes", "Domäne des Handels", "Domäne des Hasses", "Domäne des Krieges", "Domäne des Lebens", "Domäne des Leidens", "Domäne des Lichts", "Domäne des Meeres", "Domäne des Mentalismus", "Domäne des Metalls", "Domäne des Mondes", "Domäne des Neids", "Domäne des Ozeans", "Domäne des Portals", "Domäne des Ruhms", "Domäne des Schicksals", "Domäne des Schmerzes", "Domäne des Schutzes", "Domäne des Stolzes", "Domäne des Sturms", "Domäne des Todes", "Domäne des Traums", "Domäne des Untodes", "Domäne des Unwetters", "Domäne des Wahnsinns", "Domäne des Wandels", "Domäne des Wassers", "Domäne des Winters", "Domäne des Wissens", "Domäne des Zaubers", "Domäne des Zorns"];
-const rüstung = ["Armschützer", "Badeanzüge", "Balaclavas", "Beckenhauben", "Beinkleider", "Beinschienen", "Beinwickel", "Benin", "Berks", "Beutel", "Boleros", "Brustpanzer", "Brustplatten", "Büchsen", "Bunthauben", "Büstenhalter", "Camails", "Casquetels", "Chemisen", "Ellenbogenpanzer", "Faltröcke", "Fausthandschuhe", "Fäustlinge", "Gambesons", "Geldbörsen", "Geschlechtsteil-Schütze", "Gewänder", "Gilets", "Große Helme", "Gürtel", "Handschuhe", "Hauberks", "Helme", "Helmbüsche", "Hemden", "Hosen", "Hüftschütze", "Hüte", "Jerkins", "Kaftane", "Kappen", "Kehlkopfschütze", "Kilts", "Kleider", "Knieschoner", "Korsetts", "Krawatten", "Kürisse", "Kurze Jacken", "Kutten", "Lange Jacken", "Lange Stiefel", "Leggings", "Lendenschurze", "Leotards", "Mäntel", "Masken", "Mittellange Jacken", "Morgenmäntel", "Oberschenkelschütze", "Overalls", "Pantaloons", "Parkas", "Pelerinen", "Ponchos", "Pullover", "Roben", "Rondelle", "Rucksäcke", "Sabbatons", "Schals", "Schleppen", "Schlipse", "Schuhe", "Schulterpanzer", "Schulterstücke", "Schürzen", "Shorts", "Socken", "Soutanen", "Stiefel", "Stirnbänder", "Strickjacken", "Strumpfhosen", "Suspensorien", "Tangas", "Taschen", "Taschentücher", "Togen", "Tonlets", "Topfhelme", "Trenchcoats", "Tücher", "Tuniken", "Umhänge", "Unterarmschützer", "Unteröcke", "Wämse", "Westen", "Zwangsjacken"];
+			/* Stil für den Zeilenumbruch innerhalb der generierten Sätze*/
+			ul#container {
+				white-space: pre-wrap;
+				padding-inline-start: 0px;
+			}
 
-const beliebiges = [
-getRandomElementFromArray(handwerke),
-getRandomElementFromArray(völker),
-getRandomElementFromArray(klassen),
-getRandomElementFromArray(regionen),
-getRandomElementFromArray(gegenstände),
-getRandomElementFromArray(schulenDerMagie),
-getRandomElementFromArray(religion),
-getRandomElementFromArray(monster),
-getRandomElementFromArray(waffe),
-getRandomElementFromArray(ort),
-getRandomElementFromArray(ereignis),
-getRandomElementFromArray(land),
-getRandomElementFromArray(domäne),
-getRandomElementFromArray(rüstung)
+			/* Stil für die Auflistung, damit keine Aufzählungszeichen angezeigt werden */
+			ul {
+				list-style-type: none;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Buchtitelgenerator</h1>
+		<h2>Sachbücher</h2>
+		<p>Dieser Generator generiert Titel für Sachbücher</p>
+		<script>
 
-];
-// Funktion, um einen zufälligen Text aus einem Array auszuwählen
-function getRandomText(arr) {
-  const index = Math.floor(Math.random() * arr.length);
-  return arr[index];
-}
+			// Eingabefelder und Buttons
+			const numAnzahlField = document.createElement('input');
+			numAnzahlField.type = 'number';
+			numAnzahlField.style.margin = '10px';
+			numAnzahlField.style.width = '50px';
+			const btnGenerate = document.createElement('button');
+			btnGenerate.style.margin = '10px';
+			btnGenerate.textContent = 'Generieren';
+			const btnClear = document.createElement('button');
+			btnClear.textContent = 'Löschen';
+			btnClear.style.margin = '10px';
+			const btnCopy = document.createElement('button'); 
+			btnCopy.textContent = 'In Zwischenablage kopieren'; 
+			btnCopy.style.margin = '10px';
+			
+			//#region  Begriffe und Abschnitte für den Buchtitelgenerator
+			const präfixe = ["","aberrante", "abgewandelte", "abnormale", "abweichende", "akroamatische", "aktuelle", "allgemeine", "alltägliche", "ältere", "alternative", "andere", "anerkannte", "anspruchsvolle", "aufgedeckte", "ausgefallene", "außergewöhnliche", "banale", "beliebte", "berüchtigte", "berühmt-berüchtigte", "berühmte", "besondere", "betörende", "bizarre", "dilettantische", "dissonante", "divergente", "durchschnittliche", "eigenartige", "einfache", "eingeschränkte", "einzigartige", "eklektische", "elegante", "erhabene", "erwähnenswerte", "esoterische", "falsche", "frühe", "gefeierte", "gegensätzliche", "gegenwärtige", "gemischte", "generelle", "geringe", "große", "größere", "herausragende", "hervorragende", "heterogene", "klassische", "kleinere", "knappe", "komische", "komplexe", "legendäre", "letztere", "mäßige", "moderne", "modische", "neoterische", "neuzeitliche", "normale", "obskure", "orphische", "orthodoxe", "quintessenzielle", "radikale", "reguläre", "seltene", "seltsame", "sonstige", "späte", "spezielle", "tiefgründige", "transzendente", "trennende", "triviale", "typische", "überlegene", "ultimative", "umständliche", "unbedeutende", "unbekannte", "unentdeckte", "ungeordnete", "ungewöhnliche", "unpopuläre", "unstimmige", "unverzichtbare", "verfeinerte", "verlorene", "verschiedene", "verschleierte", "versteckte", "vertraute", "vielfältige", "wiedergefundene", "zeitgenössische"];
+			const handwerkPlural = ["Alchemisten", "Apotheker", "Architekten", "Auftragsmörder", "Bäcker", "Banditen", "Bankiers", "Barbaren", "Barden", "Bauern", "Bettler", "Bischöfe", "Bogenmacher", "Bogenschützen", "Boten", "Brauer", "Bürgermeister", "Butler", "Diener", "Diplomaten", "Edelsteinschneider", "Fallensteller", "Fischer", "Forstwirte", "Fremdenführer", "Gärtner", "Gelehrte", "Generäle", "Gerber", "Gladiatoren", "Glasbläser", "Goldschmiede", "Graveure", "Hebammen", "Heiler", "Hellseher", "Herolde", "Hufschmiede", "Hundedresseure", "Ingenieure", "Inquisitoren", "Jagdaufseher", "Jäger", "Juweliere", "Kapitäne", "Kartographen", "Kerzenmacher", "Kleriker", "Knechte", "Köche", "Kräuterkundler", "Krieger", "Künstler", "Kuriere", "Kürschner", "Kutscher", "Laternenanzünder", "Lederarbeiter", "Lehrer", "Magier", "Metzger", "Mönche", "Orakel", "Investigatoren", "Priester", "Rechtsanwälte", "Runenschmiede", "Rüstungsschmiede", "Sattler", "Schäfer", "Schauspieler", "Schmiede", "Schmuggler", "Schneider", "Schreiber", "Schreiner", "Schurken", "Seeleute", "Seher", "Sekretäre", "Silberschmiede", "Soldaten", "Steinmetze", "Theaterautoren", "Tierdressuren", "Töpfer", "Torwächter", "Totengräber", "Unterhaltungskünstler", "Wachmänner", "Wächter", "Waffenschmiede", "Wagenbauer", "Waldläufer", "Weber", "Weise", "Wirte", "Wissenshüter", "Zauberer", "Zimmerleute"];
+			const völkerPlural = ["Aarakocra", "Astralelfen", "Autognome", "Beschützer-Aasimar", "Blasselfen", "Bullywugs", "Chromatische Drachgenblütige", "Dämmerungselfen", "Derros", "Dhampire", "Drachlingsblütige Drachenblütige", "Dunkelelfen", "Dunkelzwerge", "Echsenmenschen", "Edelstein-Drachenblütige", "Eladrin", "Erd-Genasi", "Feen", "Felsengnome", "Feuer-Genasi", "Feuermolche", "Firbolg", "Flinkläufer-Wandler", "Gebirgzwerge", "Gefallene Aasimar", "Geißel-Aasimar", "Geisterwaisen-Halblinge", "Giff", "Githyanki", "Githzerai", "Gnolle", "Goblins", "Goliaths", "Grimlocks", "Grottenschrate", "Grung", "Hadozees", "Halbdrachen", "Halbelfen", "Halb-Orks", "Harengon", "Hexenblütigen", "Hobgoblins", "Hochelfen", "Hügelzwerge", "Kalashtar", "Kender", "Kenkus", "Kobolde", "Kraul", "Kriegsgeschmiedeten", "Kua-Toas", "Langzahn-Wandler", "Lavakinder", "Leichtfuß-Halblinge", "Leoniden", "Locathah", "Lotusden-Halblinge", "Loxodon", "Luft-Genasi", "Lykanthropen", "Mazer", "Meereselfen", "Meervolk", "Menschen", "Metallische Drachenblütige", "Minotauren", "Mischlingsvolk", "Nagpa", "Nilbogs", "Orks", "Orog", "Plasmoide", "Quaggoth", "Ravenit-Drachenblütige", "Sahuagine", "Satyren", "Saurianer", "Shadar-Kai", "Simic-Hybride", "Stämmige Halblinge", "Tabaxi", "Thri-Kreen", "Tiefengnome", "Tieflinge", "Tierhaut-Wandler", "Tortle", "Tritons", "Troglodyten", "Uhlen", "Vedalken", "Verdan", "Waldelfen", "Waldgnome", "Wasser-Genasi", "Wechselbälger", "Wiedergeborenen", "Wildläufer-Wandler", "Yuan-Ti", "Zentauren"];
+			const monsterPlural = ["Abberationen", "Tiere", "Himmlische", "Konstrukte", "Drachen", "Elementare", "Feenwesen", "Unholde", "Riesen", "Humanoide", "Monstrositäten", "Schlicke", "Pflanzen", "Untote"];
+			
+			const klassenSingular = [
+				{
+					name: "Barbar",
+					genus: "maskulinum",
+					numerus: "singular",
+					adjektiv: "",
+					präfix: "",
+					suffix: ""
+				},
+				{
+					name: "Barde",
+					genus: "maskulinum",
+					numerus: "singular",
+					adjektiv: "",
+					präfix: "",
+					suffix: ""
+				},
+				{
+					name: "Druide",
+					genus: "maskulinum",
+					numerus: "singular",
+					adjektiv: "",
+					präfix: "",
+					suffix: ""
+				},
+				{
+					name: "Hexenmeister",
+					genus: "maskulinum",
+					numerus: "singular",
+					adjektiv: "",
+					präfix: "",
+					suffix: ""
+				},
+				{
+					name: "Kämpfer",
+					genus: "maskulinum",
+					numerus: "singular",
+					adjektiv: "",
+					präfix: "",
+					suffix: ""
+				},
+				{
+					name: "Kleriker",
+					genus: "maskulinum",
+					numerus: "singular",
+					adjektiv: "",
+					präfix: "",
+					suffix: ""
+				},
+				{
+					name: "Magier",
+					genus: "maskulinum",
+					numerus: "singular",
+					adjektiv: "",
+					präfix: "",
+					suffix: ""
+				},
+				{
+					name: "Mönch",
+					genus: "maskulinum",
+					numerus: "singular",
+					adjektiv: "",
+					präfix: "",
+					suffix: ""
+				},
+				{
+					name: "Paladin",
+					genus: "maskulinum",
+					numerus: "singular",
+					adjektiv: "",
+					präfix: "",
+					suffix: ""
+				},
+				{
+					name: "Schurke",
+					genus: "maskulinum",
+					numerus: "singular",
+					adjektiv: "",
+					präfix: "",
+					suffix: ""
+				},
+				{
+					name: "Waldläufer",
+					genus: "maskulinum",
+					numerus: "singular",
+					adjektiv: "",
+					präfix: "",
+					suffix: ""
+				},
+				{
+					name: "Zauberer",
+					genus: "maskulinum",
+					numerus: "singular",
+					adjektiv: "",
+					präfix: "",
+					suffix: ""
+				},
+				{
+					name: "Magieschmied",
+					genus: "maskulinum",
+					numerus: "singular",
+					adjektiv: "",
+					präfix: "",
+					suffix: ""
+				},
+				{
+					name: "Blutjäger",
+					genus: "maskulinum",
+					numerus: "singular"
+				}
+			]
 
-// Funktion, um einen zufälligen Text aus einem Array in einem Array auszuwählen
-function getRandomElementFromArray(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-// Array, um die generierten Buchtitel zu speichern
-let generatedTitles = [];
+			const klassenSingularName = klassenSingular.name;
+			const klassenSingularGeschlecht = klassenSingular.genus;
+			const klassenSingularAdjektiv = klassenSingular.adjektiv;
+			const klassenSingularPräfix = klassenSingular.präfix;
+			const klassenSingularSuffix = klassenSingular.suffix;
 
-// Funktion zum Generieren eines einzigartigen Buchtitels
-function generateBookTitle() {
-  const Handwerk = getRandomText(handwerke);
-  const Volk = getRandomText(völker);
-  const Monster = getRandomText(monster);
-  const Präfix = getRandomText(präfixe);
-  const Klasse = getRandomText(klassen);
-  const Region = getRandomText(regionen);
-  const Gegenstand = getRandomText(gegenstände);
-  const SchulederMagie = getRandomText(schulenDerMagie);
-  const Windrichtung = getRandomText(windrichtungen);
-  const Beliebiges = getRandomText(beliebiges);
-  const Religion = getRandomText(religion);
-  const Ort = getRandomText(ort);
-  const Gottheit = getRandomText(gottheit);
-  const Waffe = getRandomText(waffe);
-  const Ereignis = getRandomText(ereignis);
-  const Land = getRandomText(land);
-  const Domäne = getRandomText(domäne);
-  const Rüstung = getRandomText(rüstung);
-  const bookTitleIdeas = [
-`${Handwerk} der ${Volk}`,
-`${Monster} seziert`,
-`${Präfix} ${Klasse} von ${Region}`,
-`${Präfix} ${Klasse} der ${Volk}`,
-`${Präfix} ${Gegenstand}`,
-`${Präfix} ${Gegenstand} aus Legenden`,
-`${Präfix} ${Gegenstand} der ${Volk}`,
-`${Präfix} ${SchulederMagie}\-\Zauber der ${Volk}`,
-`${Präfix} ${Monster}`,
-`${Präfix} ${Beliebiges}: Eine Geschichte`,
-`${Präfix} Fähigkeiten der ${Klasse}`,
-`${Präfix} Artefakte der ${Volk}`,
-`${Präfix} Gottheiten der ${Volk}`,
-`${Präfix} Fakten über ${Beliebiges}`,
-`${Präfix} Helden der ${Volk}`,
-`${Präfix} Helden aus ${Ort}`,
-`${Präfix} Sprachen der ${Monster}`,
-`${Präfix} Legenden von ${Beliebiges}`,
-`${Präfix} Wunder von ${Gottheit}`,
-`${Präfix} Gebete an ${Gottheit}`,
-`${Präfix} Riten für ${Klasse}`,
-`${Präfix} Riten der ${Windrichtung} ${Volk}`,
-`${Präfix} Gerüchte aus ${Ort}`,
-`${Präfix} Lieder aus ${Region}`,
-`${Präfix} Zauber der ${SchulederMagie}`,
-`${Präfix} Geschichten aus ${Region}`,
-`${Präfix} Erzählungen der ${Volk}`,
-`${Präfix} Verwendungen für ${Gegenstand} im Kampf`,
-`${Präfix} Nutzen für ${Beliebiges}`,
-`${Präfix} Herrscher über ${Region}`,
-`${Präfix} Herrscher über ${Volk}`,
-`${Präfix} Herrscher über ${Volk}`,
-`${getRandomText(völker)} \-\ ${getRandomText(völker)} Wörterbuch`,
-`${Volk} Lieder`,
-`${Religion} der ${Volk}`,
-`${Waffe} Varianten`,
-`${Beliebiges}: Die unerzählte Wahrheit`,
-`${Beliebiges} für Kinder`,
-`Ein Anfängerhandbuch über ${Beliebiges}`,
-`Eine Begutachtung von ${Waffe}`,
-`Ein Leitfaden zu ${Beliebiges}`,
-`Eine Abhandlung über ${Beliebiges}`,
-`Über ${Beliebiges}`,
-`Berichterstattung über ${Ereignis}`,
-`Eine kurze Geschichte über ${Beliebiges}`,
-`Eine Enzyklopädie über ${Beliebiges}`,
-`Eine Analyse von ${Beliebiges}`,
-`Ein Expose über ${Präfix} ${Beliebiges}`,
-`Atlas von ${Region}`,
-`Eigenschaften von ${Beliebiges}`,
-`Buch der ${Beliebiges}`,
-`${Monster} züchten`,
-`Sammelband mit Fakten über ${Beliebiges}`,
-`Katalog der ${Gegenstand}`,
-`Kodex der ${Beliebiges}`,
-`Kompendium der ${Beliebiges}`,
-`Zusammengestellte Geschichte von ${Beliebiges}`,
-`In Bezug auf ${Beliebiges}`,
-`Kreuzzüchtung von ${Monster}`,
-`Verteidigung gegen ${SchulederMagie}`,
-`Entwicklung der ${Gegenstand}`,
-`Entstehungsgeschichte der ${Gegenstand}`,
-`Ökologie der ${Monster}`,
-`Ökonomie von ${Religion} ${Land}`,
-`Grundlegende ${SchulederMagie}`,
-`Berühmte ${Beliebiges} von ${Region}`,
-`Berühmte Familien von ${Region}`,
-`Glossar der ${Beliebiges}\-\Begriffe`,
-`Ratgeber für ${Klasse}\-\Begriffe`,
-`Wappenkunde von ${Region}`,
-`Hybride der ${Volk}`,
-`Hymnen der ${Volk}`,
-`Anführer von ${Region}`,
-`Lexikon über ${Beliebiges}`,
-`Lebensräume von ${Monster}`,
-`Lebensräume von ${Volk}`,
-`Handbuch der ${Beliebiges}`,
-`Paarungsverhalten der ${Monster}`,
-`Mysterien von ${Region}`,
-`Mythen über ${SchulederMagie}`,
-`Sammelwerk über ${Beliebiges}`,
-`Muster in der Geschichte von ${Beliebiges}`,
-`Praktische Anwendungen für ${SchulederMagie}`,
-`${Beliebiges} betreffend`,
-`Heilende Anwendungen von ${SchulederMagie}`,
-`Rituale der ${Volk}`,
-`Geheimnisse von ${Beliebiges}`,
-`Symbole von ${Gottheit}`,
-`Die vollständige Geschichte von ${Beliebiges}`,
-`Die kompakte Geschichte von ${Beliebiges}`,
-`Der erste ${Klasse}`,
-`Wahrheit und Lüge über ${Beliebiges}`,
-`Foliant der ${Präfix} ${Beliebiges}`,
-`Traditionen der ${Volk}`,
-`Traditionen der ${Klasse}`,
-`Anleitungen zur Verwendung von ${Gegenstand}`,
-`Verwendungszwecke für ${Domäne} in Zeiten des Krieges`,
-`Verwendungszwecke für ${SchulederMagie} in Zeiten des Friedens`,
-`Verwendungszwecke für ${Monster}\-\Teile`,
-`Verwendung von ${Waffe} gegen ${Rüstung}`,
-`Reisen in ${Ort}`,
-`Schriften über ${Beliebiges}`];
+			const klassenPlural = ["Barbaren", "Barden", "Druiden", "Hexenmeister", "Kämpfer", "Kleriker", "Magier", "Mönche", "Paladine", "Schurken", "Waldläufer", "Zauberer", "Magieschmiede", "Blutjäger"];
+			const regionen = ["Grat der Welt", "Grat der Welt", "Königreich der Vielpfeile", "Königreich der Vielpfeile", "Lauerwald", "Lauerwald", "Niewinterwald", "Niewinterwald", "Immermoor", "Immermoor", "Schwertberge", "Schwertberge", "Sternenhügel", "Sternenhügel", "Hoher Wald", "Hoher Wald", "Kalter Wald", "Kalter Wald", "Eisgipfel", "Eisgipfel", "Netherberge", "Netherberge", "Armwald", "Armwald", "Weiter Wald", "Weiter Wald", "Graugipfelberge", "Graugipfelberge", "Südwald", "Südwald", "Hochmoor", "Hochmoor", "Schlangenhügel", "Schlangenhügel", "Marsch von Chelimber", "Marsch von Chelimber", "Gefrorene See", "Gefrorene See", "Hohes Eis", "Hohes Eis", "Ebene der Stehenden Steine", "Ebene der Stehenden Steine", "Anauroch", "Anauroch", "Graumantelhügel", "Graumantelhügel", "Wüstmund-Berge", "Wüstmund-Berge", "Sonnenuntergangsberge", "Sonnenuntergangsberge", "Sturmhörner", "Sturmhörner", "Hullack-Wald", "Hullack-Wald", "Greifenden Wälder", "Greifenden Wälder", "Cormyr", "Cormyr", "Drachensee", "Drachensee", "Riesenlauf-Berge", "Riesenlauf-Berge", "Schneeflockenberge", "Schneeflockenberge", "Riesensteppe", "Riesensteppe", "Shilmistawald", "Shilmistawald", "Wald von Thethir", "Wald von Thethir", "Amn", "Amn", "Nelanther", "Nelanther", "Scharfzahnwald", "Scharfzahnwald", "Manielwald", "Manielwald", "Elturgard", "Elturgard", "Tirelta-Hügel", "Tirelta-Hügel", "Felder der Toten", "Felder der Toten", "Weite Hügel", "Weite Hügel", "Trollklauen", "Trollklauen", "Trollbarkenwald", "Trollbarkenwald", "Schwertküste", "Schwertküste", "Norddunkelwald", "Norddunkelwald", "Najara", "Najara", "Wald des Wyrms", "Wald des Wyrms", "Nebelwald", "Nebelwald"];
+			const gegenständePlural = ["Abakusse", "Abdeckbare Laternen", "Amulette", "Angelausrüstungen", "Armbrustbolzen", "Armbrustbolzenbehälter", "Blasrohrpfeile", "Blattpapiere", "Blendlaternen", "Brechstangen", "Bücher", "Decken", "Drei-Schritt-Stangen", "Eibenzauberstäbe", "Eimer", "Eisenkeile", "Eisentöpfe", "Embleme", "Enterhaken", "Fackeln", "Fangeisen", "Fässer", "Feine Kleidung", "Ferngläser", "Fläschchen Tinte", "Flaschen mit Alchemistenfeuer", "Flaschen Öl", "Flaschenzüge", "Gegengiftphiole", "Gewöhnliche Kleidung", "Giftphiole", "Glasflaschen", "Glocken", "Hämmer", "Handschellen", "Hanfseile", "Heilerausrüstungen", "Heiltränke", "Holzstäbe", "Kaufmannswagen", "Kerzen", "Ketten", "Kisten", "Kletterausrüstungen", "Kletterhaken", "Köcher", "Körbe", "Kostüme", "Krähenfüße", "Kreide", "Kristalle", "Kugeln", "Lampen", "Leitern", "Materialkomponentenbeutel", "Metallkügelchen", "Mistelzweigsprösslinge", "Pergamentblätter", "Pfeile", "Phiole", "Phiole Parfüm", "Phiole Säure", "Reisegeschirr", "Reisekleidungen", "Reliquien", "Roben", "Rucksäcke", "Ruten", "Säcke", "Sanduhren", "Schaufeln", "Schlafsäcke", "Schleuderkugeln", "Schlösser", "Schneeschuhe", "Schreibfedern", "Schriftrollenbehälter", "Seidenseile", "Seifen", "Siegelringe", "Siegelwachse", "Signalpfeifen", "Spitzhacken", "Stäbe", "Stahlspiegel", "Tagesrationen", "Taschen", "Tonhumpen", "Tonkrüge oder Kannen", "Totems", "Tragbare Rammbocks", "Trinkschläuche", "Vergrößerungsgläser", "Vorschlaghämmer", "Weihwasser", "Wetzsteine", "Zauberbücher", "Zauberstäbe", "Zelte", "Zunderkästchen"];
+			const schulenDerMagie = ["Schutzmagie", "Alchemie", "Betörung", "Außergewöhnliches", "Arkanes", "Arkane Wissenschaften", "Magieschmiedung", "Astrologie", "Voraussagung", "Kampfmagie", "Verwünschung", "Verheißungen", "Bindung", "Gesänge", "Verzauberungen", "Chemie", "Beschwörungsmagie", "Beschwörung", "Beugung", "Flüche und Heilung", "Dämoniasmus", "Teufelsmagie", "Betrugsmagie", "Erkenntnismagie", "Verführung", "Verführungsmagie", "Verzauberung", "Esoterik", "Hervorrufung", "Experementierung", "Glamour", "Scheinmagie", "Hermetik", "Hexhandwerk", "Verhexungen", "Verborgene Mächte", "Illusionismus", "Illusionen", "Immateriuem", "Anrufungen", "Unbeschreibliches", "Ungreifbares", "Hexensprühce", "Taschenspielertricks", "Magie", "Magnetismus", "Malediktion", "Wunder", "Metaphysisches", "Mojo", "Mummenschanz", "Mysterien", "Mystische Künste", "Naturphilosophie", "Nekromantie", "Nichtrationalität", "Okkultismus", "Orakel", "Paranormales", "Phänomene", "Philosophie", "Platonik", "Macht", "Vorahnung", "Taschenspielerei", "Überirdisches", "Zweites Auge", "Schatten", "Zauberei", "Weissagung", "Zauberwirken", "Zauberhandwerk", "Zauber", "Zauberweben", "Zauberkunst", "Spirituelle Kunst", "Fremdes", "Herbeirufung", "Supernale Reiche", "Übernatürliches", "Übernatürliche Künste", "Übernatürlichkeit", "Sympathisierende Magie", "Technomantie", "Telestik", "Thaumaturgie", "Theurgie", "Transzendenz", "Transzendental", "Transmundanisch", "Transmutation", "Trickserei", "Übersinnlichkeit", "Kriegsmagie", "Hexenmeisterei", "Magie weben", "Komisches", "Hexenwerk", "Hexerei", "Magierkunst"];
+			const religion = ["Paganismus", "Kirche", "Kult"];
+			const windrichtungen = ['nördlichen', "nordöstlichen", 'nordwestlichen', "südlichen", "südöstlichen", "südöstlichen",  'östlichen', 'westlichen'];
+			const waffePlural = ["Anderthalbhänder", "Anderthalbhänder", "Beile", "Beile", "Blasrohre", "Blasrohre", "Boomerangs", "Boomerangs", "Dolche", "Dolche", "Dreizacke", "Dreizacke", "Flegel", "Flegel", "Gleven", "Gleven", "Hakenförmige Kurzspeere", "Hakenförmige Kurzspeere", "Handarmbrüste", "Handarmbrüste", "Hellebarden", "Hellebarden", "Hoopaks", "Hoopaks", "Improvisierte Waffen", "Improvisierte Waffen", "Kampfstäbe", "Kampfstäbe", "Knüppel", "Knüppel", "Kriegshacken", "Kriegshacken", "Kriegshämmer", "Kriegshämmer", "Krummsäbel", "Krummsäbel", "Kurzbogen", "Kurzbogen", "Kurzschwerter", "Kurzschwerter", "Langbogen", "Langbogen", "Langschwerter", "Langschwerter", "Lanzen", "Lanzen", "Leichte Armbrüste", "Leichte Armbrüste", "Leichte Repetierarmbrüste", "Leichte Repetierarmbrüste", "Leichte Hämmer", "Leichte Hämmer", "Morgensterne", "Morgensterne", "Netze", "Netze", "Peitschen", "Peitschen", "Piken", "Piken", "Rapier", "Rapier", "Schlagringe", "Schlagringe", "Schleudern", "Schleudern", "Schwere Armbrüste", "Schwere Armbrüste", "Sensen", "Sensen", "Sicheln", "Sicheln", "Speere", "Speere", "Stachelketten", "Stachelketten", "Streitäxte", "Streitäxte", "Streitkolben", "Streitkolben", "Tonfas", "Tonfas", "Übergroße Langbögen", "Übergroße Langbögen", "Wurfpfeile", "Wurfpfeile", "Wurfspeere", "Wurfspeere", "Ylkwae", "Ylkwae", "Zweihandäxte", "Zweihandäxte", "Zweihandhämmer", "Zweihandhämmer", "Zweihandknüppel", "Zweihandknüppel", "Zweihandschwerter", "Zweihandschwerter", "Zweiklingige Krummsäbel", "Zweiklingige Krummsäbel"];
+			const rüstungPlural = ["Armschützer", "Badeanzüge", "Balaclavas", "Beckenhauben", "Beinkleider", "Beinschienen", "Beinwickel", "Benin", "Berks", "Beutel", "Boleros", "Brustpanzer", "Brustplatten", "Büchsen", "Bunthauben", "Büstenhalter", "Camails", "Casquetels", "Chemisen", "Ellenbogenpanzer", "Faltröcke", "Fausthandschuhe", "Fäustlinge", "Gambesons", "Geldbörsen", "Geschlechtsteil-Schütze", "Gewänder", "Gilets", "Große Helme", "Gürtel", "Handschuhe", "Hauberks", "Helme", "Helmbüsche", "Hemden", "Hosen", "Hüftschütze", "Hüte", "Jerkins", "Kaftane", "Kappen", "Kehlkopfschütze", "Kilts", "Kleider", "Knieschoner", "Korsetts", "Krawatten", "Kürisse", "Kurze Jacken", "Kutten", "Lange Jacken", "Lange Stiefel", "Leggings", "Lendenschurze", "Leotards", "Mäntel", "Masken", "Mittellange Jacken", "Morgenmäntel", "Oberschenkelschütze", "Overalls", "Pantaloons", "Parkas", "Pelerinen", "Ponchos", "Pullover", "Roben", "Rondelle", "Rucksäcke", "Sabbatons", "Schals", "Schleppen", "Schlipse", "Schuhe", "Schulterpanzer", "Schulterstücke", "Schürzen", "Shorts", "Socken", "Soutanen", "Stiefel", "Stirnbänder", "Strickjacken", "Strumpfhosen", "Suspensorien", "Tangas", "Taschen", "Taschentücher", "Togen", "Tonlets", "Topfhelme", "Trenchcoats", "Tücher", "Tuniken", "Umhänge", "Unterarmschützer", "Unteröcke", "Wämse", "Westen", "Zwangsjacken"];
+			const ort = ["Amphail", "Amphail", "Ascore", "Ascore", "Baldurs Tor", "Baldurs Tor", "Berdusk", "Berdusk", "Berg Hotenow", "Berg Hotenow", "Boareskyr Brücke", "Boareskyr Brücke", "Burg Drachenspeer", "Burg Drachenspeer", "Burg Hartwick", "Burg Hartwick", "Caer Corwell", "Caer Corwell", "Caer Moray", "Caer Moray", "Caer Westphal", "Caer Westphal", "Dolchfurt", "Dolchfurt", "Dreieber", "Dreieber", "Dunkelfeste", "Dunkelfeste", "Dynnegall", "Dynnegall", "Eisenfeste", "Eisenfeste", "Elturel", "Elturel", "Everaska", "Everaska", "Fernblick", "Fernblick", "Feuerschere", "Feuerschere", "Feuersteinfels", "Feuersteinfels", "Fort Morgenfürst", "Fort Morgenfürst", "Fort Tamal", "Fort Tamal", "Gauntlgrym", "Gauntlgrym", "Großvaterbaum", "Großvaterbaum", "Hartbuckler", "Hartbuckler", "Helms Feste", "Helms Feste", "Immerdar", "Immerdar", "Kerzenfeste", "Kerzenfeste", "Langsattel", "Langsattel", "Menzoberrazan", "Menzoberrazan", "Mirabar", "Mirabar", "Mithralhalle", "Mithralhalle", "Morgurs Hügel", "Morgurs Hügel", "Niewinter", "Niewinter", "Orogoth", "Orogoth", "Phandalin", "Phandalin", "Rabenfels", "Rabenfels", "Rogarsheim", "Rogarsheim", "Scornubel", "Scornubel", "Secomber", "Secomber", "Siedelstein", "Siedelstein", "Silbrigmond", "Silbrigmond", "Soubar", "Soubar", "Ss´thart´tissssun", "Ss´thart´tissssun", "Tiefwasser", "Tiefwasser", "Triel", "Triel", "Trollklauenfurt", "Trollklauenfurt", "Yartar", "Yartar", "Zitadelle Adbar", "Zitadelle Adbar"];
+			const gottheit = ["Abbathor", "Arvoreen", "Asmodeus", "Auril", "Azuth", "Baervan Wildwanderer", "Bahgtru", "Bane", "Baravar Mantelschatten", "Berronar Wahrsilber", "Beshaba", "Bhaal", "Bleredd", "Brandobaris", "Callarduran Sanfthände", "Charmalaine", "Chauntea", "Klangeddin Silberbard", "Cyric", "Cyrrollalee", "Deneir", "Dugmaren Leuchtmantel", "Dumathoin", "Eilistraee", "Eldath", "Flandal Stahlhaut", "Gaerdal Eisenhaut", "Garl Glitzergold", "Gelf Dunkelherz", "Ghaunadaur", "Gond", "Gorm Gulthyn", "Grumbar", "Gruumsh", "Gwaeron Windstrom", "Haela Leuchtaxt", "Hanseath", "Helm", "Hoar", "Ilmater", "Ilneval", "Istishia", "Jergal", "Kelemvor", "Keptolo", "Kiaransalee", "Kossuth", "Lathander", "Leira", "Lliira", "Lolth", "Loviatar", "Luthic", "Malar", "Malyk", "Marthammor Duin", "Mask", "Mielikki", "Milil", "Moradin", "Muamman Duathal", "Mya", "Myrkul", "Mystra", "Nebelun", "Oghma", "Rill Schlaudrossel", "Roknar", "Savras", "Segojan Erdrufer", "Selûne", "Selvetarm", "Shar", "Shargaas", "Sharindlar", "Sheela Peryroyl", "Sheyanna Flachssträhne", "Silvanus", "Sune", "Talona", "Talos", "Tempus", "Thard Harr", "Tharmekhûl", "Thautam", "Die rote Ritterin", "Torm", "Tymora", "Tyr", "Ulaa", "Umberlee", "Urdlen", "Urogalan", "Valkauna", "Valkur", "Vhaeraun", "Waukeen", "Yondalla", "Yurtrus", "Zinzerena"];
+			const ereignis = ["Abenteuer", "Abstieg", "Aufbruch", "Aufgabe", "Aufstand", "Aufstieg", "Ausbruch", "Auslöschung", "Auslöser", "Bau", "Befreiung", "Belagerung", "Einigung", "Entdeckung", "Entfremdung", "Enthüllung", "Entscheidung", "Entwurzelung", "Erkundung", "Erlösung", "Ermordung", "Ernte", "Eroberung", "Erwachen", "Explosion", "Flammen", "Fluch", "Flucht", "Geburt", "Gefangennahme", "Geheimnis", "Grenzüberschreitung", "Gründung", "Heilung", "Heimkehr", "Herausforderung", "Hinterhalt", "Hochzeit", "Intrige", "Konflikt", "Konfrontation", "Krieg", "Lüge", "Niederlage", "Offenbarung", "Opferung", "Plage", "Prophezeiung", "Rache", "Rebellion", "Rückkehr", "Schicksal", "Schicksalsschlag", "Schicksalswende", "Sieg", "Sonnenfinsternis", "Spaltung", "Stille", "Sturm", "Täuschung", "Tod", "Überleben", "Überraschung", "Umkehr", "Veränderung", "Verat", "Verbannung", "Verbindung", "Verbündung", "Verdammnis", "Verdrängung", "Verfluchung", "Verführung", "Vergebung", "Vergeltung", "Verhandlung", "Verirrung", "Verleumdung", "Verlockung", "Verlust", "Verrat", "Verstoß", "Verstrickung", "Versuchung", "Verwandlung", "Verwundung", "Verzauberung", "Wandel", "Wendepunkt", "Widerstand", "Wiedergeburt", "Wiedergutmachung", "Wiederherstellung", "Wiedersehen", "Wiedervereinigung", "Wunder", "Zeremonie", "Zerstörung", "Zusammenarbeit", "Zusammenbruch"];
+			const land = ["Land 1", "Land 2", "Land 3"];
+			const domäne = ["Domäne der Adeligen", "Domäne der Arkana", "Domäne der Ausdauer", "Domäne der Dämmerung", "Domäne der Dämonen", "Domäne der Demut", "Domäne der Dunkelheit", "Domäne der Erde", "Domäne der Erneuerung", "Domäne der Familie", "Domäne der Feen", "Domäne der Fertigkeiten", "Domäne der Freiheit", "Domäne der Freude", "Domäne der Geduld", "Domäne der Gemeinschaft", "Domäne der Gerechtigkeit", "Domäne der Gier", "Domäne der Großzügigkeit", "Domäne der Habgier", "Domäne der Handwerkskunst", "Domäne der Heilung", "Domäne der Hoffnung", "Domäne der Illusion", "Domäne der Jagd", "Domäne der Kälte", "Domäne der Keuschheit", "Domäne der Korruption", "Domäne der Liebe", "Domäne der Luft", "Domäne der Lust", "Domäne der Magie", "Domäne der Mäßigung", "Domäne der Nächstenliebe", "Domäne der Natur", "Domäne der Ordnung", "Domäne der Pflanzen", "Domäne der Planung", "Domäne der Qual", "Domäne der Rache", "Domäne der Reise", "Domäne der Runen", "Domäne der Schmiedekunst", "Domäne der Schöpfung", "Domäne der Sonne", "Domäne der Stärke", "Domäne der Tiere", "Domäne der Trägheit", "Domäne der Tyrannei", "Domäne der Vergeltung", "Domäne der Verwöhnung", "Domäne der Völlerei", "Domäne der Wildnis", "Domäne der Zeit", "Domäne der Zerstörung", "Domäne der Zivilisation", "Domäne des Bestialischen", "Domäne des Betrugs", "Domäne des Chaos", "Domäne des Charmes", "Domäne des Diabolischen", "Domäne des Eifers", "Domäne des Feuers", "Domäne des Friedens", "Domäne des Geistes", "Domäne des Gesetzes", "Domäne des Gleichgewichts", "Domäne des Gleißens", "Domäne des Glücks", "Domäne des Grabes", "Domäne des Handels", "Domäne des Hasses", "Domäne des Krieges", "Domäne des Lebens", "Domäne des Leidens", "Domäne des Lichts", "Domäne des Meeres", "Domäne des Mentalismus", "Domäne des Metalls", "Domäne des Mondes", "Domäne des Neids", "Domäne des Ozeans", "Domäne des Portals", "Domäne des Ruhms", "Domäne des Schicksals", "Domäne des Schmerzes", "Domäne des Schutzes", "Domäne des Stolzes", "Domäne des Sturms", "Domäne des Todes", "Domäne des Traums", "Domäne des Untodes", "Domäne des Unwetters", "Domäne des Wahnsinns", "Domäne des Wandels", "Domäne des Wassers", "Domäne des Winters", "Domäne des Wissens", "Domäne des Zaubers", "Domäne des Zorns"];
+
+		// 	function declineNoun(noun, gender, adjectiv, prefix, suffix) {
+		// 	const endsWithE = noun.endsWith('e');
+		// 	const endsWithT = noun.endsWith('t');
+		// 	const endsWithD = noun.endsWith('d');
+		// 	const endsWithS = noun.endsWith('s');
+		// 	const endsWithZ = noun.endsWith('z');
+		// 	const endsWithCh = noun.endsWith('ch');
+	
+		// 	// Überprüfe, ob das Nomen eine schwache Deklination hat
+		// 	if (nomenSchwacheDeklination.includes(noun)) {
+	
+		// 		// Deklinationsregeln für Adjektive und Nomen mit schwacher Deklination
+		// 		const nounCases = {
+		// 			maskulinum: {
+		// 				nominativ: 'der ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		// 				genitiv: endsWithE ? 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
+		// 				dativ: endsWithE ? 'dem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' : 'dem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
+		// 				akkusativ: endsWithE ? 'den ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'den ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
+	
+		// 				nominativEin: endsWithE ? 'ein ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'r ' : '') + noun + 'r' + (suffix ? ' ' + suffix : ''): 'ein ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'r ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		// 				genitivEin: endsWithE ? 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
+		// 				dativEin: endsWithE ? 'einem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'einem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
+		// 				akkusativEin: endsWithE ? 'einen ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'einen ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
+	
+		// 				nominativBestimmterArtikel: 'der',
+		// 				genitivBestimmterArtikel: 'des',
+		// 				dativBestimmterArtikel: 'dem',
+		// 				akkusativBestimmterArtikel: 'den',
+	
+		// 				nominativPersonalpronomen: 'er',
+		// 				genitivPersonalpronomen: 'seiner',
+		// 				dativPersonalpronomen: 'ihm',
+		// 				akkusativPersonalpronomen: 'ihn',
+	
+		// 				nominativWelcher: 'welcher',
+		// 				genitivWelcher: 'welches',
+		// 				dativWelcher: 'welchem',
+		// 				akkusativWelcher: 'welchen',
+	
+		// 				nominativPossesivpronomenMaskulinum: 'sein',
+		// 				genitivPossesivpronomenMaskulinum: 'seines',
+		// 				dativPossesivpronomenMaskulinum: 'seinem',
+		// 				akkusativPossesivpronomenMaskulinum: 'seinen',
+	
+		// 				nominativPossesivpronomenFemininum: 'seine',
+		// 				genitivPossesivpronomenFemininum: 'seiner',
+		// 				dativPossesivpronomenFemininum: 'seiner',
+		// 				akkusativPossesivpronomenFemininum: 'seine',
+	
+		// 				nominativPossesivpronomenNeutrum: 'sein',
+		// 				genitivPossesivpronomenNeutrum: 'seines',
+		// 				dativPossesivpronomenNeutrum: 'seinem',
+		// 				akkusativPossesivpronomenNeutrum: 'sein',
+	
+		// 				nominativPossesivpronomenPlural: 'seine',
+		// 				genitivPossesivpronomenPlural: 'seiner',
+		// 				dativPossesivpronomenPlural: 'seinen',
+		// 				akkusativPossesivpronomenPlural: 'seine',
+		// 			},
+		// 		};
+		// 		return nounCases[gender];
+		// 	} else {
+		// 		// Normale Deklinationsregeln für Adjektive und Nomen ohne schwache Deklination
+		// 		const nounCases = {
+		// 			maskulinum: {
+		// 				nominativ: 'der ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		// 				genitiv: endsWithE ? 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): endsWithT ? 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'es' + (suffix ? ' ' + suffix : ''): endsWithS ? 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'es' + (suffix ? ' ' + suffix : ''): endsWithZ ? 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'es' + (suffix ? ' ' + suffix : ''): 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 's' + (suffix ? ' ' + suffix : ''),
+		// 				dativ: endsWithE ? 'dem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'dem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		// 				akkusativ: endsWithE ? 'den ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'den ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+	
+		// 				nominativEin: 'ein ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'r ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		// 				genitivEin: endsWithE ? 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): endsWithT ? 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'es' + (suffix ? ' ' + suffix : ''): 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 's' + (suffix ? ' ' + suffix : ''),
+		// 				dativEin: endsWithE ? 'einem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'einem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		// 				akkusativEin: endsWithE ? 'einen ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'einen ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+	
+		// 				nominativBestimmterArtikel: 'der',
+		// 				genitivBestimmterArtikel: 'des',
+		// 				dativBestimmterArtikel: 'dem',
+		// 				akkusativBestimmterArtikel: 'den',
+	
+		// 				nominativPersonalpronomen: 'er',
+		// 				genitivPersonalpronomen: 'seiner',
+		// 				dativPersonalpronomen: 'ihm',
+		// 				akkusativPersonalpronomen: 'ihn',
+	
+		// 				nominativWelcher: 'welcher',
+		// 				genitivWelcher: 'welches',
+		// 				dativWelcher: 'welchem',
+		// 				akkusativWelcher: 'welchen',
+	
+		// 				nominativPossesivpronomenMaskulinum: 'sein',
+		// 				genitivPossesivpronomenMaskulinum: 'seines',
+		// 				dativPossesivpronomenMaskulinum: 'seinem',
+		// 				akkusativPossesivpronomenMaskulinum: 'seinen',
+	
+		// 				nominativPossesivpronomenFemininum: 'seine',
+		// 				genitivPossesivpronomenFemininum: 'seiner',
+		// 				dativPossesivpronomenFemininum: 'seiner',
+		// 				akkusativPossesivpronomenFemininum: 'seine',
+	
+		// 				nominativPossesivpronomenNeutrum: 'sein',
+		// 				genitivPossesivpronomenNeutrum: 'seines',
+		// 				dativPossesivpronomenNeutrum: 'seinem',
+		// 				akkusativPossesivpronomenNeutrum: 'sein',
+	
+		// 				nominativPossesivpronomenPlural: 'seine',
+		// 				genitivPossesivpronomenPlural: 'seiner',
+		// 				dativPossesivpronomenPlural: 'seinen',
+		// 				akkusativPossesivpronomenPlural: 'seine',
+		// 			},
+		// 			femininum: {
+		// 				nominativ: 'die ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		// 				genitiv: 'der ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		// 				dativ: 'der ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		// 				akkusativ: 'die ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
+	
+		// 				nominativEin: 'eine ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		// 				genitivEin: 'einer ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		// 				dativEin: 'einer ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		// 				akkusativEin: 'eine ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
+	
+		// 				nominativBestimmterArtikel: 'die',
+		// 				genitivBestimmterArtikel: 'der',
+		// 				dativBestimmterArtikel: 'der',
+		// 				akkusativBestimmterArtikel: 'die',
+	
+		// 				nominativPersonalpronomen: 'sie',
+		// 				genitivPersonalpronomen: 'ihrer',
+		// 				dativPersonalpronomen: 'ihr',
+		// 				akkusativPersonalpronomen: 'sie',
+	
+		// 				nominativWelcher: 'welche',
+		// 				genitivWelcher: 'welcher',
+		// 				dativWelcher: 'welcher',
+		// 				akkusativWelcher: 'welche',
+	
+		// 				nominativPossesivpronomenMaskulinum: 'ihr',
+		// 				genitivPossesivpronomenMaskulinum: 'ihres',
+		// 				dativPossesivpronomenMaskulinum: 'ihrem',
+		// 				akkusativPossesivpronomenMaskulinum: 'ihren',
+	
+		// 				nominativPossesivpronomenFemininum: 'ihre',
+		// 				genitivPossesivpronomenFemininum: 'ihrer',
+		// 				dativPossesivpronomenFemininum: 'ihrer',
+		// 				akkusativPossesivpronomenFemininum: 'ihre',
+	
+		// 				nominativPossesivpronomenNeutrum: 'ihr',
+		// 				genitivPossesivpronomenNeutrum: 'ihres',
+		// 				dativPossesivpronomenNeutrum: 'ihrem',
+		// 				akkusativPossesivpronomenNeutrum: 'ihr',
+	
+		// 				nominativPossesivpronomenPlural: 'ihre',
+		// 				genitivPossesivpronomenPlural: 'ihrer',
+		// 				dativPossesivpronomenPlural: 'ihren',
+		// 				akkusativPossesivpronomenPlural: 'ihre',
+		// 			},
+		// 			neutrum: {
+		// 				nominativ: 'das ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		// 				genitiv: 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 's' + (suffix ? ' ' + suffix : ''),
+		// 				dativ: 'dem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		// 				akkusativ: 'das ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
+	
+		// 				nominativEin: 'ein ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 's ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		// 				genitivEin: 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 's' + (suffix ? ' ' + suffix : ''),
+		// 				dativEin: 'einem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		// 				akkusativEin: 'ein ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 's ' : '') + noun + (suffix ? ' ' + suffix : ''),
+	
+		// 				nominativBestimmterArtikel: 'das',
+		// 				genitivBestimmterArtikel: 'des',
+		// 				dativBestimmterArtikel: 'dem',
+		// 				akkusativBestimmterArtikel: 'das',
+	
+		// 				nominativPersonalpronomen: 'es',
+		// 				genitivPersonalpronomen: 'seiner',
+		// 				dativPersonalpronomen: 'ihm',
+		// 				akkusativPersonalpronomen: 'es',
+	
+		// 				nominativWelcher: 'welches',
+		// 				genitivWelcher: 'welchen',
+		// 				dativWelcher: 'welchem',
+		// 				akkusativWelcher: 'welches',
+	
+		// 				nominativPossesivpronomenMaskulinum: 'sein',
+		// 				genitivPossesivpronomenMaskulinum: 'seines',
+		// 				dativPossesivpronomenMaskulinum: 'seinem',
+		// 				akkusativPossesivpronomenMaskulinum: 'seinen',
+	
+		// 				nominativPossesivpronomenFemininum: 'seine',
+		// 				genitivPossesivpronomenFemininum: 'seiner',
+		// 				dativPossesivpronomenFemininum: 'seiner',
+		// 				akkusativPossesivpronomenFemininum: 'seine',
+	
+		// 				nominativPossesivpronomenNeutrum: 'sein',
+		// 				genitivPossesivpronomenNeutrum: 'seines',
+		// 				dativPossesivpronomenNeutrum: 'seinem',
+		// 				akkusativPossesivpronomenNeutrum: 'sein',
+	
+		// 				nominativPossesivpronomenPlural: 'seine',
+		// 				genitivPossesivpronomenPlural: 'seiner',
+		// 				dativPossesivpronomenPlural: 'seinen',
+		// 				akkusativPossesivpronomenPlural: 'seine',
+		// 			}
+		// 		};
+		// 		return nounCases[gender];
+		// 	}
+		// }
+	
+		// //Erstellt die Konstante für deklinierte 
+		// const declinedKlassenSingular = declineNoun(klassenSingularName, klassenSingularGeschlecht, klassenSingularAdjektiv, klassenSingularPräfix, klassenSingularSuffix);
+
+			// Funktion, um einen zufälligen Text aus einem Array auszuwählen
+			function getRandomText(arr) {
+				const index = Math.floor(Math.random() * arr.length);
+				return arr[index];
+			}
+
+			// Funktion, um einen zufälligen Text aus einem Array in einem Array auszuwählen
+			function getRandomElementFromArray(arr) {
+				return arr[Math.floor(Math.random() * arr.length)];
+			}
+
+			// Array, um die generierten Buchtitel zu speichern
+			let generatedTitles = [];
+			
+			// Funktion zum Generieren eines einzigartigen Buchtitels
+			function generateBookTitle() {
+				const beliebiges = [
+					getRandomElementFromArray(handwerkPlural),
+					getRandomElementFromArray(völkerPlural),
+					getRandomElementFromArray(klassenPlural),
+					getRandomElementFromArray(regionen),
+					getRandomElementFromArray(gegenständePlural),
+					getRandomElementFromArray(schulenDerMagie),
+					getRandomElementFromArray(religion),
+					getRandomElementFromArray(monsterPlural),
+					getRandomElementFromArray(waffePlural),
+					getRandomElementFromArray(ort),
+					getRandomElementFromArray(ereignis),
+					getRandomElementFromArray(land),
+					getRandomElementFromArray(domäne),
+					getRandomElementFromArray(rüstungPlural)
+					];
+				const Handwerk = getRandomText(handwerkPlural);
+				const Volk = getRandomText(völkerPlural);
+				const Monster = getRandomText(monsterPlural);
+				const Präfix = getRandomText(präfixe);
+				const Klasse = getRandomText(klassenPlural);
+				const Region = getRandomText(regionen);
+				const Gegenstand = getRandomText(gegenständePlural);
+				const SchuleDerMagie = getRandomText(schulenDerMagie);
+				const Windrichtung = getRandomText(windrichtungen);
+				const Beliebiges = getRandomText(beliebiges);
+				const Religion = getRandomText(religion);
+				const Ort = getRandomText(ort);
+				const Gottheit = getRandomText(gottheit);
+				const Waffe = getRandomText(waffePlural);
+				const Ereignis = getRandomText(ereignis);
+				const Land = getRandomText(land);
+				const Domäne = getRandomText(domäne);
+				const Rüstung = getRandomText(rüstungPlural);
+				const bookTitleIdeas = [				
+					`${Handwerk} der ${Volk}`,				
+					`${Monster} seziert`, 				
+					`${Präfix ? Präfix + ' ' : ''}${Klasse} von ${Region}`, 				
+					`${Präfix ? Präfix + ' ' : ''}${Klasse} der ${Volk}`, 				
+					`${Präfix ? Präfix + ' ' : ''}${Gegenstand}`, 				
+					`${Präfix ? Präfix + ' ' : ''}${Gegenstand} aus Legenden`, 				
+					`${Präfix ? Präfix + ' ' : ''}${Gegenstand} der ${Volk}`, 				
+					`${Präfix ? Präfix + ' ' : ''}${SchuleDerMagie}\-\Zauber der ${Volk}`, 				
+					`${Präfix ? Präfix + ' ' : ''}${Monster}`, 
+					`${Präfix ? Präfix + ' ' : ''}${Beliebiges}: Eine Geschichte`, 
+					`${Präfix ? Präfix + ' ' : ''}Fähigkeiten der ${Klasse}`, 
+					`${Präfix ? Präfix + ' ' : ''}Artefakte der ${Volk}`, 
+					`${Präfix ? Präfix + ' ' : ''}Gottheiten der ${Volk}`, 
+					`${Präfix ? Präfix + ' ' : ''}Fakten über ${Beliebiges}`, 
+					`${Präfix ? Präfix + ' ' : ''}Helden der ${Volk}`, 
+					`${Präfix ? Präfix + ' ' : ''}Helden aus ${Ort}`, 
+					`${Präfix ? Präfix + ' ' : ''}Sprachen der ${Monster}`, 
+					`${Präfix ? Präfix + ' ' : ''}Legenden von ${Beliebiges}`, 
+					`${Präfix ? Präfix + ' ' : ''}Wunder von ${Gottheit}`, 
+					`${Präfix ? Präfix + ' ' : ''}Gebete an ${Gottheit}`, 
+					`${Präfix ? Präfix + ' ' : ''}Riten für ${Klasse}`, 
+					`${Präfix ? Präfix + ' ' : ''}Riten der ${Windrichtung} ${Volk}`, 
+					`${Präfix ? Präfix + ' ' : ''}Gerüchte aus ${Ort}`, 
+					`${Präfix ? Präfix + ' ' : ''}Lieder aus ${Region}`, 
+					`${Präfix ? Präfix + ' ' : ''}Zauber der ${SchuleDerMagie}`, 
+					`${Präfix ? Präfix + ' ' : ''}Geschichten aus ${Region}`, 
+					`${Präfix ? Präfix + ' ' : ''}Erzählungen der ${Volk}`, 
+					`${Präfix ? Präfix + ' ' : ''}Verwendungen für ${Gegenstand} im Kampf`, 
+					`${Präfix ? Präfix + ' ' : ''}Nutzen für ${Beliebiges}`, 
+					`${Präfix ? Präfix + ' ' : ''}Herrscher von ${Land}`, 
+					`${Präfix ? Präfix + ' ' : ''}Herrscher aus ${Region}`, 
+					`${Präfix ? Präfix + ' ' : ''}Herrscher der ${Volk}`, 
+					`${getRandomText(völkerPlural)} \-\ ${getRandomText(völkerPlural)} Wörterbuch`, 
+					`${Volk} Lieder`, 
+					`${Religion} der ${Volk}`, 
+					`${Waffe} Varianten`, 
+					`${Beliebiges}: Die unerzählte Wahrheit`, 
+					`${Beliebiges} für Kinder`, 
+					`Ein Anfängerhandbuch über ${Beliebiges}`, 
+					`Eine Begutachtung von ${Waffe}`, 
+					`Ein Leitfaden zu ${Beliebiges}`, 
+					`Eine Abhandlung über ${Beliebiges}`, 
+					`Über ${Beliebiges}`,
+					`Berichterstattung über ${Ereignis}`,
+					`Eine kurze Geschichte über ${Beliebiges}`,
+					`Eine Enzyklopädie über ${Beliebiges}`,
+					`Eine Analyse von ${Beliebiges}`,
+					`Ein Expose über ${Präfix ? Präfix + ' ' : ''}${Beliebiges}`,
+					`Atlas von ${Region}`,
+					`Eigenschaften von ${Beliebiges}`,
+					`Buch der ${Beliebiges}`, 
+					`${Monster} züchten`,
+					`Sammelband mit Fakten über ${Beliebiges}`,
+					`Katalog der ${Gegenstand}`,
+					`Kodex der ${Beliebiges}`,
+					`Kompendium der ${Beliebiges}`,
+					`Zusammengestellte Geschichte von ${Beliebiges}`,
+					`In Bezug auf ${Beliebiges}`,
+					`Kreuzzüchtung von ${Monster}`,
+					`Verteidigung gegen ${SchuleDerMagie}`,
+					`Entwicklung der ${Gegenstand}`,
+					`Entstehungsgeschichte der ${Gegenstand}`,
+					`Ökologie der ${Monster}`,
+					`Ökonomie von ${Religion} ${Land}`,
+					`Grundlegende ${SchuleDerMagie}`,
+					`Berühmte ${Beliebiges} von ${Region}`,
+					`Berühmte Familien von ${Region}`,
+					`Glossar der ${Beliebiges}\-Begriffe`,
+					`Ratgeber für ${Klasse}\-Begriffe`,
+					`Wappenkunde von ${Region}`,
+					`Hybride der ${Volk}`,
+					`Hymnen der ${Volk}`,
+					`Anführer von ${Region}`,
+					`Lexikon über ${Beliebiges}`,
+					`Lebensräume von ${Monster}`,
+					`Lebensräume von ${Volk}`,
+					`Handbuch der ${Beliebiges}`,
+					`Paarungsverhalten der ${Monster}`,
+					`Mysterien von ${Region}`,
+					`Mythen über ${SchuleDerMagie}`,
+					`Sammelwerk über ${Beliebiges}`,
+					`Muster in der Geschichte von ${Beliebiges}`,
+					`Praktische Anwendungen für ${SchuleDerMagie}`, 
+					`${Beliebiges} betreffend`,
+					`Heilende Anwendungen von ${SchuleDerMagie}`,
+					`Rituale der ${Volk}`,
+					`Geheimnisse von ${Beliebiges}`,
+					`Symbole von ${Gottheit}`,
+					`Die vollständige Geschichte von ${Beliebiges}`,
+					`Die kompakte Geschichte von ${Beliebiges}`,
+					`Der erste ${Klasse}`,
+					`Wahrheit und Lüge über ${Beliebiges}`,
+					`Foliant der ${Präfix ? Präfix + ' ' : ''}${Beliebiges}`,
+					`Traditionen der ${Volk}`,
+					`Traditionen der ${Klasse}`,
+					`Anleitungen zur Verwendung von ${Gegenstand}`,
+					`Verwendungszwecke für ${Domäne} in Zeiten des Krieges`,
+					`Verwendungszwecke für ${SchuleDerMagie} in Zeiten des Friedens`,
+					`Verwendungszwecke für ${Monster}\-\Teile`,
+					`Verwendung von ${Waffe} gegen ${Rüstung}`,
+					`Reisen in ${Ort}`,
+					`Schriften über ${Beliebiges}`
+					];
+				return getRandomText(bookTitleIdeas);
+			}
+			
+			// Funktion zum Generieren des Namens basierend auf Geschlecht und Volk
+			let autorGeschlecht = '';
+			let autorVolk = '';
+			let autorVorname = '';
+			let autorNachname = '';
+
+			function generateAuthorName(autorGeschlechtRoll, autorVolkRoll) {
+				autorGeschlecht = autorGeschlechtRoll <= 49 ? 'männlich' : (autorGeschlechtRoll <= 98 ? 'weiblich' : 'nicht-binär');
+				autorVolk = autorVolkRoll <= 64 ? 'Mensch' : autorVolkRoll <= 74 ? 'Zwerg' : autorVolkRoll <= 84 ? 'Elf' : autorVolkRoll <= 89 ? 'Halbling' : autorVolkRoll <= 92 ? 'Gnom' : autorVolkRoll <= 95 ? 'Halbelf' : autorVolkRoll <= 98 ? 'Halbork' : autorVolkRoll === 99 ? 'Drachenblütiger' : 'Tiefling';
+				autorVorname = generateAutorVornameForAutorGeschlechtAndAutorVolk(autorGeschlecht, autorVolk);
+				autorNachname = generateAutorNachnameForAutorVolk(autorVolk);
+				return `${autorVorname} ${autorNachname}`;
+			}
+
+			function generateAutorVornameForAutorGeschlechtAndAutorVolk(autorGeschlecht, autorVolk) {
+				if (autorGeschlecht === 'männlich') {
+					switch (autorVolk) {
+						case 'Mensch':
+							return getRandomText(vornameMaennlichMensch);
+						case 'Zwerg':
+							return getRandomText(vornameMaennlichZwerg);
+						case 'Elf':
+							return getRandomText(vornameMaennlichElf);
+						case 'Halbling':
+							return getRandomText(vornameMaennlichHalbling);
+						case 'Gnom':
+							return getRandomText(vornameMaennlichGnom);
+						case 'Halbelf':
+							return getRandomText(vornameMaennlichHalbelf);
+						case 'Halbork':
+							return getRandomText(vornameMaennlichHalbork);
+						case 'Drachenblütiger':
+							return getRandomText(vornameMaennlichDrachenbluetiger);
+						case 'Tiefling':
+							return getRandomText(vornameMaennlichTiefling);
+					}
+				} else if (autorGeschlecht === 'weiblich') {
+					switch (autorVolk) {
+						case 'Mensch':
+							return getRandomText(vornameWeiblichMensch);
+						case 'Zwerg':
+							return getRandomText(vornameWeiblichZwerg);
+						case 'Elf':
+							return getRandomText(vornameWeiblichElf);
+						case 'Halbling':
+							return getRandomText(vornameWeiblichHalbling);
+						case 'Gnom':
+							return getRandomText(vornameWeiblichGnom);
+						case 'Halbelf':
+							return getRandomText(vornameWeiblichHalbelf);
+						case 'Halbork':
+							return getRandomText(vornameWeiblichHalbork);
+						case 'Drachenblütiger':
+							return getRandomText(vornameWeiblichDrachenbluetiger);
+						case 'Tiefling':
+							return getRandomText(vornameWeiblichTiefling);
+					}
+				} else if (autorGeschlecht === 'nicht-binär') {
+					switch (autorVolk) {
+						case 'Mensch':
+							return getRandomText(vornameNichtbinaerMensch);
+						case 'Zwerg':
+							return getRandomText(vornameNichtbinaerZwerg);
+						case 'Elf':
+							return getRandomText(vornameNichtbinaerElf);
+						case 'Halbling':
+							return getRandomText(vornameNichtbinaerHalbling);
+						case 'Gnom':
+							return getRandomText(vornameNichtbinaerGnom);
+						case 'Halbelf':
+							return getRandomText(vornameNichtbinaerHalbelf);
+						case 'Halbork':
+							return getRandomText(vornameNichtbinaerHalbork);
+						case 'Drachenblütiger':
+							return getRandomText(vornameNichtbinaerDrachenbluetiger);
+						case 'Tiefling':
+							return getRandomText(vornameNichtbinaerTiefling);
+					}
+				}
+			}
+
+			function generateAutorNachnameForAutorVolk(autorVolk) {
+				switch (autorVolk) {
+					case 'Mensch':
+						return getRandomText(nachnameMensch);
+					case 'Zwerg':
+						return getRandomText(nachnameZwerg);
+					case 'Elf':
+						return getRandomText(nachnameElf);
+					case 'Halbling':
+						return getRandomText(nachnameHalbling);
+					case 'Gnom':
+						return getRandomText(nachnameGnom);
+					case 'Halbelf':
+						return getRandomText(nachnameHalbelf);
+					case 'Halbork':
+						return getRandomText(nachnameHalbork);
+					case 'Drachenblütiger':
+						return getRandomText(nachnameDrachenbluetiger);
+					case 'Tiefling':
+						return getRandomText(nachnameTiefling);
+				}
+			}
+			
+			// Generiert Vornamen und Nachnamen für verschiedene Geschlechter und Völker
+
+			// Array mit Vornamen für männliche Menschen
+			const vornameMaennlichMensch = ["Adam", "Adelard", "Aelius", "Aetius", "Agni", "Agrippa", "Airell", "Airic", "Alan", "Alaric", "Albanus", "Albrecht", "Albus", "Aldous", "Alexandre", "Alfonso", "Allexander", "Alonso", "Ambroys", "Ame", "Andri", "Andriet", "Anghus", "Anselm", "Anthoine", "Anthon", "Antonius", "Anvindr", "Aodh", "Appius", "Aquilinus", "Arcos", "Arnaut", "Arnold", "Arturo", "Arvid", "Asger", "Asmund", "Atilus", "Augustus", "Aurelius", "Avitus", "Balbus", "Baltasar", "Bardon", "Bartoleme", "Bearacb", "Benedick", "Benito", "Berhart", "Bernard", "Bernat", "Bertram", "Bevyn", "Bjarte", "Bjorg", "Bjorn", "Blandus", "Blasco", "Blasius", "Boden", "Bran", "Brandr", "Brandt", "Brasil", "Bredon", "Brian", "Bricriu", "Brutus", "Bryant", "Brynjar", "Cadman", "Caelius", "Caius", "Calder", "Caradoc", "Carlos", "Casian", "Caspar", "Cassius", "Cato", "Cedric", "Celsus", "Charles", "Charles", "Charlot", "Clas", "Claudius", "Clerebold", "Cloelius", "Cnaeus", "Colborn", "Colin", "Conalt", "Conchobar", "Condon", "Conrad", "Crispus", "Cristin", "Cristoff", "Cuyler", "Cyprianus", "Damian", "Darcy", "Denis", "Devin", "Diego", "Dieterich", "Diggory", "Dillion", "Diocletianus", "Domingo", "Donaghy", "Donall", "Drogo", "Duer", "Durant", "Edouart", "Eghan", "Egil", "Egnatius", "Einar", "Engelhart", "Ennius", "Enrique", "Eremon", "Erhart", "Eric", "Erland", "Ernault", "Escobar", "Ethor", "Ettor", "Everard", "Ewyn", "Fabricius", "Faustus", "Felix", "Felix", "Ferghus", "Fernando", "Fiske", "Floquart", "Folkvar", "Franciso", "Frantz", "Frederick", "Fritjof", "Fritz", "Frode", "Gabriel", "Gaius", "Galleren", "Galvyn", "Garcia", "Gaspar", "Gaultier", "Geir", "Geoffrey", "Gerald", "Gerhart", "Germanus", "Gil", "Gilbert", "Gildas", "Gilles", "Gnaeus", "Godfrey", "Gomes", "Goncalo", "Gostantin", "Gotleib", "Gunter", "Guy", "Guy", "Guy", "Halvar", "Hans", "Hartmann", "Harvey", "Heintz", "Hemming", "Henry", "Henry", "Herman", "Heward", "Hjalmar", "Hjortr", "Horatius", "Hubert", "Hugh", "Hugo", "Iden", "Imbert", "Ingimarr", "Iovianus", "Irven", "Iulius", "Ivar", "Jacob", "Jacques", "Jacquot", "Jayme", "Jean", "Jehannin", "Jeremias", "Joan", "Jocelyn", "John", "Jorg", "Jorge", "Jose", "Juan", "Karll", "Karney", "Kayne", "Kelvyn", "Kilian", "Knud", "Kunsgnos", "Lance", "Leif", "Leigh", "Linhart", "Liufr", "Lorentz", "Louis", "Louys", "Loys", "Lucilius", "Ludwig", "Maccus", "Machin", "Manfred", "Manius", "Manning", "Marcus", "Marius", "Martin", "Martin", "Marx", "Mateu", "Maximus", "Melchor", "Mertin", "Michel", "Miguel", "Miles", "Mille", "Morelet", "Moritz", "Moryn", "Neale", "Nicholas", "Nicolas", "Nicolas", "Nicolle", "Norman", "Octavius", "Oddr", "Odo", "Olin", "Ormr", "Osswald", "Ott", "Oudart", "Ove", "Owyn", "Pascual", "Paulus", "Pedro", "Percival", "Perrin", "Peter", "Peter", "Phillippe", "Pierre", "Porico", "Pryderi", "Quintilian", "Ralf", "Ramiro", "Ramon", "Randal", "Rannulfr", "Raymond", "Reaghan", "Regnault", "Regulus", "Reynard", "Richard", "Richart", "Robert", "Robert", "Robinet", "Rodrigo", "Roger", "Roland", "Rolf", "Rudolff", "Ruprecht", "Sabastian", "Salvador", "Sauvage", "Servius", "Sewastian", "Sigmund", "Sigurd", "Simon", "Simon", "Simon", "Skari", "Snorri", "Steffan", "Sten", "Stigandr", "Stigr", "Sven", "Symon", "Tacitus", "Talbot", "Taliesin", "Tanguy", "Theobald", "Theodoric", "Thoman", "Thomas", "Tiernay", "Timm", "Tomas", "Tristan", "Trygve", "Turi", "Ulf", "Ulrich", "Valeriano", "Vali", "Vallentin", "Varius", "Vidar", "Vincent", "Wendel", "Wilhelm", "William", "Wolff", "Wolfgang", "Wymar", "Ynigo"];
+
+			// Array mit Vornamen für weibliche Menschen
+			const vornameWeiblichMensch = ["Aalis", "Abella", "Adalina", "Adelaide", "Adelhayt", "Adora", "Adriana", "Aelia", "Aemilia", "Affra", "Agatha", "Agnes", "Agnez", "Agripina", "Agrippina", "Aife", "Aina", "Alane", "Alba", "Alberea", "Alfhild", "Alice", "Aline", "Alips", "Allet", "Amée", "Amelot", "Ana", "Anastasiya", "Angnes", "Anna", "Anne", "Antonia", "Apell", "Applonia", "Aquila", "Ardena", "Arienh", "Arnbjorg", "Ase", "Aslog", "Astrid", "Auda", "Audhid", "Augusta", "Aurelia", "Avelina", "Avice", "Balbina", "Barbara", "Basilia", "Beatha", "Beatrice", "Beatriz", "Bergljot", "Birghild", "Birgit", "Blancha", "Blandina", "Bodil", "Bogdana", "Boleslava", "Bonita", "Bozhena", "Brenna", "Briann", "Brida", "Brigita", "Brynhild", "Caelia", "Camila", "Camilla", "Cande", "Caomh", "Cara", "Carmen", "Casia", "Cateline", "Catlina", "Cecilia", "Cecily", "Cinnia", "Clara", "Claricia", "Claudia", "Cloelia", "Collette", "Cordelia", "Cristina", "Dagmar", "Danica", "Darya", "Deheune", "Denisete", "Desislava", "Divone", "Dolores", "Dominga", "Domitia", "Donia", "Doreena", "Dorian", "Dorotea", "Dorothea", "Dragoslava", "Drusa", "Dunja", "Duretta", "Edelina", "Eerika", "Efrosinia", "Egelina", "Eira", "Ekaterina", "Eleanor", "Elena", "Elicia", "Elizabeth", "Ella", "Eloise", "Els", "Elsbeth", "Elsha", "Elysande", "Emelina", "Emeny", "Emma", "Emmeline", "Emmelot", "Engel", "Enid", "Enlein", "Enndlin", "Ermentrudis", "Ermina", "Esmerelda", "Ethne", "Eva", "Evelina", "Fabia", "Fabricia", "Faina", "Fausta", "Fela", "Felipina", "Fianna", "Flavia", "Floriana", "Francisca", "Fronicka", "Fulvia", "Gabriela", "Galiena", "Galina", "Genefe", "Genevieve", "Geras", "Gerhauss", "Germana", "Gertrudt", "Geva", "Gibelina", "Gila", "Gilda", "Gillette", "Giselle", "Gitta", "Glaucia", "Grania", "Gratiana", "Griselda", "Gudrun", "Guiburgis", "Guillemette", "Gunborg", "Gunhild", "Gunvor", "Guoite", "Guttel", "Gwyndolin", "Hadriana", "Hadwisa", "Hecelina", "Helen", "Helena", "Helga", "Heloysis", "Helyoudis", "Herleva", "Hermina", "Hertha", "Hilde", "Hillevi", "Hodeardis", "Horatia", "Hortensia", "Hugolina", "Ida", "Idelisa", "Imelda", "Ines", "Ingrid", "Iona", "Iovita", "Irina", "Irmel", "Isabel", "Isabella", "Isabellis", "Iskra", "Isolde", "Iulia", "Jacoba", "Jane", "Jaquette", "Jasna", "Jehan", "Joan", "Johanna", "Jonata", "Jorunn", "Juana", "Juliana", "Juliote", "Kari", "Katarina", "Katerina", "Katerine", "Katherine", "Katya", "Keelin", "Kenna", "Kennocha", "Kresimira", "Kuen", "Kungund", "Laelia", "Laurentia", "Lavena", "Leocadia", "Leonor", "Lesley", "Leta", "Linnette", "Livia", "Longina", "Lucia", "Luciana", "Lucilla", "Lucinda", "Lucretia", "Lyonesse", "Lyudmila", "Mabina", "Madalena", "Magda", "Magdalen", "Magnhild", "Marcella", "Marcia", "Maresol", "Margery", "Margot", "Margret", "Marguerite", "Maria", "Maricela", "Marie", "Mariya", "Marlein", "Martha", "Marvina", "Mary", "Matilda", "Matilde", "Mavis", "Maxima", "Maynild", "Melania", "Melisende", "Militsa", "Millicent", "Miloslava", "Mira", "Mirna", "Miroslava", "Mokosh", "Monica", "Morana", "Morgan", "Muriel", "Nanna", "Nareena", "Natasha", "Neva", "Nika", "Nilda", "Nona", "Octavia", "Odelina", "Olga", "Oriana", "Oriel", "Otilia", "Ottilg", "Paulina", "Perrette", "Peternella", "Petrona", "Petronia", "Petronilla", "Porcia", "Rada", "Radoslava", "Rafaela", "Ragna", "Ragnhild", "Raisa", "Ramira", "Ranveig", "Regan", "Reusin", "Rohesia", "Ronat", "Rosalind", "Rosamund", "Rosario", "Rowena", "Runa", "Saga", "Sarah", "Sedilia", "Selma", "Sibilla", "Sigfrid", "Signe", "Sigrid", "Sigrunn", "Slavitsa", "Sofia", "Sofiya", "Solveg", "Stanislava", "Stephana", "Suelo", "Susannah", "Svanhild", "Svetlana", "Sybil", "Sybilla", "Tacita", "Tatyana", "Teresa", "Thora", "Tomasa", "Tomislava", "Torborg", "Torunn", "Tove", "Tullia", "Ula", "Unn", "Ursel", "Valentia", "Venetia", "Verginia", "Veronica", "Veronika", "Vesna", "Vigdis", "Vita", "Vladimira", "Vrsula", "Walpurg", "Williamina", "Wynne", "Yaroslava", "Yelena", "Ylva", "Ynes", "Yngvild", "Ysabeau", "Ysabel", "Yseult", "Yvonne", "Zaria", "Zarya", "Zoria"];
+
+			// Array mit Vornamen für nicht-binäre Menschen
+			const vornameNichtbinaerMensch = ["Aaren", "Addison", "Alex", "Alexis", "Amar", "Anouk", "Anuk", "Aria", "Ashley", "Ashton", "Aydin", "Bailey", "Bene", "Benja", "Bent", "Bente", "Beverly", "Blair", "Blake", "Bo", "Bozan", "Brook", "Cameron", "Camille", "Carol", "Carter", "Celeste", "Charlie", "Chaska", "Chris", "Conny", "Corey", "Dakota", "Darcy", "Darian", "Deniz", "Derya", "Devin", "Dominique", "Dylan", "Eike", "Elis", "Elliot", "Elvin", "Elya", "Enid", "Esin", "Eske", "Eslem", "Esra", "Evin", "Farina", "Felice", "Feng", "Fidan", "Finn", "Fiore", "Flo", "Florin", "Francis", "Friedel", "Gale", "Gates", "Gerrit", "Ghazal", "Gia", "Gin", "Glenn", "Günes", "Güven", "Gwenaël", "Hadar", "Hadir", "Hadley", "Haik", "Harley", "Helge", "Hemke", "Henny", "Hilal", "Hunter", "Ihsan", "Ilter", "Ilya", "Immi", "Indiana", "Indigo", "Indra", "Ino", "Ira", "Isa", "Islay", "Jade", "Jaime", "Jamal", "Jamie", "Janne", "Jantje", "Jayce", "Jayden", "Jean", "Jesse", "Jody", "Jona", "Jorah", "Joyce", "Junis", "Kelsey", "Kendall", "Kennedy", "Kerry", "Kim", "Kiran", "Kirsten", "Kourtney", "Kris", "Kristan", "Kyler", "Lesley", "Leslie", "Lian", "Lilian", "Lindsay", "Logan", "Loki", "Lorin", "Lou", "Lovis", "Luca", "Malu", "Marian", "Maris", "Marley", "Marlin", "Marlo", "Maxime", "Meredith", "Merle", "Mian", "Mika", "Milou", "Mio", "Nika", "Nikita", "Nikky", "Nino", "Noah", "Nova", "Oakley", "Ola", "Ora", "Orly", "Oyama", "Özbek", "Pahul", "Paris", "Parker", "Pat", "Patrice", "Paulin", "Payden", "Phoenix", "Pim", "Pleun", "Qian", "Quincy", "Quinn", "Raja", "Raven", "Rayan", "Regis", "Reign", "Rey", "Riley", "Robin", "Rory", "Ryan", "Sam", "Sandy", "Sanja", "Sascha", "Scout", "Shannon", "Shanti", "Shay", "Simone", "Siro", "Skyler", "Spencer", "Taylor", "Teagan", "Terry", "Theodore", "Tiam", "Tjade", "Tomke", "Toni", "Tracy", "Tyler", "Ude", "Ulli", "Umut", "Uzay", "Vada", "Val", "Valea", "Valentine", "Valera", "Valo", "Vanja", "Vesa", "Vildan", "Wally", "Wanja", "Wisal", "Wissam", "Wynne", "Yael", "Yuki", "Yuri", "Zero", "Zia", "Zisan", "Zohar"];
+
+			// Array mit Nachnamen für Menschen
+			const nachnameMensch = ["Abel", "Acisculus", "Aeserninus", "Aguilar", "Aignelme", "Aileanach", "Albinus", "Alder", "Alonso", "Álvarez", "Ambarsan", "Andrés", "Antokolsky", "Arasgain", "Arias", "Arnolt", "Arquitius", "Arsenyev", "Asellio", "Ash", "Ashdown", "Asiagenus", "Asina", "Atticus", "Atwood", "Auberteau", "Augustus", "Bakal", "Balbus", "Balenier", "Balmont", "Baran", "Barbula", "Barnes", "Barrach", "Bartholme", "Bartošeneš", "Baujart", "Becker", "Beitean", "Belligs", "Berangieri", "Berry", "Bhacstair", "Bhodhsa", "Blacach", "Blanchart", "Blanco", "Blàrach", "Bogoraz", "Bollinger", "Borderel", "Borodin", "Bourlabbé", "Božovic", "Bràigheach", "Bravo", "Breac", "Breathnach", "Briar", "Briggs", "Brock", "Brod", "Brodierer", "Brohmer", "Brook", "Brothaigh", "Brùn", "Buca", "Buideach", "Buids", "Bulgakov", "Bundy", "Burian", "Burnside", "Burroughs", "Bursio", "Bush", "Butcher", "Butler", "Caballero", "Cabrera", "Cadiot", "Caecus", "Càidh", "Cailbhin", "Caileanach", "Calic", "Callaicus", "Calvo", "Calvus", "Campos", "Cananach", "Cano", "Caoidheach", "Capitolinus", "Cappus", "Carmona", "Carrasco", "Castillo", "Castro", "Catach", "Catanach", "Catifinaly", "Cato", "Caudex", "Ceallach", "Ceanadach", "Cearrach", "Cento", "Charentone", "Cherkassky", "Chladek", "Cincinnatus", "Ciogach", "Ciraisse", "Cižek", "Clay", "Clodianus", "Còmhan", "Contessee", "Cortés", "Corvinus", "Cossus", "Court", "Courtois", "Cox", "Crassus", "Crespo", "Croft", "Cross", "Crump", "Cruscellio", "Cruz", "Dalais", "Dale", "Damasippus", "Dantannt", "Dasel", "d'Attainville", "de Bailliir", "de Blayseville", "de Carnaygnolles", "de Choisy", "de Dreux", "de Gonnaulx", "de Henault", "de la Charité", "de la Marche", "de la Ville", "de Lestoffe", "de Marigni", "de Nantueil", "de Praelles", "de Saint Climent", "de Sesselles", "de Vannedicque", "de Waryllons", "Deane", "Delaney", "Delgado", "des Moulinsvre", "Díaz", "Díez", "Dike", "Dodd", "Dokiychuk", "Dolabella", "Domínguez", "Dorsuo", "Dotschebauer", "Dottenreuch", "Dourches", "Druimein", "du Consiel", "du Ploich", "Dubhach", "Dubinsky", "Dùghlas", "Dunaidh", "Durán", "Durybourc", "Dvorkin", "Eabarcrombaigh", "Eburnus", "Eck", "Engelhart", "Falco", "Fearghasdan", "Fedoruk", "Felix", "Fendin", "Fernández", "Ferrer", "Fessier", "Fionnlasdan", "Flaccus", "Flannagàin", "Flimean", "Flores", "Foirbeis", "Foirbeiseach", "Ford", "Forrest", "Fournier", "Fox", "Fredenman", "Freeman", "Friseal", "Fuentes", "Ful", "Gajic", "Galerne", "Gallach", "Gallaecus", "García", "Garrido", "Garside", "Geadais", "Getha", "Geyger", "Gil", "Gilios", "Gilleberty", "Giménez", "Giobsan", "Glaucia", "Globulus", "Göck", "Golovkin", "Gómez", "González", "Gòrdanach", "Gorsuch", "Grabow", "Gracchanus", "Graciast", "Grannda", "Graves", "Green", "Greeves", "Greumach", "Griogal", "Griogalach", "Groll", "Gross", "Grove", "Grover", "Grünigen", "Guaire", "Guerrero", "Guiart", "Guinne", "Gurges", "Gutiérrez", "Gutman", "Gutraidh", "Hall", "Hanaige", "Hanak", "Happolt", "Hawthorne", "Hazel", "Head", "Heather", "Heffnerin", "Helenus", "Herbelot", "Hernández", "Herrera", "Herrero", "Hertman", "Hidalgo", "Hill", "Hilprant", "Hispaniensis", "Hnilo", "Holley", "Holmes", "Holt", "Homer", "Honiger", "Hooke", "Hope", "Hortator", "Hospod", "House", "Howe", "Hubik", "Hume", "Huneier", "Hyde", "Ibáñez", "Iglesias", "Imperiosus", "Isauricus", "Isenmenger", "Iulus", "Iunianus", "Izquierdo", "Jablonski", "Janiszewski", "Janowitz", "Jelinek", "Jiménez", "Johnston", "Jubontaille", "Julus", "Junianus", "Kanevsky", "Kapp", "Karolewski", "Kaye", "Keats", "Kempff", "Kerry", "Kirk", "Kleinschrotte", "Kolev", "Konig", "Korda", "Kowacewicz", "Krakowski", "Kratochvíl", "Krylov", "Küchlin", "Kudelin", "La Beraudele", "La Doyenneoise", "La Micaudee", "Lactuca", "Laeca", "Lahush", "Lamb", "Lambertr", "Lanng", "Latharnach", "Lathurna", "Layne", "Le Begue", "Le Bryais", "Le Drouais", "Le Gendre", "Le Maireer", "Le Normantr", "Le Saigenier", "Le Vigneron", "Lea", "Leamhnach", "Lentinus", "Leòideach", "León", "Lepidus", "Lerchn", "Levesque", "Levitsky", "Livianus", "Lobhdain", "Loffler", "Loganac", "López", "Lorenzo", "Loudain", "Lovric", "Lowell", "Lozano", "Lucast", "Lupus", "Macedonicus", "Mackler", "Maignat", "Maluginensis", "Mamercus", "Marcellus", "March", "Marcos", "Margolin", "Marín", "Markovic", "Màrnach", "Márquez", "Marsh", "Marshal", "Martin", "Martín", "Martínez", "Masleer", "Masur", "Matasan", "Mathanach", "Maugist", "May", "Medina", "Mèinn", "Mèinnearach", "Mendel", "Méndez", "Menéndez", "Mento", "Mercier", "Merino", "Merula", "Mewslin", "Meyer", "Micottre", "Milenkovic", "Miller", "Mills", "Milutinovic", "Mocilla", "Moireasdan", "Moliert", "Molina", "Molotov", "Montero", "Moore", "Mora", "Morales", "Moreno", "Morganach", "Morhier", "Most", "Moursin", "Moya", "Mucibaba", "Munna", "Muñoz", "Murrin", "Nasica", "Navarre", "Navarro", "Nerva", "Neuckam", "Newby", "Nieto", "Niocalsan", "Norbanus", "Nuber", "Núñez", "Ocella", "Ochslin", "Ogiert", "Okilj", "Orca", "Ortega", "Ortiz", "Oswalt", "Paciacus", "Pagaut", "Paine", "Pantelic", "Paorach", "Papus", "Pardo", "Pascual", "Pasquier", "Pastor", "Paulus", "Pawczer", "Paxton", "Peadarsan", "Pele", "Peña", "Pera", "Pérez", "Perlic", "Perrechon", "Perrin", "Peucag", "Peutan", "Pfaff", "Pfeller", "Pieton", "Pike", "Pischoff", "Pitio", "Pitt", "Pivovarský", "Plansson", "Polyak", "Ponticus", "Pontinle", "Popovic", "Porcina", "Poucin", "Praeconinus", "Preacher", "Prewnnegk", "Prieron", "Prieto", "Prokesch", "Provost", "Puidreach", "Pulex", "Purvis", "Pütel", "Quilletau", "Rabinovich", "Radach", "Raguiere", "Ramírez", "Ramos", "Rappiotn", "Raschart", "Rathais", "Redondo", "Regerin", "Regillensis", "Rengault", "Reppin", "Rey", "Reyes", "Reynhartt", "Ridge", "Ristovic", "Rivier", "Robasan", "Rock", "Rodegast", "Rodríguez", "Román", "Romero", "Rosach", "Rose", "Rosenberger", "Rothach", "Rousseau", "Rowen", "Ruadh", "Rubio", "Rufflin", "Rufinus", "Ruiseal", "Ruiz", "Rullianus", "Russus", "Sabinus", "Sadowsky", "Sáez", "Šagolj", "Sailcirc", "Saillart", "Salinator", "Salmond", "Salutio", "Sánchez", "Sangster", "Sansson", "Santos", "Sanz", "Sattler", "Scaeva", "Scaurus", "Schenkel", "Schicker", "Schlee", "Schmidt", "Schnee", "Schneider", "Schreiber", "Schulten", "Schwach", "Schwarz", "Seagha", "Sellers", "Semenov", "Šendula", "Seramet", "Sergianus", "Serrano", "Sesler", "Sgèin", "Sginnearach", "Sgot", "Shaw", "Shklovsky", "Short", "Shuksin", "Sibylla", "Simler", "Simonov", "Singleir", "Siosal", "Sisenna", "Slavik", "Slovak", "Smios", "Smirnov", "Sokolovsky", "Soler", "Soranus", "Sosniok", "Soto", "Souriz", "Spaning", "Stahel", "Steller", "Stiùbhart", "Stoll", "Stolo", "Streibe", "Structus", "Stuler", "Suárez", "Sùdrach", "Suthurlanach", "Swapp", "Tagturn", "Tàillear", "Tappo", "Taverne", "Thiboult", "Thoman", "Thorne", "Tichý", "Tillartn", "Tiutchev", "Tkachov", "Todt", "Tolmach", "Tomášek", "Topol", "Torquatus", "Torres", "Trager", "Trajkovski", "Trochelle", "Tuairnear", "Tucca", "Tuchscherer", "Tulach", "Turquanr", "Tvardovsky", "Ualas", "Umphraidh", "Underwood", "Unimanus", "Urchardan", "Uticensis", "Uvarov", "Vajda", "Vasiliev", "Vatia", "Vázquez", "Veaser", "Vega", "Velasco", "Verrucosus", "Veste", "Vibulanus", "Vicente", "Vidal", "Vigneron", "Vila", "Vilshofer", "Vinograd", "Vishinsky", "Vlaev", "Vodenicarovic", "Volansky", "Volcker", "Volný", "Volso", "Vopiscus", "Voronin", "Voroshilov", "Voslein", "Walsh", "Walther", "Wateure", "Weick", "Wells", "Weltzlin", "Werlein", "Wessely", "West", "Weyck", "Whitney", "Widmann", "Wilde", "Wilkowske", "Winenden", "Winter", "Wishart", "Witkiewicz", "Wood", "Wragge", "Wyck", "Wynne", "Zacharov", "Zech", "Zeman", "Zhirinovsky", "Zhtomir", "Zigel", "Zinoviev", "Zubkowski", "Zutlinger", "Zweck", "Zworszak"];
+
+			// Generiert Vornamen für männliche Zwerge
+			function generateVornameMaennlichZwerg() {
+				const nm1 = ["Ad", "Alb", "Ba", "Bar", "Belo", "Brot", "Da", "Dal", "Dar", "Del", "Duer", "Dwo", "Eb", "Ein", "Ela", "Eri", "Fall", "Far", "Gar", "Gil", "Gim", "Har", "Kil", "Mor", "Nal", "Nor", "Nura", "Olo", "Ol", "Or", "Os", "Ran", "Rei", "Ru", "Tak", "Thor", "Thra", "Tor", "Trau", "Tra", "Ulf", "Ur", "Ve", "Von", "Whur"];
+				const nm2 = ["rik", "erich", "ern", "endd", "ril", "tor", "in", "gal", "rak", "elg", "gath", "ric", "erk", "kil", "im", "as", "ond", "grim", "dain", "thur", "gen", "urt", "bek", "drak", "var", "gran", "kral", "ral", "dak", "val", "unt", "sik", "kar", "linn", "adin", "dal", "dek", "bon", "vok", "gar", "aim", "it", "bin"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für männliche Zwerge hinzu
+			const vornameMaennlichZwerg = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameMaennlichZwerg.push(generateVornameMaennlichZwerg());
+			}
+			
+			// Generiert Vornamen für weibliche Zwerge
+			function generateVornameWeiblichZwerg() {
+				const nm1 = ["An", "Ar", "Aud", "Bali", "Bar", "Bol", "Dag", "Da", "Del", "Die", "El", "Eri", "Falk", "Fall", "Fi", "Gil", "Gunn", "Gur", "Hel", "Hli", "Il", "Ja", "Kath", "Ki", "Kris", "Lif", "Mara", "Mar", "Mora", "Nala", "Nor", "Nur", "Or", "Ov", "Ris", "Sa", "Ther", "Tho", "Tor", "Torg", "Ursh", "Vali", "Vis", "Vona", "Wer", "Whur", "Yur"];
+				const nm2 = ["bera", "tin", "hild", "fra", "bena", "dryn", "nal", "riff", "re", "sa", "deth", "dred", "runn", "thra", "nellen", "lyd", "loda", "dis", "gret", "ja", "n", "de", "rana", "ra", "lia", "tryd", "trasa", "styr", "na", "ed", "a", "kara", "iff", "ina", "wynn", "nnl", "lin", "dris", "drid", "ga", "ar", "da", "tra", "ydd", "gunn"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für weibliche Zwerge hinzu
+			const vornameWeiblichZwerg = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameWeiblichZwerg.push(generateVornameWeiblichZwerg());
+			}
+			
+			// Generiert Vornamen für nicht-binäre Zwerge
+			function generateVornameNichtbinaerZwerg() {
+				const nm1 = ["Ad", "Alb", "Ba", "Bar", "Belo", "Brot", "Da", "Dal", "Dar", "Del", "Duer", "Dwo", "Eb", "Ein", "Ela", "Eri", "Fall", "Far", "Gar", "Gil", "Gim", "Har", "Kil", "Mor", "Nal", "Nor", "Nura", "Olo", "Ol", "Or", "Os", "Ran", "Rei", "Ru", "Tak", "Thor", "Thra", "Tor", "Trau", "Tra", "Ulf", "Ur", "Ve", "Von", "Whur", "An", "Ar", "Aud", "Bali", "Bar", "Bol", "Dag", "Da", "Del", "Die", "El", "Eri", "Falk", "Fall", "Fi", "Gil", "Gunn", "Gur", "Hel", "Hli", "Il", "Ja", "Kath", "Ki", "Kris", "Lif", "Mara", "Mar", "Mora", "Nala", "Nor", "Nur", "Or", "Ov", "Ris", "Sa", "Ther", "Tho", "Tor", "Torg", "Ursh", "Vali", "Vis", "Vona", "Wer", "Whur", "Yur" ];
+				const nm2 = ["rik", "erich", "ern", "endd", "ril", "tor", "in", "gal", "rak", "elg", "gath", "ric", "erk", "kil", "im", "as", "ond", "grim", "dain", "thur", "gen", "urt", "bek", "drak", "var", "gran", "kral", "ral", "dak", "val", "unt", "sik", "kar", "linn", "adin", "dal", "dek", "bon", "vok", "gar", "aim", "it", "bin", "bera", "tin", "hild", "fra", "bena", "dryn", "nal", "riff", "re", "sa", "deth", "dred", "runn", "thra", "nellen", "lyd", "loda", "dis", "gret", "ja", "n", "de", "rana", "ra", "lia", "tryd", "trasa", "styr", "na", "ed", "a", "kara", "iff", "ina", "wynn", "nnl", "lin", "dris", "drid", "ga", "ar", "da", "tra", "ydd", "gunn"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für nicht-binäre Zwerge hinzu
+			const vornameNichtbinaerZwerg = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameNichtbinaerZwerg.push(generateVornameNichtbinaerZwerg());
+			}
+			
+			// Generiert Nachnamen für Zwerge
+			function generateNachnameZwerg() {
+				const nm1 = ["Ara", "Bal", "Blut", "Bof", "Bördig", "Braz", "Brut", "Cae", "Daer", "Dan", "Dar", "Durth", "Eisen", "Fall", "Feuer", "Frost", "Glan", "Goblin", "Gold", "Gor", "Grau", "Groß", "Halter", "Hammer", "Höl", "Immer", "Kraft", "Lod", "Lut", "Mori", "Ork", "Rakan", "Rubin", "Rumna", "Schaum", "Schlacht", "Silber", "Stahl", "Stark", "Stra", "Thra", "Tief", "Tor", "Tore", "Troll", "Un", "Wahr"];
+				const nm2 = ["aln", "amboss", "ane", "aug", "axt", "bart", "bier", "blut", "bluter", "brek", "dahk", "dann", "derk", "err", "faust", "feind", "finder", "fund", "gak", "gart", "gehr", "gräber", "hak", "hammer", "heim", "hek", "herz", "hig", "humpen", "keln", "kil", "kith", "krak", "kral", "lack", "nor", "scharf", "schmied", "schreck", "stein", "unn", "vir", "zeh", "zik"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Nachnamen für Zwerge hinzu
+			const nachnameZwerg = [];
+			for (let i = 0; i < 1000; i++) {
+				nachnameZwerg.push(generateNachnameZwerg());
+			}
+
+			// Generiert Vornamen für männliche Elfen
+			function generateVornameMaennlichElf() {
+				const nm1 = ["Adr", "Ael", "Ahv", "Ara", "Aran", "Aus", "Aza", "Beir", "Cael", "Car", "Day", "Drea", "Eferr", "Eira", "Enia", "Er", "Ere", "Fiv", "Gallinn", "Genn", "Hada", "Hali", "Hei", "Hi", "Immer", "Ivell", "Kor", "Lam", "Lau", "Lu", "Mindar", "Na", "Nut", "Pael", "Per", "Quar", "Riar", "Rol", "Sovel", "Suhn", "Tham", "Thar", "Ther", "Uthem", "Vanu", "Var"];
+				const nm2 = ["an", "ar", "ain", "mil", "nis", "t", "ki", "o", "drim", "ric", "ereth", "li", "il", "vel", "lis", "dan", "van", "in", "al", "rai", "math", "mo", "ios", "fel", "cian", "can", "tis", "ae", "ias", "en", "ion", "don", "iss", "ior", "ivol", "iatis", "ath", "is"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für männliche Elfen hinzu
+			const vornameMaennlichElf = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameMaennlichElf.push(generateVornameMaennlichElf());
+			}
+			
+			// Generiert Vornamen für weibliche Elfen
+			function generateVornameWeiblichElf() {
+				const nm1 = ["Ad", "Ahi", "Altha", "Anas", "An", "Ar", "Bae", "Beth", "Bir", "Cae", "Chae", "Clai", "Da", "Dru", "El", "En", "Fa", "Felo", "Ha", "Ie", "Il", "Ir", "Jar", "Jelen", "Key", "Lesh", "Li", "Mai", "Mal", "Mer", "Mya", "Nai", "Quel", "Quill", "Ri", "Sa", "Shan", "Sha", "Sil", "Sum", "Thei", "Thia", "Tiaath", "Trau", "Va", "Val", "Xan"];
+				const nm2 = ["rie", "nar", "ea", "trianna", "draste", "tinua", "ara", "litae", "rynna", "el", "lynn", "di", "ra", "silia", "ama", "na", "ral", "sial", "tae", "lenia", "anis", "ann", "sali", "neth", "leth", "anna", "a", "athah", "quis", "iele", "lee", "thethil", "vara", "enna", "athe", "daro", "riel", "airla", "va", "aqui", "nes", "rastra", "la", "que", "lam", "dania", "lanthe", "aphia"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für weibliche Elfen hinzu
+			const vornameWeiblichElf = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameWeiblichElf.push(generateVornameWeiblichElf());
+			}
+			
+			// Generiert Vornamen für nicht-binäre Elfen
+			function generateVornameNichtbinaerElf() {
+				const nm1 = ["Adr", "Ael", "Ahv", "Ara", "Aran", "Aus", "Aza", "Beir", "Cael", "Car", "Day", "Drea", "Eferr", "Eira", "Enia", "Er", "Ere", "Fiv", "Gallinn", "Genn", "Hada", "Hali", "Hei", "Hi", "Immer", "Ivell", "Kor", "Lam", "Lau", "Lu", "Mindar", "Na", "Nut", "Pael", "Per", "Quar", "Riar", "Rol", "Sovel", "Suhn", "Tham", "Thar", "Ther", "Uthem", "Vanu", "Var", "Ad", "Ahi", "Altha", "Anas", "An", "Ar", "Bae", "Beth", "Bir", "Cae", "Chae", "Clai", "Da", "Dru", "El", "En", "Fa", "Felo", "Ha", "Ie", "Il", "Ir", "Jar", "Jelen", "Key", "Lesh", "Li", "Mai", "Mal", "Mer", "Mya", "Nai", "Quel", "Quill", "Ri", "Sa", "Shan", "Sha", "Sil", "Sum", "Thei", "Thia", "Tiaath", "Trau", "Va", "Val", "Xan"];
+				const nm2 = ["an", "ar", "ain", "mil", "nis", "t", "ki", "o", "drim", "ric", "ereth", "li", "il", "vel", "lis", "dan", "van", "in", "al", "rai", "math", "mo", "ios", "fel", "cian", "can", "tis", "ae", "ias", "en", "ion", "don", "iss", "ior", "ivol", "iatis", "ath", "is", "rie", "nar", "ea", "trianna", "draste", "tinua", "ara", "litae", "rynna", "el", "lynn", "di", "ra", "silia", "ama", "na", "ral", "sial", "tae", "lenia", "anis", "ann", "sali", "neth", "leth", "anna", "a", "athah", "quis", "iele", "lee", "thethil", "vara", "enna", "athe", "daro", "riel", "airla", "va", "aqui", "nes", "rastra", "la", "que", "lam", "dania", "lanthe", "aphia"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für nicht-binäre Elfen hinzu
+			const vornameNichtbinaerElf = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameNichtbinaerElf.push(generateVornameNichtbinaerElf());
+			}
+			
+			// Generiert Nachnamen für Elfen
+			function generateNachnameElf() {
+				const nm1 = ["Alo", "Ama", "Ari", "Arnu", "Ber", "Caer", "Ca", "Casill", "Ci", "Dal", "Eatha", "Ere", "Etha", "Fash", "Fir", "Flo", "Gala", "Gol", "Ha", "Ho", "Ia", "Ill", "Ira", "Koeh", "Lath", "Lia", "Me", "My", "Nar", "Net", "Of", "Os", "O", "Qua", "Rae", "Ro", "Sel", "Sian", "Sui", "Syl", "Tei", "Til", "Wa", "With", "Xi", "Xist", "Ya"];
+				const nm2 = ["ro", "kiir", "stacia", "essus", "anna", "evan", "donel", "phaxath", "tenirra", "threth", "anathan", "lena", "naeth", "nasath", "arash", "ahel", "shem", "nodel", "torah", "nali", "limion", "rineth", "thrana", "phelkiir", "napha", "lanna", "alas", "don", "liamne", "llerelel", "stralath", "lo", "yoive", "fandrus", "toroth", "thronus", "lanthri", "thran", "thenel", "evarun", "thrasas", "varanth", "nithra", "tathana", "santhi", "rethin", "loscient", "srith", "eldrin"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Nachnamen für Elfen hinzu
+			const nachnameElf = [];
+			for (let i = 0; i < 1000; i++) {
+				nachnameElf.push(generateNachnameElf());
+			}
+
+			// Generiert Vornamen für männliche Halblinge
+			function generateVornameMaennlichHalbling() {
+				const nm1 = ["Al", "An", "Ber", "Bob", "Ca", "Call", "Corr", "Dan", "Ed", "Eg", "El", "Er", "Fil", "Fin", "Fran", "Gar", "Gil", "Go", "Har", "Ig", "Jas", "Ke", "Kev", "Laz", "Ler", "Lind", "Ly", "Merr", "Mi", "Mor", "Ne", "Nev", "Os", "Per", "Pop", "Re", "Ros", "Sa", "Shar", "Ty", "Ul", "We", "Well", "Wen"];
+				const nm2 = ["al", "am", "art", "bert", "bin", "born", "by", "can", "coe", "de", "del", "der", "die", "don", "e", "ed", "es", "ic", "il", "in", "ith", "klin", "le", "lo", "mo", "nad", "nan", "ner", "nie", "niel", "ob", "ol", "or", "per", "py", "ret", "rich", "rin", "ry", "th", "ton", "tran", "us", "walt"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für männliche Halblinge hinzu
+			const vornameMaennlichHalbling = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameMaennlichHalbling.push(generateVornameMaennlichHalbling());
+			}
+			
+			// Generiert Vornamen für weibliche Halblinge
+			function generateVornameWeiblichHalbling() {
+				const nm1 = ["Al", "An", "Bel", "Blos", "Bre", "Call", "Chen", "Cor", "De", "Dell", "Ei", "Er", "Euph", "Geor", "Gyn", "Harr", "Jas", "Jill", "Jo", "Kith", "Lavi", "Lid", "Mae", "Mari", "Mer", "My", "Ned", "Nik", "No", "Oli", "Pae", "Pe", "Pen", "Philo", "Por", "Ro", "Rob", "Sar", "Sera", "Shae", "Sta", "Taw", "The", "Try", "Ty", "Va", "Ver", "Wel", "Will"];
+				const nm2 = ["a", "ain", "al", "an", "arl", "bie", "cee", "da", "dry", "e", "ea", "ee", "ell", "emia", "gan", "gina", "gold", "ian", "ie", "iet", "ki", "la", "mena", "mine", "na", "ne", "ni", "nia", "nie", "o", "ow", "phina", "ra", "ri", "ria", "se", "som", "tia", "via", "ym"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für weibliche Halblinge hinzu
+			const vornameWeiblichHalbling = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameWeiblichHalbling.push(generateVornameWeiblichHalbling());
+			}
+			
+			// Generiert Vornamen für nicht-binäre Halblinge
+			function generateVornameNichtbinaerHalbling() {
+				const nm1 = ["Al", "An", "Ber", "Bob", "Ca", "Call", "Corr", "Dan", "Ed", "Eg", "El", "Er", "Fil", "Fin", "Fran", "Gar", "Gil", "Go", "Har", "Ig", "Jas", "Ke", "Kev", "Laz", "Ler", "Lind", "Ly", "Merr", "Mi", "Mor", "Ne", "Nev", "Os", "Per", "Pop", "Re", "Ros", "Sa", "Shar", "Ty", "Ul", "We", "Well", "Wen", "Al", "An", "Bel", "Blos", "Bre", "Call", "Chen", "Cor", "De", "Dell", "Ei", "Er", "Euph", "Geor", "Gyn", "Harr", "Jas", "Jill", "Jo", "Kith", "Lavi", "Lid", "Mae", "Mari", "Mer", "My", "Ned", "Nik", "No", "Oli", "Pae", "Pe", "Pen", "Philo", "Por", "Ro", "Rob", "Sar", "Sera", "Shae", "Sta", "Taw", "The", "Try", "Ty", "Va", "Ver", "Wel", "Will"];
+				const nm2 = ["al", "am", "art", "bert", "bin", "born", "by", "can", "coe", "de", "del", "der", "die", "don", "e", "ed", "es", "ic", "il", "in", "ith", "klin", "le", "lo", "mo", "nad", "nan", "ner", "nie", "niel", "ob", "ol", "or", "per", "py", "ret", "rich", "rin", "ry", "th", "ton", "tran", "us", "walt","a", "ain", "al", "an", "arl", "bie", "cee", "da", "dry", "e", "ea", "ee", "ell", "emia", "gan", "gina", "gold", "ian", "ie", "iet", "ki", "la", "mena", "mine", "na", "ne", "ni", "nia", "nie", "o", "ow", "phina", "ra", "ri", "ria", "se", "som", "tia", "via", "ym"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für nicht-binäre Halblinge hinzu
+			const vornameNichtbinaerHalbling = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameNichtbinaerHalbling.push(generateVornameNichtbinaerHalbling());
+			}
+			
+			// Generiert Nachnamen für Halblinge
+			function generateNachnameHalbling() {
+				const nm1 = ["Älter", "Apfel", "Auf", "Brei", "Dick", "Distel", "Dorn", "Feg", "Flüster", "Frucht", "Gold", "Gras", "Groß", "Grün", "Gut", "Hell", "Honig", "Hügel", "Kessel", "Klein", "Kupfer", "Leis", "Ried", "Rot", "Sanft", "Sau", "Schatten", "Schilf", "Schnell", "Silber", "Sonn", "Stark", "Stein", "Tal", "Tee", "Tief", "Unter", "Warm", "Weis", "Wild", "Wurf", "Zehn"];
+				const nm2 = ["acker", "aug", "band", "beere", "bein", "blatt", "blüte", "brück", "erd", "fass", "finger", "flasch", "freund", "fund", "fuß", "glas", "grund", "hand", "has", "herz", "hügel", "kessel", "kopf", "kupfer", "laub", "mann", "mantel", "maß", "maus", "mond", "pfiff", "sammler", "schnell", "schritt", "spitz", "stein", "topf", "wang", "wasser", "wies", "zweig"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Nachnamen für Halblinge hinzu
+			const nachnameHalbling = [];
+			for (let i = 0; i < 1000; i++) {
+				nachnameHalbling.push(generateNachnameHalbling());
+			}
+
+			// Generiert Vornamen für männliche Gnome
+			function generateVornameMaennlichGnom() {
+				const nm1 = ["Al", "An", "Aru", "Bil", "Bod", "Bro", "Bur", "Co", "Cram", "Dab", "De", "Dim", "Eber", "El", "Er", "Fab", "Fib", "Fon", "Frou", "Fru", "Ger", "Gim", "Gli", "Ig", "Jab", "Je", "Kel", "Kip", "Nam", "Opp", "Or", "Pag", "Pal", "Po", "Qua", "Rib", "Rim", "Ro", "Sap", "See", "Sen", "Sin", "Um", "War", "Wig", "Wob", "Wre", "Zaff", "Zo"];
+				const nm2 = ["", "ma", "dy", "cka", "per", "ble", "le", "bed", "foo", "la", "on", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ];
+				const nm3 = ["ston", "vyn", "verth", "wann", "bron", "nock", "occ", "gell", "by", "nap", "dob", "bean", "ble", "deb", "don", "ky", "len", "stib", "kin", "se", "ug", "bo", "ble", "im", "den", "ble", "do", "len", "per", "dle", "by", "ryn", "gen", "bar", "og", "len", "bles", "ple", "dar", "ply", "bo", "teq", "dri", "pen", "ryn", "gens", "bles", "enn", "rab", "ok"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name3 = nm3[Math.floor(Math.random() * nm3.length)];
+				const name = name1 + name2 + name3;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für männliche Gnome hinzu
+			const vornameMaennlichGnom = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameMaennlichGnom.push(generateVornameMaennlichGnom());
+			}
+			
+			// Generiert Vornamen für weibliche Gnome
+			function generateVornameWeiblichGnom() {
+				const nm1 = ["Aba", "Bimp", "Bree", "Buv", "Cal", "Ca", "Car", "Cum", "Da", "Do", "Du", "El", "Elly", "Eni", "Lil", "Loop", "Lor", "Luth", "Mard", "Mee", "Men", "Mum", "Nis", "Num", "Ny", "O", "Op", "Or", "Pa", "Pyn", "Qui", "Ra", "Red", "Roy", "Sa", "Sha", "Siff", "Sym", "Ta", "Te", "Terv", "Tip", "Ul", "Un", "Vel", "Vir", "Way", "Ye", "Zan"];
+				const nm2 = ["not", "ly", "ra", "la", "ne", "va", "joy", "meo", "na", "dle", "ple", "ve", "opti", "wo", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
+				const nm3 = ["laba", "tin", "na", "vie", "bon", "mip", "lin", "pen", "ba", "lla", "mil", "la", "bell", "wick", "dda", "li", "ttin", "illa", "ra", "nab", "ny", "pena", "sa", "x", "da", "pah", "tle", "pop", "wyn", "nop", "ress", "ma", "around", "toe", "cket", "be"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name3 = nm3[Math.floor(Math.random() * nm3.length)];
+				const name = name1 + name2 + name3;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für weibliche Gnome hinzu
+			const vornameWeiblichGnom = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameWeiblichGnom.push(generateVornameWeiblichGnom());
+			}
+			
+			// Generiert Vornamen für nicht-binäre Gnome
+			function generateVornameNichtbinaerGnom() {
+				const nm1 = ["Al", "An", "Aru", "Bil", "Bod", "Bro", "Bur", "Co", "Cram", "Dab", "De", "Dim", "Eber", "El", "Er", "Fab", "Fib", "Fon", "Frou", "Fru", "Ger", "Gim", "Gli", "Ig", "Jab", "Je", "Kel", "Kip", "Nam", "Opp", "Or", "Pag", "Pal", "Po", "Qua", "Rib", "Rim", "Ro", "Sap", "See", "Sen", "Sin", "Um", "War", "Wig", "Wob", "Wre", "Zaff", "Zo", "Aba", "Bimp", "Bree", "Buv", "Cal", "Ca", "Car", "Cum", "Da", "Do", "Du", "El", "Elly", "Eni", "Lil", "Loop", "Lor", "Luth", "Mard", "Mee", "Men", "Mum", "Nis", "Num", "Ny", "O", "Op", "Or", "Pa", "Pyn", "Qui", "Ra", "Red", "Roy", "Sa", "Sha", "Siff", "Sym", "Ta", "Te", "Terv", "Tip", "Ul", "Un", "Vel", "Vir", "Way", "Ye", "Zan"];
+				const nm2 = ["", "ma", "dy", "cka", "per", "ble", "le", "bed", "foo", "la", "on", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "","not", "ly", "ra", "la", "ne", "va", "joy", "meo", "na", "dle", "ple", "ve", "opti", "wo", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ];
+				const nm3 = ["ston", "vyn", "verth", "wann", "bron", "nock", "occ", "gell", "by", "nap", "dob", "bean", "ble", "deb", "don", "ky", "len", "stib", "kin", "se", "ug", "bo", "ble", "im", "den", "ble", "do", "len", "per", "dle", "by", "ryn", "gen", "bar", "og", "len", "bles", "ple", "dar", "ply", "bo", "teq", "dri", "pen", "ryn", "gens", "bles", "enn", "rab", "ok", "laba", "tin", "na", "vie", "bon", "mip", "lin", "pen", "ba", "lla", "mil", "la", "bell", "wick", "dda", "li", "ttin", "illa", "ra", "nab", "ny", "pena", "sa", "x", "da", "pah", "tle", "pop", "wyn", "nop", "ress", "ma", "around", "toe", "cket", "be"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name3 = nm3[Math.floor(Math.random() * nm3.length)];
+				const name = name1 + name2 + name3;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für nicht-binäre Gnome hinzu
+			const vornameNichtbinaerGnom = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameNichtbinaerGnom.push(generateVornameNichtbinaerGnom());
+			}
+			
+			// Generiert Nachnamen für Gnome
+			function generateNachnameGnom() {
+				const nm1 = ["Alba", "Wirr", "Be", "Boon", "Kobbe", "Daer", "Dun", "Fabbel", "Fappel", "Fiedel", "Fol", "Gar", "Gim", "Funkel", "Gobbel", "Gum", "Horcus", "Hampel", "Eisen", "Lef", "Lingen", "Loo", "Mäkkel", "Miggel", "Mung", "Mur", "Mus", "Na", "Nin", "Nopen", "Nuckel", "Off", "Oom", "Pil", "Pin", "Kiel", "Raul", "Rie", "Roffer", "Schep", "Schatten", "Silber", "Sym", "Tarkel", "Tim", "Tu", "Umbo", "Waggel", "Wel", "Wild"];
+    			const nm2 = ["ra", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "fol", "", "gel", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ];
+   				const nm3 = ["tie", "stein", "ren", "diggel", "lobb", "gel", "ben", "stabbel", "stamp", "fenn", "kor", "rick", "len", "firn", "men", "porcus", "bampel", "fell", "fery", "hall", "lue", "ferß", "dy", "gen", "nig", "graben", "ckel", "stallen", "stemp", "und", "traul", "wicken", "gun", "schärfer", "nor", "ieß", "ton", "pen", "mantel", "garn", "pony", "by", "bers", "doben", "top", "ber", "wander"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name3 = nm3[Math.floor(Math.random() * nm3.length)];
+				const name = name1 + name2 + name3;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Nachnamen für Gnome hinzu
+			const nachnameGnom = [];
+			for (let i = 0; i < 1000; i++) {
+				nachnameGnom.push(generateNachnameGnom());
+			}
+
+			// Generiert halbelfische Vornamen
+			function generateHalbelfischerVorname(geschlecht) {
+				let vorname;
+				
+				// Zufällig wählen, ob der Halbelf in einer elfischen oder menschlichen Gesellschaft aufgewachsen ist
+				const elfAufgewachsen = Math.random() < 0.25; // 25% Wahrscheinlichkeit für elfisch
+				const gesellschaft = elfAufgewachsen ? "elfisch" : "menschlich";
+				
+				if (gesellschaft === "menschlich") {
+					if (geschlecht === "männlich") {
+						vorname = vornameMaennlichMensch[Math.floor(Math.random() * vornameMaennlichMensch.length)];
+					} else if (geschlecht === "weiblich") {
+						vorname = vornameWeiblichMensch[Math.floor(Math.random() * vornameWeiblichMensch.length)];
+					} else {
+						vorname = vornameNichtbinaerMensch[Math.floor(Math.random() * vornameNichtbinaerMensch.length)];
+					}
+				} else {
+					if (geschlecht === "männlich") {
+						vorname = vornameMaennlichElf[Math.floor(Math.random() * vornameMaennlichElf.length)];
+					} else if (geschlecht === "weiblich") {
+						vorname = vornameWeiblichElf[Math.floor(Math.random() * vornameWeiblichElf.length)];
+					} else {
+						vorname = vornameNichtbinaerElf[Math.floor(Math.random() * vornameNichtbinaerElf.length)];
+					}
+				}
+				
+				return { vorname, gesellschaft };
+			}
+
+			// Funktion zur Generierung von halbelfischen Nachnamen
+			function generateHalbelfischerNachname() {
+				let nachname;
+				
+				// Zufällig wählen, ob der Halbelf in einer elfischen oder menschlichen Gesellschaft aufgewachsen ist
+				const elfAufgewachsen = Math.random() < 0.5;
+				
+				if (elfAufgewachsen) {
+					nachname = nachnameElf[Math.floor(Math.random() * nachnameElf.length)];
+				} else {
+					nachname = nachnameMensch[Math.floor(Math.random() * nachnameMensch.length)];
+				}
+				
+				return { nachname, gesellschaft: elfAufgewachsen ? "elfisch" : "menschlich" };
+			}
+
+			// Funktion zur Generierung von halbelfischen Vornamen (männlich)
+			function generateVornameMaennlichHalbelf() {
+				const vornameListe = [];
+				for (let i = 0; i < 1000; i++) {
+					const halbelf = generateHalbelfischerVorname("männlich");
+					vornameListe.push(halbelf.vorname);
+				}
+				return vornameListe;
+			}
+
+			// Funktion zur Generierung von halbelfischen Vornamen (weiblich)
+			function generateVornameWeiblichHalbelf() {
+				const vornameListe = [];
+				for (let i = 0; i < 1000; i++) {
+					const halbelf = generateHalbelfischerVorname("weiblich");
+					vornameListe.push(halbelf.vorname);
+				}
+				return vornameListe;
+			}
+
+			// Funktion zur Generierung von halbelfischen Vornamen (nicht-binär)
+			function generateVornameNichtbinaerHalbelf() {
+				const vornameListe = [];
+				for (let i = 0; i < 1000; i++) {
+					const halbelf = generateHalbelfischerVorname("nicht-binär");
+					vornameListe.push(halbelf.vorname);
+				}
+				return vornameListe;
+			}
+
+			// Funktion zur Generierung von halbelfischen Nachnamen
+			function generateNachnameHalbelf() {
+				const nachnameListe = [];
+				for (let i = 0; i < 1000; i++) {
+					const nachname = generateHalbelfischerNachname().nachname;
+					nachnameListe.push(nachname);
+				}
+				return nachnameListe;
+			}
 
 
-  return getRandomText(bookTitleIdeas);
-}
+			// Generiere Listen von halbelfischen Vornamen und Nachnamen
+			const vornameMaennlichHalbelf = generateVornameMaennlichHalbelf();
+			const vornameWeiblichHalbelf = generateVornameWeiblichHalbelf();
+			const vornameNichtbinaerHalbelf = generateVornameNichtbinaerHalbelf();
+			const nachnameHalbelf = generateNachnameHalbelf();
 
-// Copy to clipboard function
-    function copyToClipboard(text) {
-      const tempElement = document.createElement('textarea');
-      tempElement.value = text;
-      document.body.appendChild(tempElement);
-      tempElement.select();
-      document.execCommand('copy');
-      document.body.removeChild(tempElement);
-    }
-    
-// on-click events
-btnGenerate.addEventListener('click', (event) => {
-  event.preventDefault();
+			// Generiert Vornamen für männliche Halborks
+			function generateVornameMaennlichHalbork() {
+				const nm1 = ["Ar", "Bra", "Bru", "Cag", "De", "Do", "Der", "Dru", "Fe", "Ge", "Gna", "Grum", "Gub", "Hag", "He", "Ho", "Hol", "Im", "Kar", "Ke", "Kor", "Kru", "Lub", "Meg", "Mhur", "Mor", "Ni", "Ny", "Od", "Oh", "Ren", "Re", "Ro", "Rra", "Sa", "Scra", "Sheg", "Shu", "Tang", "Tar", "Tha", "Tho", "Tra", "Ug", "Va", "Vil", "Yur", "Ze"];
+				const nm2 = ["gran", "ak", "ug", "nch", "rn", "en", "uk", "eng", "ell", "arsh", "bar", "rash", "ren", "enk", "gar", "olg", "sh", "ash", "arg", "eth", "ag", "usk", "ged", "ord", "org", "il", "barg", "orr", "ohr", "dar", "esh", "ont", "ath", "ark", "gen", "ump", "lar", "ar", "okk", "arth", "berg", "urk", "ed"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für männliche Halborks hinzu
+			const vornameMaennlichHalbork = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameMaennlichHalbork.push(generateVornameMaennlichHalbork());
+			}
+			
+			// Generiert Vornamen für weibliche Halborks
+			function generateVornameWeiblichHalbork() {
+				const nm1 = ["Ar", "Bag", "Ben", "Bil", "Brak", "Cree", "Dren", "Ekk", "Em", "En", "Fist", "Ga", "Gor", "Gra", "Gree", "Gri", "Gy", "Hra", "Hu", "Il", "Kab", "Kan", "Lag", "Lez", "Mur", "Mu", "My", "Nag", "Nee", "Ne", "No", "Oo", "Ov", "Own", "Pu", "Re", "Shau", "Sil", "Su", "Tag", "Taw", "To", "Ub", "Van", "Vo", "Vol", "Vor", "Yev", "Zag"];
+				const nm2 = ["ha", "gi", "doo", "ga", "ka", "na", "ek", "en", "gong", "ula", "aki", "ai", "ba", "nk", "thy", "ru", "barg", "sif", "azi", "re", "gen", "rook", "ev", "rette", "lla", "gu", "lah", "tah", "ak", "yet", "eza", "tha", "gre", "ar", "omph", "ada", "chu", "la", "elda"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für weibliche Halborks hinzu
+			const vornameWeiblichHalbork = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameWeiblichHalbork.push(generateVornameWeiblichHalbork());
+			}
+			
+			// Generiert Vornamen für nicht-binäre Halborks
+			function generateVornameNichtbinaerHalbork() {
+				const nm1 = ["Ar", "Bra", "Bru", "Cag", "De", "Do", "Der", "Dru", "Fe", "Ge", "Gna", "Grum", "Gub", "Hag", "He", "Ho", "Hol", "Im", "Kar", "Ke", "Kor", "Kru", "Lub", "Meg", "Mhur", "Mor", "Ni", "Ny", "Od", "Oh", "Ren", "Re", "Ro", "Rra", "Sa", "Scra", "Sheg", "Shu", "Tang", "Tar", "Tha", "Tho", "Tra", "Ug", "Va", "Vil", "Yur", "Ze", "Ar", "Bag", "Ben", "Bil", "Brak", "Cree", "Dren", "Ekk", "Em", "En", "Fist", "Ga", "Gor", "Gra", "Gree", "Gri", "Gy", "Hra", "Hu", "Il", "Kab", "Kan", "Lag", "Lez", "Mur", "Mu", "My", "Nag", "Nee", "Ne", "No", "Oo", "Ov", "Own", "Pu", "Re", "Shau", "Sil", "Su", "Tag", "Taw", "To", "Ub", "Van", "Vo", "Vol", "Vor", "Yev", "Zag"];
+				const nm2 = ["gran", "ak", "ug", "nch", "rn", "en", "uk", "eng", "ell", "arsh", "bar", "rash", "ren", "enk", "gar", "olg", "sh", "ash", "arg", "eth", "ag", "usk", "ged", "ord", "org", "il", "barg", "orr", "ohr", "dar", "esh", "ont", "ath", "ark", "gen", "ump", "lar", "ar", "okk", "arth", "berg", "urk", "ed", "ha", "gi", "doo", "ga", "ka", "na", "ek", "en", "gong", "ula", "aki", "ai", "ba", "nk", "thy", "ru", "barg", "sif", "azi", "re", "gen", "rook", "ev", "rette", "lla", "gu", "lah", "tah", "ak", "yet", "eza", "tha", "gre", "ar", "omph", "ada", "chu", "la", "elda"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für nicht-binäre Halborks hinzu
+			const vornameNichtbinaerHalbork = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameNichtbinaerHalbork.push(generateVornameNichtbinaerHalbork());
+			}
+			
+			// Generiert Nachnamen für Halborks
+			function generateNachnameHalbork() {
+				const nm1 = ["Schwarz", "Knack", "Eisen", "Schädel", "Klingen", "Stark", "Esel", "Blank", "Stein", "Unheil", "Höll", "Maden", "Blut", "Schlamm", "Feuer", "Stink", "Wolf", "Zwei", "Fuß", "Dunkel", "Sturm", "Axt", "Frosch", "Hasen", "Hirn", "Venen", "Adern", "Riesen", "Bestien", "Ketten", "Faust", "Kinn"];
+				const nm2 = ["speer", "rücken", "kopf", "schmetter", "hauer", "faust", "tret", "hand", "haut", "schmiss", "bringer", "schrei", "wasch", "spritzer", "schädel", "bog", "atem", "bann", "heul", "kling", "trampler", "magen", "darm", "knurr", "schlächter", "werf", "sprung", "fuß", "schlau", "schlitzer", "schaffer", "blut"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Nachnamen für Halborks hinzu
+			const nachnameHalbork = [];
+			for (let i = 0; i < 1000; i++) {
+				nachnameHalbork.push(generateNachnameHalbork());
+			}
+			
+			// Generiert Vornamen für männliche Drachenblütige
+			function generateVornameMaennlichDrachenbluetiger() {
+				const nm1 = ["A", "Ar", "Azz", "Bala", "Bara", "Bha", "Bidre", "Dada", "Dazz", "Dire", "Do", "Fa", "Gar", "Ghe", "Gor", "Gree", "Hes", "Hirra", "Il", "Kala", "Ker", "Kii", "Kri", "Maa", "Me", "Me", "Mo", "Mre", "Mugrun", "Na", "Nith", "Nork", "Nyk", "Pand", "Pa", "Pijj", "Quare", "Rath", "Rho", "Riva", "Sethre", "Sha", "She", "Sror", "Tar", "To", "Tryn", "Valo", "Vron", "Ze"];
+				const nm2 = ["drex", "jhan", "akh", "sar", "dad", "rash", "ked", "lan", "azn", "cris", "naar", "ax", "gax", "sh", "bundus", "then", "kann", "thak", "dan", "kad", "rith", "iv", "gog", "drash", "hen", "zikth", "ksh", "den", "darr", "ther", "ruuth", "jed", "trin", "rik", "thon", "kran", "gar", "an", "kar", "mash", "dinn", "hun", "rinn", "nicus", "rean", "diss", "daar"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für männliche Drachenblütige hinzu
+			const vornameMaennlichDrachenbluetiger = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameMaennlichDrachenbluetiger.push(generateVornameMaennlichDrachenbluetiger());
+			}
+			
+			// Generiert Vornamen für weibliche Drachenblütige
+			function generateVornameWeiblichDrachenbluetiger() {
+				const nm1 = ["Ak", "Aasa", "An", "Ara", "Bi", "Blen", "Bu", "Chass", "Da", "Den", "Dou", "Driin", "Egg", "Fari", "Fin", "Fur", "Ges", "Gil", "Ha", "Havi", "Heth", "Hilla", "Ja", "Je", "Jhe", "Ka", "Ko", "Me", "Mi", "Na", "Nuth", "Per", "Pogra", "Pyx", "Que", "Rai", "Re", "Ru", "Sa", "So", "Su", "Syn", "Tat", "Tha", "Ua", "Ve", "Zy"];
+				const nm2 = ["ra", "thra", "trara", "va", "ri", "daeth", "rana", "ath", "ar", "tratha", "dra", "dar", "ren", "deh", "dex", "rele", "rethe", "kass", "rann", "lar", "ress", "not", "xi", "zean", "dana", "rinn", "gren", "jira", "shann", "la", "nix", "rin", "spa", "ann", "zena", "loth", "phara", "varan", "rina", "thrin", "yan", "djit", "zera", "kroff"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für weibliche Drachenblütige hinzu
+			const vornameWeiblichDrachenbluetiger = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameWeiblichDrachenbluetiger.push(generateVornameWeiblichDrachenbluetiger());
+			}
+			
+			// Generiert Vornamen für nicht-binäre Drachenblütige
+			function generateVornameNichtbinaerDrachenbluetiger() {
+				const nm1 = ["A", "Ar", "Azz", "Bala", "Bara", "Bha", "Bidre", "Dada", "Dazz", "Dire", "Do", "Fa", "Gar", "Ghe", "Gor", "Gree", "Hes", "Hirra", "Il", "Kala", "Ker", "Kii", "Kri", "Maa", "Me", "Me", "Mo", "Mre", "Mugrun", "Na", "Nith", "Nork", "Nyk", "Pand", "Pa", "Pijj", "Quare", "Rath", "Rho", "Riva", "Sethre", "Sha", "She", "Sror", "Tar", "To", "Tryn", "Valo", "Vron", "Ze", "Ak", "Aasa", "An", "Ara", "Bi", "Blen", "Bu", "Chass", "Da", "Den", "Dou", "Driin", "Egg", "Fari", "Fin", "Fur", "Ges", "Gil", "Ha", "Havi", "Heth", "Hilla", "Ja", "Je", "Jhe", "Ka", "Ko", "Me", "Mi", "Na", "Nuth", "Per", "Pogra", "Pyx", "Que", "Rai", "Re", "Ru", "Sa", "So", "Su", "Syn", "Tat", "Tha", "Ua", "Ve", "Zy"];
+				const nm2 = ["drex", "jhan", "akh", "sar", "dad", "rash", "ked", "lan", "azn", "cris", "naar", "ax", "gax", "sh", "bundus", "then", "kann", "thak", "dan", "kad", "rith", "iv", "gog", "drash", "hen", "zikth", "ksh", "den", "darr", "ther", "ruuth", "jed", "trin", "rik", "thon", "kran", "gar", "an", "kar", "mash", "dinn", "hun", "rinn", "nicus", "rean", "diss", "daar", "ra", "thra", "trara", "va", "ri", "daeth", "rana", "ath", "ar", "tratha", "dra", "dar", "ren", "deh", "dex", "rele", "rethe", "kass", "rann", "lar", "ress", "not", "xi", "zean", "dana", "rinn", "gren", "jira", "shann", "la", "nix", "rin", "spa", "ann", "zena", "loth", "phara", "varan", "rina", "thrin", "yan", "djit", "zera", "kroff"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für nicht-binäre Drachenblütige hinzu
+			const vornameNichtbinaerDrachenbluetiger = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameNichtbinaerDrachenbluetiger.push(generateVornameNichtbinaerDrachenbluetiger());
+			}
+			
+			// Generiert Nachnamen für Drachenblütige
+			function generateNachnameDrachenbluetiger() {
+				const nm1 = ["Akam", "Argen", "Ba", "Beryn", "Bhenk", "Caavyl", "Chumby", "Clenth", "Daar", "Del", "Dhyr", "Eby", "Ess", "Fharn", "Gha", "Grrrmm", "Gygaz", "Hash", "Hshh", "Imbix", "Jery", "Jhar", "Ker", "Kim", "Lham", "Linxa", "Mohr", "My", "Nem", "Nor", "Ophin", "Ore", "Pfaph", "Phrah", "Pyrax", "Qyx", "Ragh", "Shes", "Skaarz", "Sum", "Tiam", "Tur", "Um", "Vang", "Verthi", "Wivvyr", "Wys", "Xephyr", "Yar", "Zzxa"];
+				const nm2 = ["bheryll", "thrix", "haro", "tolthro", "kumbyrz", "tera", "xirin", "tinthi", "den", "mi", "ktel", "nichto", "tyr", "gnarth", "alli", "ball", "zyly", "phrony", "ssto", "tellr", "nomo", "thra", "rhy", "ba", "bol", "kasen", "stan", "monis", "ixi", "shtala", "xijan", "nyrren", "dran", "talli", "pahr", "throk", "tende", "borro", "nargh", "", "", "", "", "", "", "", "", "", "", ""];
+				const nm3 = ["iax", "us", "osh", "pal", "naax", "dyn", "nish", "allor", "drian", "rev", "onis", "monis", "lynn", "nost", "xirn", "hyst", "shrift", "xadyn", "roth", "nis", "xyn", "lon", "tuul", "dennish", "dalor", "ion", "adyll", "jiir", "dilin", "don", "gh", "naar", "liath", "thrysh", "lish", "phrael", "giesh", "phiax", "nor", "it", "manthyl", "nu", "byr", "don", "sathur", "holdal", "tong", "bah", "jer", "axth"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name3 = nm3[Math.floor(Math.random() * nm3.length)];
+				const name = name1 + name2 + name3;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Nachnamen für Drachenblütige hinzu
+			const nachnameDrachenbluetiger = [];
+			for (let i = 0; i < 1000; i++) {
+				nachnameDrachenbluetiger.push(generateNachnameDrachenbluetiger());
+			}
 
-  // clear existing results
-  const container = document.getElementById('container');
-  container.querySelectorAll('li').forEach((li) => li.remove());
+			const vornameMaennlichTiefling = ["Damien", "Lucian", "Malachai"];
+			const vornameWeiblichTiefling = ["Lilith", "Saraphina", "Evelina"];
+			const vornameNichtbinaerTiefling = ["Dino"];
+			const nachnameTiefling = ["Schattenfluch", "Teufelszorn", "Höllenruf", "Dunkelblut"];
+			
+			// Funktion zum Generieren und Anzeigen der Sätze
+			btnGenerate.addEventListener('click', (event) => {
+				event.preventDefault();
+				const container = document.getElementById('container');
+				container.querySelectorAll('li').forEach((li) => li.remove());
+				const numAnzahl = parseInt(numAnzahlField.value);
+				for (let i = 0; i < numAnzahl; i++) {
+					const bookTitle = generateBookTitle();
+					const autorGeschlechtRoll = Math.floor(Math.random() * 100) + 1;
+					const autorVolkRoll = Math.floor(Math.random() * 100) + 1;
+					const author = generateAuthorName(autorGeschlechtRoll, autorVolkRoll);
+					const li = document.createElement('li');
+					
+					// Funktion zum Großschreiben des ersten Buchstabens
+					function capitalizeFirstLetter(string) {
+						return string.charAt(0).toUpperCase() + string.slice(1);
+					}
+					
+					li.innerHTML = `<strong>${capitalizeFirstLetter(bookTitle)}</strong> <br>von ${author}, ${autorGeschlecht}er ${autorVolk}\n\n`;
+					container.appendChild(li);
+				}
+			});
 
-  const numQuests = parseInt(numQuestsField.value);
-
-  for (let i = 0; i < numQuests; i++) {
-    const bookTitle = generateBookTitle();
-
-    const li = document.createElement('li');
-    li.textContent = bookTitle;
-    container.appendChild(li);
-  }
-});
-
-btnClear.addEventListener('click', (event) => {
-  event.preventDefault();
-
-  // clear existing results
-  const container = document.getElementById('container');
-  container.querySelectorAll('li').forEach((li) => li.remove());
-});
-
-  btnCopy.addEventListener('click', (event) => {
-      event.preventDefault();
-      const container = document.getElementById('container');
-      const namesList = container.innerText;
-      
-      if (namesList) {
-        copyToClipboard(namesList);
-        alert('Die Liste wurde in die Zwischenablage kopiert.');
-      } else {
-        alert('Die Liste ist leer.');
-      }
-    });
-    
-// append elements to the document body
-document.body.appendChild(document.createTextNode('Anzahl der Buchtitel: '));
-document.body.appendChild(numQuestsField);
-document.body.appendChild(btnGenerate);
-document.body.appendChild(btnCopy); // Add the copy button
-document.body.appendChild(btnClear);
-
-// create a container for the results
-const container = document.createElement('ul');
-container.id = 'container';
-document.body.appendChild(container);
-
-</script>
-
-</body>
+			// Fügt einen Event Listener hinzu, um die generierten Ergebnisse in die Zwischenablage zu kopieren
+			function copyToClipboard(text) {
+				const tempElement = document.createElement('textarea');
+				tempElement.value = text;
+				document.body.appendChild(tempElement);
+				tempElement.select();
+				document.execCommand('copy');
+				document.body.removeChild(tempElement);
+			}
+			
+			// Entfernt bisher generierte Resulate
+			btnClear.addEventListener('click', (event) => {
+				event.preventDefault();
+				const container = document.getElementById('container');
+				container.querySelectorAll('li').forEach((li) => li.remove());
+			});
+			
+			// Fügt einen Textknoten 'Anzahl der Buchtitel: ' sowie die Felder 'numAnzalField', den Button 'btnGenerate' und den Button 'btnClear' dem Dokumentkörper hinzu.
+			document.body.appendChild(document.createTextNode('Anzahl der Buchtitel: '));
+			document.body.appendChild(numAnzahlField);
+			document.body.appendChild(btnGenerate);
+			document.body.appendChild(btnCopy);
+			document.body.appendChild(btnClear);
+			
+			// Fügt einen Container für die Ergebnisse hinzu
+			const container = document.createElement('ul');
+			container.id = 'container';
+			document.body.appendChild(container);
+		</script>
+	</body>
 </html>
