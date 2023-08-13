@@ -81,7 +81,7 @@
 			btnCopy.textContent = 'In Zwischenablage kopieren'; 
 			btnCopy.style.margin = '10px';
 			
-			//#region  Begriffe und Abschnitte für den Buchtitelgenerator
+			//Begriffe und Abschnitte für den Buchtitelgenerator
 			const präfixe = ["","aberrante", "abgewandelte", "abnormale", "abweichende", "akroamatische", "aktuelle", "allgemeine", "alltägliche", "ältere", "alternative", "andere", "anerkannte", "anspruchsvolle", "aufgedeckte", "ausgefallene", "außergewöhnliche", "banale", "beliebte", "berüchtigte", "berühmt-berüchtigte", "berühmte", "besondere", "betörende", "bizarre", "dilettantische", "dissonante", "divergente", "durchschnittliche", "eigenartige", "einfache", "eingeschränkte", "einzigartige", "eklektische", "elegante", "erhabene", "erwähnenswerte", "esoterische", "falsche", "frühe", "gefeierte", "gegensätzliche", "gegenwärtige", "gemischte", "generelle", "geringe", "große", "größere", "herausragende", "hervorragende", "heterogene", "klassische", "kleinere", "knappe", "komische", "komplexe", "legendäre", "letztere", "mäßige", "moderne", "modische", "neoterische", "neuzeitliche", "normale", "obskure", "orphische", "orthodoxe", "quintessenzielle", "radikale", "reguläre", "seltene", "seltsame", "sonstige", "späte", "spezielle", "tiefgründige", "transzendente", "trennende", "triviale", "typische", "überlegene", "ultimative", "umständliche", "unbedeutende", "unbekannte", "unentdeckte", "ungeordnete", "ungewöhnliche", "unpopuläre", "unstimmige", "unverzichtbare", "verfeinerte", "verlorene", "verschiedene", "verschleierte", "versteckte", "vertraute", "vielfältige", "wiedergefundene", "zeitgenössische"];
 			const handwerkPlural = ["Alchemisten", "Apotheker", "Architekten", "Auftragsmörder", "Bäcker", "Banditen", "Bankiers", "Barbaren", "Barden", "Bauern", "Bettler", "Bischöfe", "Bogenmacher", "Bogenschützen", "Boten", "Brauer", "Bürgermeister", "Butler", "Diener", "Diplomaten", "Edelsteinschneider", "Fallensteller", "Fischer", "Forstwirte", "Fremdenführer", "Gärtner", "Gelehrte", "Generäle", "Gerber", "Gladiatoren", "Glasbläser", "Goldschmiede", "Graveure", "Hebammen", "Heiler", "Hellseher", "Herolde", "Hufschmiede", "Hundedresseure", "Ingenieure", "Inquisitoren", "Jagdaufseher", "Jäger", "Juweliere", "Kapitäne", "Kartographen", "Kerzenmacher", "Kleriker", "Knechte", "Köche", "Kräuterkundler", "Krieger", "Künstler", "Kuriere", "Kürschner", "Kutscher", "Laternenanzünder", "Lederarbeiter", "Lehrer", "Magier", "Metzger", "Mönche", "Orakel", "Investigatoren", "Priester", "Rechtsanwälte", "Runenschmiede", "Rüstungsschmiede", "Sattler", "Schäfer", "Schauspieler", "Schmiede", "Schmuggler", "Schneider", "Schreiber", "Schreiner", "Schurken", "Seeleute", "Seher", "Sekretäre", "Silberschmiede", "Soldaten", "Steinmetze", "Theaterautoren", "Tierdressuren", "Töpfer", "Torwächter", "Totengräber", "Unterhaltungskünstler", "Wachmänner", "Wächter", "Waffenschmiede", "Wagenbauer", "Waldläufer", "Weber", "Weise", "Wirte", "Wissenshüter", "Zauberer", "Zimmerleute"];
 			const völkerPlural = ["Aarakocra", "Astralelfen", "Autognome", "Beschützer-Aasimar", "Blasselfen", "Bullywugs", "Chromatische Drachgenblütige", "Dämmerungselfen", "Derros", "Dhampire", "Drachlingsblütige Drachenblütige", "Dunkelelfen", "Dunkelzwerge", "Echsenmenschen", "Edelstein-Drachenblütige", "Eladrin", "Erd-Genasi", "Feen", "Felsengnome", "Feuer-Genasi", "Feuermolche", "Firbolg", "Flinkläufer-Wandler", "Gebirgzwerge", "Gefallene Aasimar", "Geißel-Aasimar", "Geisterwaisen-Halblinge", "Giff", "Githyanki", "Githzerai", "Gnolle", "Goblins", "Goliaths", "Grimlocks", "Grottenschrate", "Grung", "Hadozees", "Halbdrachen", "Halbelfen", "Halb-Orks", "Harengon", "Hexenblütigen", "Hobgoblins", "Hochelfen", "Hügelzwerge", "Kalashtar", "Kender", "Kenkus", "Kobolde", "Kraul", "Kriegsgeschmiedeten", "Kua-Toas", "Langzahn-Wandler", "Lavakinder", "Leichtfuß-Halblinge", "Leoniden", "Locathah", "Lotusden-Halblinge", "Loxodon", "Luft-Genasi", "Lykanthropen", "Mazer", "Meereselfen", "Meervolk", "Menschen", "Metallische Drachenblütige", "Minotauren", "Mischlingsvolk", "Nagpa", "Nilbogs", "Orks", "Orog", "Plasmoide", "Quaggoth", "Ravenit-Drachenblütige", "Sahuagine", "Satyren", "Saurianer", "Shadar-Kai", "Simic-Hybride", "Stämmige Halblinge", "Tabaxi", "Thri-Kreen", "Tiefengnome", "Tieflinge", "Tierhaut-Wandler", "Tortle", "Tritons", "Troglodyten", "Uhlen", "Vedalken", "Verdan", "Waldelfen", "Waldgnome", "Wasser-Genasi", "Wechselbälger", "Wiedergeborenen", "Wildläufer-Wandler", "Yuan-Ti", "Zentauren"];
@@ -586,12 +586,13 @@
 				return getRandomText(bookTitleIdeas);
 			}
 			
-			// Funktion zum Generieren des Namens basierend auf Geschlecht und Volk
+			// Erstellt leere Arrays für Geschlecht, Volk, Vor- und Nachname des Autors
 			let autorGeschlecht = '';
 			let autorVolk = '';
 			let autorVorname = '';
 			let autorNachname = '';
-
+			
+			// Funktion zum Generieren des Namens basierend auf Geschlecht und Volk
 			function generateAuthorName(autorGeschlechtRoll, autorVolkRoll) {
 				autorGeschlecht = autorGeschlechtRoll <= 49 ? 'männlich' : (autorGeschlechtRoll <= 98 ? 'weiblich' : 'nicht-binär');
 				autorVolk = autorVolkRoll <= 49 ? 'Mensch' : autorVolkRoll <= 59 ? 'Zwerg' : autorVolkRoll <= 69 ? 'Elf' : autorVolkRoll <= 74 ? 'Halbling' : autorVolkRoll <= 79 ? 'Gnom' : autorVolkRoll <= 84 ? 'Halbelf' : autorVolkRoll <= 89 ? 'Halbork' : autorVolkRoll <= 94 ? 'Drachenblütiger' : 'Tiefling';
@@ -1258,7 +1259,7 @@
 						return string.charAt(0).toUpperCase() + string.slice(1);
 					}
 					
-					li.innerHTML = `<strong>${capitalizeFirstLetter(bookTitle)}</strong> <br>von ${author}, ${autorGeschlecht}er ${autorVolk}\n\n`;
+					li.innerHTML = `<strong>${capitalizeFirstLetter(bookTitle)}</strong>\nvon ${author}, ${autorGeschlecht}er ${autorVolk}\n\n`;
 					container.appendChild(li);
 				}
 			});
