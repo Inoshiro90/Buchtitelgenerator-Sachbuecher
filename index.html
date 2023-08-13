@@ -594,7 +594,7 @@
 
 			function generateAuthorName(autorGeschlechtRoll, autorVolkRoll) {
 				autorGeschlecht = autorGeschlechtRoll <= 49 ? 'männlich' : (autorGeschlechtRoll <= 98 ? 'weiblich' : 'nicht-binär');
-				autorVolk = autorVolkRoll <= 64 ? 'Mensch' : autorVolkRoll <= 74 ? 'Zwerg' : autorVolkRoll <= 84 ? 'Elf' : autorVolkRoll <= 89 ? 'Halbling' : autorVolkRoll <= 92 ? 'Gnom' : autorVolkRoll <= 95 ? 'Halbelf' : autorVolkRoll <= 98 ? 'Halbork' : autorVolkRoll === 99 ? 'Drachenblütiger' : 'Tiefling';
+				autorVolk = autorVolkRoll <= 49 ? 'Mensch' : autorVolkRoll <= 59 ? 'Zwerg' : autorVolkRoll <= 69 ? 'Elf' : autorVolkRoll <= 74 ? 'Halbling' : autorVolkRoll <= 79 ? 'Gnom' : autorVolkRoll <= 84 ? 'Halbelf' : autorVolkRoll <= 89 ? 'Halbork' : autorVolkRoll <= 94 ? 'Drachenblütiger' : 'Tiefling';
 				autorVorname = generateAutorVornameForAutorGeschlechtAndAutorVolk(autorGeschlecht, autorVolk);
 				autorNachname = generateAutorNachnameForAutorVolk(autorVolk);
 				return `${autorVorname} ${autorNachname}`;
@@ -1190,10 +1190,55 @@
 				nachnameDrachenbluetiger.push(generateNachnameDrachenbluetiger());
 			}
 
-			const vornameMaennlichTiefling = ["Damien", "Lucian", "Malachai"];
-			const vornameWeiblichTiefling = ["Lilith", "Saraphina", "Evelina"];
-			const vornameNichtbinaerTiefling = ["Dino"];
-			const nachnameTiefling = ["Schattenfluch", "Teufelszorn", "Höllenruf", "Dunkelblut"];
+			// Generiert Vornamen für männliche Tieflinge
+			function generateVornameMaennlichTiefling() {
+				const nm1 = ["Ab", "Ahr", "Ak", "Am", "An", "As", "Bal", "Bara", "Bath", "Ca", "Che", "Cim", "Cress", "Dama", "Eke", "Eu", "Fen", "For", "Ha", "Ia", "Kai", "Leu", "Mam", "Man", "Mar", "Mel", "Meri", "Mo", "Mor", "Ni", "Nir", "Ori", "Pay", "Pelai", "Pur", "Qe", "Ra", "Rim", "Sam", "Ska", "Teth", "Tha", "The", "Vala", "Vassa", "Xap", "Ze"];
+				const nm2 = ["ad", "im", "men", "non", "dram", "tar", "am", "kas", "in", "em", "er", "el", "kos", "mon", "ron", "riz", "cas", "bor", "dos", "cis", "nen", "tus", "bas", "ech", "him", "dean", "dai", "thos", "cor", "gel", "ax", "os", "son", "muel", "mal", "mos", "ren", "muz", "rai", "far", "go", "pan", "par", "phan"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für männliche Tieflinge hinzu
+			const vornameMaennlichTiefling = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameMaennlichTiefling.push(generateVornameMaennlichTiefling());
+			}
+			
+			// Generiert Vornamen für weibliche Tieflinge
+			function generateVornameWeiblichTiefling() {
+				const nm1 = ["Ak", "Ana", "Ar", "Asta", "Ay", "Az", "Bel", "Bry", "Bu", "Cri", "Dama", "Deca", "E", "Ga", "Go", "He", "Ish", "Jeze", "Ka", "Kalli", "Kas", "Ler", "Lil", "Maka", "Ma", "Marko", "Mas", "Naa", "Neme", "Ni", "Ori", "Os", "Phela", "Prosper", "Pu", "Py", "Ri", "Ron", "Sed", "Se", "Sekh", "Semy", "Sha", "Sor", "Uz", "Va", "Ve"];
+				const nm2 = ["ta", "kis", "mara", "ro", "ym", "za", "eth", "seis", "ne", "ella", "ia", "rabia", "a", "dreel", "mory", "cat", "te", "beth", "li", "sta", "deya", "issa", "ith", "ria", "nea", "sian", "tema", "mah", "ja", "anna", "ah", "ine", "rah", "ra", "eta", "obe", "we", "dit", "ere", "met", "aza", "va", "ax", "ath", "pula", "par", "rin"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für weibliche Tieflinge hinzu
+			const vornameWeiblichTiefling = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameWeiblichTiefling.push(generateVornameWeiblichTiefling());
+			}
+			
+			// Generiert Vornamen für nicht-binäre Tieflinge
+			function generateVornameNichtbinaerTiefling() {
+				const nm1 = ["Ab", "Ahr", "Ak", "Am", "An", "As", "Bal", "Bara", "Bath", "Ca", "Che", "Cim", "Cress", "Dama", "Eke", "Eu", "Fen", "For", "Ha", "Ia", "Kai", "Leu", "Mam", "Man", "Mar", "Mel", "Meri", "Mo", "Mor", "Ni", "Nir", "Ori", "Pay", "Pelai", "Pur", "Qe", "Ra", "Rim", "Sam", "Ska", "Teth", "Tha", "The", "Vala", "Vassa", "Xap", "Ze", "Ak", "Ana", "Ar", "Asta", "Ay", "Az", "Bel", "Bry", "Bu", "Cri", "Dama", "Deca", "E", "Ga", "Go", "He", "Ish", "Jeze", "Ka", "Kalli", "Kas", "Ler", "Lil", "Maka", "Ma", "Marko", "Mas", "Naa", "Neme", "Ni", "Ori", "Os", "Phela", "Prosper", "Pu", "Py", "Ri", "Ron", "Sed", "Se", "Sekh", "Semy", "Sha", "Sor", "Uz", "Va", "Ve"];
+				const nm2 = ["ad", "im", "men", "non", "dram", "tar", "am", "kas", "in", "em", "er", "el", "kos", "mon", "ron", "riz", "cas", "bor", "dos", "cis", "nen", "tus", "bas", "ech", "him", "dean", "dai", "thos", "cor", "gel", "ax", "os", "son", "muel", "mal", "mos", "ren", "muz", "rai", "far", "go", "pan", "par", "phan", "ta", "kis", "mara", "ro", "ym", "za", "eth", "seis", "ne", "ella", "ia", "rabia", "a", "dreel", "mory", "cat", "te", "beth", "li", "sta", "deya", "issa", "ith", "ria", "nea", "sian", "tema", "mah", "ja", "anna", "ah", "ine", "rah", "ra", "eta", "obe", "we", "dit", "ere", "met", "aza", "va", "ax", "ath", "pula", "par", "rin"];
+				const name1 = nm1[Math.floor(Math.random() * nm1.length)];
+				const name2 = nm2[Math.floor(Math.random() * nm2.length)];
+				const name = name1 + name2;
+				return name.charAt(0).toUpperCase() + name.slice(1);
+			}
+			
+			// Erstellt leeres Array und fügt eine Anzahl an Vornamen für nicht-binäre Tieflinge hinzu
+			const vornameNichtbinaerTiefling = [];
+			for (let i = 0; i < 1000; i++) {
+				vornameNichtbinaerTiefling.push(generateVornameNichtbinaerTiefling());
+			}
+			
+			const nachnameTiefling = nachnameMensch
 			
 			// Funktion zum Generieren und Anzeigen der Sätze
 			btnGenerate.addEventListener('click', (event) => {
