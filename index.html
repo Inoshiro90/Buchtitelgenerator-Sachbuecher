@@ -1245,9 +1245,12 @@
 			let buchAlter = '';
 			let buchZeiteinheit = '';
 			let buchAuflage = '';
+			let seitenZahl = '';
+			let buchHöhe = '';
+			let buchBreite = '';
 
 			// Bestimmt das Alter des Buches
-			function generateBookage() {
+			function generateBookAge() {
 			const randomNumber = Math.random() * 100;
 			let buchAlter;
 			let buchZeiteinheit;
@@ -1367,11 +1370,126 @@
 			} else {
 				seitenZahl = `${Math.floor(Math.random() * (520 - 421 + 1)) + 421}`;
 			}
-
 			return seitenZahl;
 			}
 
+			// Bestimmt die Buchhöhe
+			function generateBookHeight() {
+			const randomNumber = Math.random() * 100 + 1;
+			let buchHöhe;
+
+			if (randomNumber <= 15) {
+				buchHöhe = `2,5`;
+			} else if (randomNumber <= 40) {
+				const randomMultiplier = Math.floor(Math.random() * (8 - 2 + 1)) + 2;
+				const height = randomMultiplier * 2.5;
+				buchHöhe = height % 1 === 0 ? height.toString() : height.toFixed(1).replace('.', ',');
+			} else if (randomNumber <= 60) {
+				const randomMultiplier = Math.floor(Math.random() * (12 - 2 + 1)) + 2;
+				const height = randomMultiplier * 2.5;
+				buchHöhe = height % 1 === 0 ? height.toString() : height.toFixed(1).replace('.', ',');
+			} else if (randomNumber <= 80) {
+				const randomMultiplier = Math.floor(Math.random() * (16 - 2 + 1)) + 2;
+				const height = randomMultiplier * 2.5;
+				buchHöhe = height % 1 === 0 ? height.toString() : height.toFixed(1).replace('.', ',');
+			} else {
+				const randomMultiplier = Math.floor(Math.random() * (20 - 2 + 1)) + 2;
+				const height = randomMultiplier * 2.5;
+				buchHöhe = height % 1 === 0 ? height.toString() : height.toFixed(1).replace('.', ',');
+			}
+			return buchHöhe;
+			}
+
+			// Bestimmt die Buchbreite
+			function generateBookWidth() {
+			const randomNumber = Math.random() * 100 + 1;
+			let buchBreite;
+
+			if (randomNumber <= 15) {
+				buchBreite = `2,5`;
+			} else if (randomNumber <= 40) {
+				const randomMultiplier = Math.floor(Math.random() * (8 - 2 + 1)) + 2;
+				const height = randomMultiplier * 2.5;
+				buchBreite = height % 1 === 0 ? height.toString() : height.toFixed(1).replace('.', ',');
+			} else if (randomNumber <= 60) {
+				const randomMultiplier = Math.floor(Math.random() * (12 - 2 + 1)) + 2;
+				const height = randomMultiplier * 2.5;
+				buchBreite = height % 1 === 0 ? height.toString() : height.toFixed(1).replace('.', ',');
+			} else if (randomNumber <= 80) {
+				const randomMultiplier = Math.floor(Math.random() * (16 - 2 + 1)) + 2;
+				const height = randomMultiplier * 2.5;
+				buchBreite = height % 1 === 0 ? height.toString() : height.toFixed(1).replace('.', ',');
+			} else {
+				const randomMultiplier = Math.floor(Math.random() * (20 - 2 + 1)) + 2;
+				const height = randomMultiplier * 2.5;
+				buchBreite = height % 1 === 0 ? height.toString() : height.toFixed(1).replace('.', ',');
+			}
+			return buchBreite;
+			}
 			
+			// Bestimmt den Zustands des Buches
+			function generateBookCondition() {
+			const randomNumber = Math.random() * 100 + 1;
+			let buchZustand;
+
+			if (randomNumber <= 5) {
+				buchZustand = "Zerfallend";
+			} else if (randomNumber <= 10) {
+				buchZustand = "Schrecklich";
+			} else if (randomNumber <= 20) {
+				buchZustand = "Mangelhaft";
+			} else if (randomNumber <= 30) {
+				buchZustand = "Unterdurchschnittlich";
+			} else if (randomNumber <= 50) {
+				buchZustand = "Durchschnittlich";
+			} else if (randomNumber <= 70) {
+				buchZustand = "Überdurchschnittlich";
+			} else if (randomNumber <= 80) {
+				buchZustand = "Sehr gut";
+			} else if (randomNumber <= 90) {
+				buchZustand = "Ausgezeichnet";
+			} else if (randomNumber <= 95) {
+				buchZustand = "Fast neuwertig";
+			} else {
+				buchZustand = "Neuwertig";
+			}
+			return buchZustand;
+			}
+
+			// Bestimmt die Bindung des Buches
+			function generateBookBinding() {
+			const randomNumber = Math.random() * 100 + 1;
+			let buchBindung;
+
+			if (randomNumber <= 5) {
+				buchBindung = "Gebunden mit Bolzen";
+			} else if (randomNumber <= 10) {
+				buchBindung = "Gebunden mit Lederschlaufen";
+			} else if (randomNumber <= 15) {
+				buchBindung = "Gebunden mit Metallschlaufen";
+			} else if (randomNumber <= 35) {
+				buchBindung = "Geklebt";
+			} else if (randomNumber <= 40) {
+				buchBindung = "Lose";
+			} else if (randomNumber <= 45) {
+				buchBindung = "Lose in einem Behälter";
+			} else if (randomNumber <= 50) {
+				buchBindung = "Lose in Stoff eingewickelt";
+			} else if (randomNumber <= 55) {
+				buchBindung = "Lose in Leder eingewickelt";
+			} else if (randomNumber <= 65) {
+				buchBindung = "Aufgerollt";
+			} else if (randomNumber <= 80) {
+				buchBindung = "Zusammengenäht";
+			} else if (randomNumber <= 90) {
+				buchBindung = "Spiralgebunden";
+			} else if (randomNumber <= 95) {
+				buchBindung = "Geklammert";
+			}  else {
+				buchBindung = "Umwickelt mit Schnüren";
+			}
+			return buchBindung;
+			}
 
 			// Funktion zum Generieren und Anzeigen der Sätze
 			btnGenerate.addEventListener('click', (event) => {
@@ -1384,9 +1502,13 @@
 					const autorGeschlechtRoll = Math.floor(Math.random() * 100) + 1;
 					const autorVolkRoll = Math.floor(Math.random() * 100) + 1;
 					const author = generateAuthorName(autorGeschlechtRoll, autorVolkRoll);
-					const buchAlter = generateBookage();
+					const buchAlter = generateBookAge();
 					const buchAuflage = generateBookEdition();
 					const seitenZahl = generateBookPageNumber();
+					const buchHöhe = generateBookHeight();
+					const buchBreite = generateBookWidth();
+					const buchZustand = generateBookCondition();
+					const buchBindung = generateBookBinding();
 					const li = document.createElement('li');
 					
 					// Funktion zum Großschreiben des ersten Buchstabens
@@ -1394,7 +1516,7 @@
 						return string.charAt(0).toUpperCase() + string.slice(1);
 					}
 					
-					li.innerHTML = `<b>${capitalizeFirstLetter(bookTitle)}</b>\nvon ${author}, ${autorGeschlecht}er ${autorVolk}\nAuflage: ${buchAuflage}\nSeitenzahl: ${seitenZahl} Seiten\nAlter des Buches: ${buchAlter} ${buchZeiteinheit}\n\n`;
+					li.innerHTML = `<b>${capitalizeFirstLetter(bookTitle)}</b>\nvon ${author}, ${autorGeschlecht}er ${autorVolk}\nAuflage: ${buchAuflage}\nSeitenzahl: ${seitenZahl} Seiten\nAlter: ${buchAlter} ${buchZeiteinheit}\nGröße: ${buchHöhe} x ${buchBreite} cm \nZustand: ${buchZustand}\nBindung: ${buchBindung}\n\n`;
 					container.appendChild(li);
 				}
 			});
