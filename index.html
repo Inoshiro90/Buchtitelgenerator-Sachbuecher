@@ -219,215 +219,215 @@
 			const land = ["Land 1", "Land 2", "Land 3"];
 			const domäne = ["Domäne der Adeligen", "Domäne der Arkana", "Domäne der Ausdauer", "Domäne der Dämmerung", "Domäne der Dämonen", "Domäne der Demut", "Domäne der Dunkelheit", "Domäne der Erde", "Domäne der Erneuerung", "Domäne der Familie", "Domäne der Feen", "Domäne der Fertigkeiten", "Domäne der Freiheit", "Domäne der Freude", "Domäne der Geduld", "Domäne der Gemeinschaft", "Domäne der Gerechtigkeit", "Domäne der Gier", "Domäne der Großzügigkeit", "Domäne der Habgier", "Domäne der Handwerkskunst", "Domäne der Heilung", "Domäne der Hoffnung", "Domäne der Illusion", "Domäne der Jagd", "Domäne der Kälte", "Domäne der Keuschheit", "Domäne der Korruption", "Domäne der Liebe", "Domäne der Luft", "Domäne der Lust", "Domäne der Magie", "Domäne der Mäßigung", "Domäne der Nächstenliebe", "Domäne der Natur", "Domäne der Ordnung", "Domäne der Pflanzen", "Domäne der Planung", "Domäne der Qual", "Domäne der Rache", "Domäne der Reise", "Domäne der Runen", "Domäne der Schmiedekunst", "Domäne der Schöpfung", "Domäne der Sonne", "Domäne der Stärke", "Domäne der Tiere", "Domäne der Trägheit", "Domäne der Tyrannei", "Domäne der Vergeltung", "Domäne der Verwöhnung", "Domäne der Völlerei", "Domäne der Wildnis", "Domäne der Zeit", "Domäne der Zerstörung", "Domäne der Zivilisation", "Domäne des Bestialischen", "Domäne des Betrugs", "Domäne des Chaos", "Domäne des Charmes", "Domäne des Diabolischen", "Domäne des Eifers", "Domäne des Feuers", "Domäne des Friedens", "Domäne des Geistes", "Domäne des Gesetzes", "Domäne des Gleichgewichts", "Domäne des Gleißens", "Domäne des Glücks", "Domäne des Grabes", "Domäne des Handels", "Domäne des Hasses", "Domäne des Krieges", "Domäne des Lebens", "Domäne des Leidens", "Domäne des Lichts", "Domäne des Meeres", "Domäne des Mentalismus", "Domäne des Metalls", "Domäne des Mondes", "Domäne des Neids", "Domäne des Ozeans", "Domäne des Portals", "Domäne des Ruhms", "Domäne des Schicksals", "Domäne des Schmerzes", "Domäne des Schutzes", "Domäne des Stolzes", "Domäne des Sturms", "Domäne des Todes", "Domäne des Traums", "Domäne des Untodes", "Domäne des Unwetters", "Domäne des Wahnsinns", "Domäne des Wandels", "Domäne des Wassers", "Domäne des Winters", "Domäne des Wissens", "Domäne des Zaubers", "Domäne des Zorns"];
 
-		// 	function declineNoun(noun, gender, adjectiv, prefix, suffix) {
-		// 	const endsWithE = noun.endsWith('e');
-		// 	const endsWithT = noun.endsWith('t');
-		// 	const endsWithD = noun.endsWith('d');
-		// 	const endsWithS = noun.endsWith('s');
-		// 	const endsWithZ = noun.endsWith('z');
-		// 	const endsWithCh = noun.endsWith('ch');
-	
-		// 	// Überprüfe, ob das Nomen eine schwache Deklination hat
-		// 	if (nomenSchwacheDeklination.includes(noun)) {
-	
-		// 		// Deklinationsregeln für Adjektive und Nomen mit schwacher Deklination
-		// 		const nounCases = {
-		// 			maskulinum: {
-		// 				nominativ: 'der ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
-		// 				genitiv: endsWithE ? 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
-		// 				dativ: endsWithE ? 'dem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' : 'dem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
-		// 				akkusativ: endsWithE ? 'den ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'den ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
-	
-		// 				nominativEin: endsWithE ? 'ein ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'r ' : '') + noun + 'r' + (suffix ? ' ' + suffix : ''): 'ein ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'r ' : '') + noun + (suffix ? ' ' + suffix : ''),
-		// 				genitivEin: endsWithE ? 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
-		// 				dativEin: endsWithE ? 'einem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'einem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
-		// 				akkusativEin: endsWithE ? 'einen ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'einen ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
-	
-		// 				nominativBestimmterArtikel: 'der',
-		// 				genitivBestimmterArtikel: 'des',
-		// 				dativBestimmterArtikel: 'dem',
-		// 				akkusativBestimmterArtikel: 'den',
-	
-		// 				nominativPersonalpronomen: 'er',
-		// 				genitivPersonalpronomen: 'seiner',
-		// 				dativPersonalpronomen: 'ihm',
-		// 				akkusativPersonalpronomen: 'ihn',
-	
-		// 				nominativWelcher: 'welcher',
-		// 				genitivWelcher: 'welches',
-		// 				dativWelcher: 'welchem',
-		// 				akkusativWelcher: 'welchen',
-	
-		// 				nominativPossesivpronomenMaskulinum: 'sein',
-		// 				genitivPossesivpronomenMaskulinum: 'seines',
-		// 				dativPossesivpronomenMaskulinum: 'seinem',
-		// 				akkusativPossesivpronomenMaskulinum: 'seinen',
-	
-		// 				nominativPossesivpronomenFemininum: 'seine',
-		// 				genitivPossesivpronomenFemininum: 'seiner',
-		// 				dativPossesivpronomenFemininum: 'seiner',
-		// 				akkusativPossesivpronomenFemininum: 'seine',
-	
-		// 				nominativPossesivpronomenNeutrum: 'sein',
-		// 				genitivPossesivpronomenNeutrum: 'seines',
-		// 				dativPossesivpronomenNeutrum: 'seinem',
-		// 				akkusativPossesivpronomenNeutrum: 'sein',
-	
-		// 				nominativPossesivpronomenPlural: 'seine',
-		// 				genitivPossesivpronomenPlural: 'seiner',
-		// 				dativPossesivpronomenPlural: 'seinen',
-		// 				akkusativPossesivpronomenPlural: 'seine',
-		// 			},
-		// 		};
-		// 		return nounCases[gender];
-		// 	} else {
-		// 		// Normale Deklinationsregeln für Adjektive und Nomen ohne schwache Deklination
-		// 		const nounCases = {
-		// 			maskulinum: {
-		// 				nominativ: 'der ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
-		// 				genitiv: endsWithE ? 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): endsWithT ? 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'es' + (suffix ? ' ' + suffix : ''): endsWithS ? 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'es' + (suffix ? ' ' + suffix : ''): endsWithZ ? 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'es' + (suffix ? ' ' + suffix : ''): 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 's' + (suffix ? ' ' + suffix : ''),
-		// 				dativ: endsWithE ? 'dem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'dem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
-		// 				akkusativ: endsWithE ? 'den ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'den ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
-	
-		// 				nominativEin: 'ein ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'r ' : '') + noun + (suffix ? ' ' + suffix : ''),
-		// 				genitivEin: endsWithE ? 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): endsWithT ? 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'es' + (suffix ? ' ' + suffix : ''): 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 's' + (suffix ? ' ' + suffix : ''),
-		// 				dativEin: endsWithE ? 'einem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'einem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
-		// 				akkusativEin: endsWithE ? 'einen ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'einen ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
-	
-		// 				nominativBestimmterArtikel: 'der',
-		// 				genitivBestimmterArtikel: 'des',
-		// 				dativBestimmterArtikel: 'dem',
-		// 				akkusativBestimmterArtikel: 'den',
-	
-		// 				nominativPersonalpronomen: 'er',
-		// 				genitivPersonalpronomen: 'seiner',
-		// 				dativPersonalpronomen: 'ihm',
-		// 				akkusativPersonalpronomen: 'ihn',
-	
-		// 				nominativWelcher: 'welcher',
-		// 				genitivWelcher: 'welches',
-		// 				dativWelcher: 'welchem',
-		// 				akkusativWelcher: 'welchen',
-	
-		// 				nominativPossesivpronomenMaskulinum: 'sein',
-		// 				genitivPossesivpronomenMaskulinum: 'seines',
-		// 				dativPossesivpronomenMaskulinum: 'seinem',
-		// 				akkusativPossesivpronomenMaskulinum: 'seinen',
-	
-		// 				nominativPossesivpronomenFemininum: 'seine',
-		// 				genitivPossesivpronomenFemininum: 'seiner',
-		// 				dativPossesivpronomenFemininum: 'seiner',
-		// 				akkusativPossesivpronomenFemininum: 'seine',
-	
-		// 				nominativPossesivpronomenNeutrum: 'sein',
-		// 				genitivPossesivpronomenNeutrum: 'seines',
-		// 				dativPossesivpronomenNeutrum: 'seinem',
-		// 				akkusativPossesivpronomenNeutrum: 'sein',
-	
-		// 				nominativPossesivpronomenPlural: 'seine',
-		// 				genitivPossesivpronomenPlural: 'seiner',
-		// 				dativPossesivpronomenPlural: 'seinen',
-		// 				akkusativPossesivpronomenPlural: 'seine',
-		// 			},
-		// 			femininum: {
-		// 				nominativ: 'die ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
-		// 				genitiv: 'der ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
-		// 				dativ: 'der ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
-		// 				akkusativ: 'die ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
-	
-		// 				nominativEin: 'eine ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
-		// 				genitivEin: 'einer ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
-		// 				dativEin: 'einer ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
-		// 				akkusativEin: 'eine ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
-	
-		// 				nominativBestimmterArtikel: 'die',
-		// 				genitivBestimmterArtikel: 'der',
-		// 				dativBestimmterArtikel: 'der',
-		// 				akkusativBestimmterArtikel: 'die',
-	
-		// 				nominativPersonalpronomen: 'sie',
-		// 				genitivPersonalpronomen: 'ihrer',
-		// 				dativPersonalpronomen: 'ihr',
-		// 				akkusativPersonalpronomen: 'sie',
-	
-		// 				nominativWelcher: 'welche',
-		// 				genitivWelcher: 'welcher',
-		// 				dativWelcher: 'welcher',
-		// 				akkusativWelcher: 'welche',
-	
-		// 				nominativPossesivpronomenMaskulinum: 'ihr',
-		// 				genitivPossesivpronomenMaskulinum: 'ihres',
-		// 				dativPossesivpronomenMaskulinum: 'ihrem',
-		// 				akkusativPossesivpronomenMaskulinum: 'ihren',
-	
-		// 				nominativPossesivpronomenFemininum: 'ihre',
-		// 				genitivPossesivpronomenFemininum: 'ihrer',
-		// 				dativPossesivpronomenFemininum: 'ihrer',
-		// 				akkusativPossesivpronomenFemininum: 'ihre',
-	
-		// 				nominativPossesivpronomenNeutrum: 'ihr',
-		// 				genitivPossesivpronomenNeutrum: 'ihres',
-		// 				dativPossesivpronomenNeutrum: 'ihrem',
-		// 				akkusativPossesivpronomenNeutrum: 'ihr',
-	
-		// 				nominativPossesivpronomenPlural: 'ihre',
-		// 				genitivPossesivpronomenPlural: 'ihrer',
-		// 				dativPossesivpronomenPlural: 'ihren',
-		// 				akkusativPossesivpronomenPlural: 'ihre',
-		// 			},
-		// 			neutrum: {
-		// 				nominativ: 'das ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
-		// 				genitiv: 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 's' + (suffix ? ' ' + suffix : ''),
-		// 				dativ: 'dem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
-		// 				akkusativ: 'das ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
-	
-		// 				nominativEin: 'ein ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 's ' : '') + noun + (suffix ? ' ' + suffix : ''),
-		// 				genitivEin: 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 's' + (suffix ? ' ' + suffix : ''),
-		// 				dativEin: 'einem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
-		// 				akkusativEin: 'ein ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 's ' : '') + noun + (suffix ? ' ' + suffix : ''),
-	
-		// 				nominativBestimmterArtikel: 'das',
-		// 				genitivBestimmterArtikel: 'des',
-		// 				dativBestimmterArtikel: 'dem',
-		// 				akkusativBestimmterArtikel: 'das',
-	
-		// 				nominativPersonalpronomen: 'es',
-		// 				genitivPersonalpronomen: 'seiner',
-		// 				dativPersonalpronomen: 'ihm',
-		// 				akkusativPersonalpronomen: 'es',
-	
-		// 				nominativWelcher: 'welches',
-		// 				genitivWelcher: 'welchen',
-		// 				dativWelcher: 'welchem',
-		// 				akkusativWelcher: 'welches',
-	
-		// 				nominativPossesivpronomenMaskulinum: 'sein',
-		// 				genitivPossesivpronomenMaskulinum: 'seines',
-		// 				dativPossesivpronomenMaskulinum: 'seinem',
-		// 				akkusativPossesivpronomenMaskulinum: 'seinen',
-	
-		// 				nominativPossesivpronomenFemininum: 'seine',
-		// 				genitivPossesivpronomenFemininum: 'seiner',
-		// 				dativPossesivpronomenFemininum: 'seiner',
-		// 				akkusativPossesivpronomenFemininum: 'seine',
-	
-		// 				nominativPossesivpronomenNeutrum: 'sein',
-		// 				genitivPossesivpronomenNeutrum: 'seines',
-		// 				dativPossesivpronomenNeutrum: 'seinem',
-		// 				akkusativPossesivpronomenNeutrum: 'sein',
-	
-		// 				nominativPossesivpronomenPlural: 'seine',
-		// 				genitivPossesivpronomenPlural: 'seiner',
-		// 				dativPossesivpronomenPlural: 'seinen',
-		// 				akkusativPossesivpronomenPlural: 'seine',
-		// 			}
-		// 		};
-		// 		return nounCases[gender];
-		// 	}
-		// }
-	
-		// //Erstellt die Konstante für deklinierte 
-		// const declinedKlassenSingular = declineNoun(klassenSingularName, klassenSingularGeschlecht, klassenSingularAdjektiv, klassenSingularPräfix, klassenSingularSuffix);
+			// 	function declineNoun(noun, gender, adjectiv, prefix, suffix) {
+			// 	const endsWithE = noun.endsWith('e');
+			// 	const endsWithT = noun.endsWith('t');
+			// 	const endsWithD = noun.endsWith('d');
+			// 	const endsWithS = noun.endsWith('s');
+			// 	const endsWithZ = noun.endsWith('z');
+			// 	const endsWithCh = noun.endsWith('ch');
+		
+			// 	// Überprüfe, ob das Nomen eine schwache Deklination hat
+			// 	if (nomenSchwacheDeklination.includes(noun)) {
+		
+			// 		// Deklinationsregeln für Adjektive und Nomen mit schwacher Deklination
+			// 		const nounCases = {
+			// 			maskulinum: {
+			// 				nominativ: 'der ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
+			// 				genitiv: endsWithE ? 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
+			// 				dativ: endsWithE ? 'dem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' : 'dem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
+			// 				akkusativ: endsWithE ? 'den ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'den ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
+		
+			// 				nominativEin: endsWithE ? 'ein ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'r ' : '') + noun + 'r' + (suffix ? ' ' + suffix : ''): 'ein ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'r ' : '') + noun + (suffix ? ' ' + suffix : ''),
+			// 				genitivEin: endsWithE ? 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
+			// 				dativEin: endsWithE ? 'einem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'einem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
+			// 				akkusativEin: endsWithE ? 'einen ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'einen ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'en' + (suffix ? ' ' + suffix : ''),
+		
+			// 				nominativBestimmterArtikel: 'der',
+			// 				genitivBestimmterArtikel: 'des',
+			// 				dativBestimmterArtikel: 'dem',
+			// 				akkusativBestimmterArtikel: 'den',
+		
+			// 				nominativPersonalpronomen: 'er',
+			// 				genitivPersonalpronomen: 'seiner',
+			// 				dativPersonalpronomen: 'ihm',
+			// 				akkusativPersonalpronomen: 'ihn',
+		
+			// 				nominativWelcher: 'welcher',
+			// 				genitivWelcher: 'welches',
+			// 				dativWelcher: 'welchem',
+			// 				akkusativWelcher: 'welchen',
+		
+			// 				nominativPossesivpronomenMaskulinum: 'sein',
+			// 				genitivPossesivpronomenMaskulinum: 'seines',
+			// 				dativPossesivpronomenMaskulinum: 'seinem',
+			// 				akkusativPossesivpronomenMaskulinum: 'seinen',
+		
+			// 				nominativPossesivpronomenFemininum: 'seine',
+			// 				genitivPossesivpronomenFemininum: 'seiner',
+			// 				dativPossesivpronomenFemininum: 'seiner',
+			// 				akkusativPossesivpronomenFemininum: 'seine',
+		
+			// 				nominativPossesivpronomenNeutrum: 'sein',
+			// 				genitivPossesivpronomenNeutrum: 'seines',
+			// 				dativPossesivpronomenNeutrum: 'seinem',
+			// 				akkusativPossesivpronomenNeutrum: 'sein',
+		
+			// 				nominativPossesivpronomenPlural: 'seine',
+			// 				genitivPossesivpronomenPlural: 'seiner',
+			// 				dativPossesivpronomenPlural: 'seinen',
+			// 				akkusativPossesivpronomenPlural: 'seine',
+			// 			},
+			// 		};
+			// 		return nounCases[gender];
+			// 	} else {
+			// 		// Normale Deklinationsregeln für Adjektive und Nomen ohne schwache Deklination
+			// 		const nounCases = {
+			// 			maskulinum: {
+			// 				nominativ: 'der ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
+			// 				genitiv: endsWithE ? 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): endsWithT ? 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'es' + (suffix ? ' ' + suffix : ''): endsWithS ? 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'es' + (suffix ? ' ' + suffix : ''): endsWithZ ? 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'es' + (suffix ? ' ' + suffix : ''): 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 's' + (suffix ? ' ' + suffix : ''),
+			// 				dativ: endsWithE ? 'dem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'dem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+			// 				akkusativ: endsWithE ? 'den ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'den ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		
+			// 				nominativEin: 'ein ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'r ' : '') + noun + (suffix ? ' ' + suffix : ''),
+			// 				genitivEin: endsWithE ? 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): endsWithT ? 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'es' + (suffix ? ' ' + suffix : ''): 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 's' + (suffix ? ' ' + suffix : ''),
+			// 				dativEin: endsWithE ? 'einem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'einem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+			// 				akkusativEin: endsWithE ? 'einen ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 'n' + (suffix ? ' ' + suffix : ''): 'einen ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		
+			// 				nominativBestimmterArtikel: 'der',
+			// 				genitivBestimmterArtikel: 'des',
+			// 				dativBestimmterArtikel: 'dem',
+			// 				akkusativBestimmterArtikel: 'den',
+		
+			// 				nominativPersonalpronomen: 'er',
+			// 				genitivPersonalpronomen: 'seiner',
+			// 				dativPersonalpronomen: 'ihm',
+			// 				akkusativPersonalpronomen: 'ihn',
+		
+			// 				nominativWelcher: 'welcher',
+			// 				genitivWelcher: 'welches',
+			// 				dativWelcher: 'welchem',
+			// 				akkusativWelcher: 'welchen',
+		
+			// 				nominativPossesivpronomenMaskulinum: 'sein',
+			// 				genitivPossesivpronomenMaskulinum: 'seines',
+			// 				dativPossesivpronomenMaskulinum: 'seinem',
+			// 				akkusativPossesivpronomenMaskulinum: 'seinen',
+		
+			// 				nominativPossesivpronomenFemininum: 'seine',
+			// 				genitivPossesivpronomenFemininum: 'seiner',
+			// 				dativPossesivpronomenFemininum: 'seiner',
+			// 				akkusativPossesivpronomenFemininum: 'seine',
+		
+			// 				nominativPossesivpronomenNeutrum: 'sein',
+			// 				genitivPossesivpronomenNeutrum: 'seines',
+			// 				dativPossesivpronomenNeutrum: 'seinem',
+			// 				akkusativPossesivpronomenNeutrum: 'sein',
+		
+			// 				nominativPossesivpronomenPlural: 'seine',
+			// 				genitivPossesivpronomenPlural: 'seiner',
+			// 				dativPossesivpronomenPlural: 'seinen',
+			// 				akkusativPossesivpronomenPlural: 'seine',
+			// 			},
+			// 			femininum: {
+			// 				nominativ: 'die ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
+			// 				genitiv: 'der ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+			// 				dativ: 'der ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+			// 				akkusativ: 'die ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		
+			// 				nominativEin: 'eine ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
+			// 				genitivEin: 'einer ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+			// 				dativEin: 'einer ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+			// 				akkusativEin: 'eine ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		
+			// 				nominativBestimmterArtikel: 'die',
+			// 				genitivBestimmterArtikel: 'der',
+			// 				dativBestimmterArtikel: 'der',
+			// 				akkusativBestimmterArtikel: 'die',
+		
+			// 				nominativPersonalpronomen: 'sie',
+			// 				genitivPersonalpronomen: 'ihrer',
+			// 				dativPersonalpronomen: 'ihr',
+			// 				akkusativPersonalpronomen: 'sie',
+		
+			// 				nominativWelcher: 'welche',
+			// 				genitivWelcher: 'welcher',
+			// 				dativWelcher: 'welcher',
+			// 				akkusativWelcher: 'welche',
+		
+			// 				nominativPossesivpronomenMaskulinum: 'ihr',
+			// 				genitivPossesivpronomenMaskulinum: 'ihres',
+			// 				dativPossesivpronomenMaskulinum: 'ihrem',
+			// 				akkusativPossesivpronomenMaskulinum: 'ihren',
+		
+			// 				nominativPossesivpronomenFemininum: 'ihre',
+			// 				genitivPossesivpronomenFemininum: 'ihrer',
+			// 				dativPossesivpronomenFemininum: 'ihrer',
+			// 				akkusativPossesivpronomenFemininum: 'ihre',
+		
+			// 				nominativPossesivpronomenNeutrum: 'ihr',
+			// 				genitivPossesivpronomenNeutrum: 'ihres',
+			// 				dativPossesivpronomenNeutrum: 'ihrem',
+			// 				akkusativPossesivpronomenNeutrum: 'ihr',
+		
+			// 				nominativPossesivpronomenPlural: 'ihre',
+			// 				genitivPossesivpronomenPlural: 'ihrer',
+			// 				dativPossesivpronomenPlural: 'ihren',
+			// 				akkusativPossesivpronomenPlural: 'ihre',
+			// 			},
+			// 			neutrum: {
+			// 				nominativ: 'das ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
+			// 				genitiv: 'des ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 's' + (suffix ? ' ' + suffix : ''),
+			// 				dativ: 'dem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+			// 				akkusativ: 'das ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + ' ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		
+			// 				nominativEin: 'ein ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 's ' : '') + noun + (suffix ? ' ' + suffix : ''),
+			// 				genitivEin: 'eines ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + 's' + (suffix ? ' ' + suffix : ''),
+			// 				dativEin: 'einem ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 'n ' : '') + noun + (suffix ? ' ' + suffix : ''),
+			// 				akkusativEin: 'ein ' + (prefix ? prefix + ' ' : '') + (adjectiv ? adjectiv + 's ' : '') + noun + (suffix ? ' ' + suffix : ''),
+		
+			// 				nominativBestimmterArtikel: 'das',
+			// 				genitivBestimmterArtikel: 'des',
+			// 				dativBestimmterArtikel: 'dem',
+			// 				akkusativBestimmterArtikel: 'das',
+		
+			// 				nominativPersonalpronomen: 'es',
+			// 				genitivPersonalpronomen: 'seiner',
+			// 				dativPersonalpronomen: 'ihm',
+			// 				akkusativPersonalpronomen: 'es',
+		
+			// 				nominativWelcher: 'welches',
+			// 				genitivWelcher: 'welchen',
+			// 				dativWelcher: 'welchem',
+			// 				akkusativWelcher: 'welches',
+		
+			// 				nominativPossesivpronomenMaskulinum: 'sein',
+			// 				genitivPossesivpronomenMaskulinum: 'seines',
+			// 				dativPossesivpronomenMaskulinum: 'seinem',
+			// 				akkusativPossesivpronomenMaskulinum: 'seinen',
+		
+			// 				nominativPossesivpronomenFemininum: 'seine',
+			// 				genitivPossesivpronomenFemininum: 'seiner',
+			// 				dativPossesivpronomenFemininum: 'seiner',
+			// 				akkusativPossesivpronomenFemininum: 'seine',
+		
+			// 				nominativPossesivpronomenNeutrum: 'sein',
+			// 				genitivPossesivpronomenNeutrum: 'seines',
+			// 				dativPossesivpronomenNeutrum: 'seinem',
+			// 				akkusativPossesivpronomenNeutrum: 'sein',
+		
+			// 				nominativPossesivpronomenPlural: 'seine',
+			// 				genitivPossesivpronomenPlural: 'seiner',
+			// 				dativPossesivpronomenPlural: 'seinen',
+			// 				akkusativPossesivpronomenPlural: 'seine',
+			// 			}
+			// 		};
+			// 		return nounCases[gender];
+			// 	}
+			// }
+		
+			// //Erstellt die Konstante für deklinierte 
+			// const declinedKlassenSingular = declineNoun(klassenSingularName, klassenSingularGeschlecht, klassenSingularAdjektiv, klassenSingularPräfix, klassenSingularSuffix);
 
 			// Funktion, um einen zufälligen Text aus einem Array auszuwählen
 			function getRandomText(arr) {
@@ -1614,6 +1614,17 @@
 			return buchEinbandDetail;
 			}	
 
+
+			//Bestimmt die Farbe des Einbandes
+			function generateBookCoverColor() {
+			const buchEinbandFarbe = ["achatgrau", "altrosa", "anthrazitgrau", "azurblau", "basaltgrau", "beige", "beigebraun", "beigegrau", "beigerot", "blassbraun", "blassgrün", "blau", "blaugrau", "blaugrün", "blaulila", "blutorange", "bordeauxviolett", "braungrau", "braungrün", "braunoliv", "braunrot", "brillantblau", "capriblau", "cremeweiß", "currygelb", "cyan", "dahliengelb", "dunkelblau", "dunkelcyan", "dunkelgelb", "dunkelgrün", "dunkelmagenta", "dunkelrot", "eisengrau", "elfenbein", "enzianblau", "erdbeerrot", "farngrün", "feuerrot", "flaschengrün", "gelb", "gelbgrau", "gelbgrün", "gelboliv", "gelborange", "ginstergelb", "goldgelb", "granitgrau", "graphitgrau", "graphitschwarz", "grasgrün", "grau", "graubeige", "graublau", "graubraun", "grauoliv", "grauweiß", "grün", "grünbeige", "grünblau", "grüngrau", "hellelfenbein", "hellrosa", "hellrotorange", "himbeerrot", "himmelblau", "honiggelb", "karminrot", "kastanienbraun", "khakigrau", "kieferngrün", "kieselgrau", "kobaltblau", "korallenrot", "kupferbraun", "lachsorange", "lachsrot", "laubgrün", "lehmbraun", "leuchtgelb", "leuchtgrün", "leuchthellorange", "leuchthellrot", "leuchtorange", "leuchtrot", "lichtblau", "lichtgrau", "lichtgrün", "magenta", "mahagonibraun", "maigrün", "maisgelb", "mausgrau", "melonengelb", "minttürkis", "minzgrün", "moosgrau", "moosgrün", "nachtblau", "narzissengelb", "nussbraun", "ockerbraun", "ockergelb", "olivbraun", "olivgelb", "olivgrau", "olivgrün", "opalgrün", "orange", "orangebraun", "orientrot", "ozeanblau", "papyrusweiß", "pastellblau", "pastellgelb", "pastellorange", "pastelltürkis", "pastellviolett", "perlbeige", "perlbrombeer", "perldunkelgrau", "perlenzian", "perlgold", "perlgrün", "perlhellgrau", "perlkupfer", "perlmausgrau", "perlnachtblau", "perlopalgrün", "perlorange", "perlrosa", "perlrubinrot", "perlviolett", "perlweiß", "platingrau", "purpurrot", "purpurviolett", "quarzgrau", "rapsgelb", "rehbraun", "reingrün", "reinorange", "reinrot", "reinweiß", "rosé", "rot", "rotbraun", "rotlila", "rotorange", "rotviolett", "rubinrot", "safrangelb", "sandgelb", "saphirblau", "schiefergrau", "schilfgrün", "schokoladenbraun", "schwarz", "schwarzblau", "schwarzbraun", "schwarzgrau", "schwarzgrün", "schwarzoliv", "schwarzrot", "schwefelgelb", "seidengrau", "sepiabraun", "silbergrau", "smaragdgrün", "sonnengelb", "stahlblau", "staubgrau", "steingrau", "tannengrün", "taubenblau", "tieforange", "tiefschwarz", "tomatenrot", "türkisblau", "türkisgrün", "ultramarinblau", "umbragrau", "violett", "violettblau", "wasserblau", "weinrot", "weiß", "weißgrün", "zinkgelb", "zitronengelb"];
+
+			const randomIndex = Math.floor(Math.random() * buchEinbandFarbe.length);
+			const selectedBuchEinbandFarbe = buchEinbandFarbe[randomIndex];
+
+			return selectedBuchEinbandFarbe;
+			}			
+
 			// Bestimmt den Qualität des Textes
 			function generateTextQuality() {
 			const randomNumber = Math.random() * 100 + 1;
@@ -1646,6 +1657,266 @@
 			return textQualität;
 			}
 
+			// Bestimmt die Produktionsart des Textes
+			function generateTextProduction() {
+			const randomNumber = Math.random() * 100 + 1;
+			let textProduktion;
+
+			const tinteFarbe = ["achatgrau", "altrosa", "anthrazitgrau", "azurblau", "basaltgrau", "beige", "beigebraun", "beigegrau", "beigerot", "blassbraun", "blassgrün", "blau", "blaugrau", "blaugrün", "blaulila", "blutorange", "bordeauxviolett", "braungrau", "braungrün", "braunoliv", "braunrot", "brillantblau", "capriblau", "cremeweiß", "currygelb", "cyan", "dahliengelb", "dunkelblau", "dunkelcyan", "dunkelgelb", "dunkelgrün", "dunkelmagenta", "dunkelrot", "eisengrau", "elfenbein", "enzianblau", "erdbeerrot", "farngrün", "feuerrot", "flaschengrün", "gelb", "gelbgrau", "gelbgrün", "gelboliv", "gelborange", "ginstergelb", "goldgelb", "granitgrau", "graphitgrau", "graphitschwarz", "grasgrün", "grau", "graubeige", "graublau", "graubraun", "grauoliv", "grauweiß", "grün", "grünbeige", "grünblau", "grüngrau", "hellelfenbein", "hellrosa", "hellrotorange", "himbeerrot", "himmelblau", "honiggelb", "karminrot", "kastanienbraun", "khakigrau", "kieferngrün", "kieselgrau", "kobaltblau", "korallenrot", "kupferbraun", "lachsorange", "lachsrot", "laubgrün", "lehmbraun", "leuchtgelb", "leuchtgrün", "leuchthellorange", "leuchthellrot", "leuchtorange", "leuchtrot", "lichtblau", "lichtgrau", "lichtgrün", "magenta", "mahagonibraun", "maigrün", "maisgelb", "mausgrau", "melonengelb", "minttürkis", "minzgrün", "moosgrau", "moosgrün", "nachtblau", "narzissengelb", "nussbraun", "ockerbraun", "ockergelb", "olivbraun", "olivgelb", "olivgrau", "olivgrün", "opalgrün", "orange", "orangebraun", "orientrot", "ozeanblau", "papyrusweiß", "pastellblau", "pastellgelb", "pastellorange", "pastelltürkis", "pastellviolett", "perlbeige", "perlbrombeer", "perldunkelgrau", "perlenzian", "perlgold", "perlgrün", "perlhellgrau", "perlkupfer", "perlmausgrau", "perlnachtblau", "perlopalgrün", "perlorange", "perlrosa", "perlrubinrot", "perlviolett", "perlweiß", "platingrau", "purpurrot", "purpurviolett", "quarzgrau", "rapsgelb", "rehbraun", "reingrün", "reinorange", "reinrot", "reinweiß", "rosé", "rot", "rotbraun", "rotlila", "rotorange", "rotviolett", "rubinrot", "safrangelb", "sandgelb", "saphirblau", "schiefergrau", "schilfgrün", "schokoladenbraun", "schwarz", "schwarzblau", "schwarzbraun", "schwarzgrau", "schwarzgrün", "schwarzoliv", "schwarzrot", "schwefelgelb", "seidengrau", "sepiabraun", "silbergrau", "smaragdgrün", "sonnengelb", "stahlblau", "staubgrau", "steingrau", "tannengrün", "taubenblau", "tieforange", "tiefschwarz", "tomatenrot", "türkisblau", "türkisgrün", "ultramarinblau", "umbragrau", "violett", "violettblau", "wasserblau", "weinrot", "weiß", "weißgrün", "zinkgelb", "zitronengelb"];
+
+			if (randomNumber <= 45) {
+				textProduktion = "hangeschrieben mit regulärer Tinte, schwarz";
+			} else if (randomNumber <= 60) {
+				textProduktion = "hangeschrieben mit regulärer Tinte, blau";
+			} else if (randomNumber <= 65) {
+				const zufaelligeTintenfarbe = tinteFarbe[Math.floor(Math.random() * tinteFarbe.length)];
+				textProduktion = `hangeschrieben mit regulärer Tinte, ${zufaelligeTintenfarbe}`;
+			} else if (randomNumber <= 70) {
+				textProduktion = "handgeschrieben mit dem Blut eines Humanoiden";
+			} else if (randomNumber <= 80) {
+				textProduktion = "handgeschrieben mit dem Blut eines Tieres";
+			} else if (randomNumber <= 85) {
+				textProduktion = "handgeschrieben mit dem Blut eines Monster";
+			} else if (randomNumber <= 90) {
+				textProduktion = "handgeschrieben mit magischer Tinte";
+			} else if (randomNumber <= 95) {
+				textProduktion = "gemalt";
+			} else {
+				textProduktion = "gedruckt";
+			}
+
+			return textProduktion;
+			}
+
+			// Bestimmt die Anzahl der Bilder
+			function generateImageQuantity() {
+			const randomNumber = Math.random() * 100 + 1;
+			let bildAnzahl;
+
+			if (randomNumber <= 5) {
+				bildAnzahl = "keine Bilder";
+			} else if (randomNumber <= 15) {
+				bildAnzahl = "ein Bild, das sich auf dem Buchdeckel befindet";
+			} else if (randomNumber <= 25) {
+				bildAnzahl = "ein Bild, das sich auf der Titelseite befindet";
+			} else if (randomNumber <= 45) {
+				bildAnzahl = "ein Bild am Beginn jedes Kapitels";
+			} else if (randomNumber <= 60) {
+				const numBilder = Math.floor(Math.random() * 2) + 1;
+				bildAnzahl = `${numBilder <= 12 ? (numBilder === 1 ? "ein Bild" : numToWords(numBilder) + " Bilder") : numBilder + " Bilder"} pro Kapitel`;
+			} else if (randomNumber <= 70) {
+				const numBilder = Math.floor(Math.random() * 3) + 1;
+				bildAnzahl = `${numBilder <= 12 ? (numBilder === 1 ? "ein Bild" : numToWords(numBilder) + " Bilder") : numBilder + " Bilder"} pro Kapitel`;
+			} else if (randomNumber <= 80) {
+				const numBilder = Math.floor(Math.random() * 6) + 1;
+				bildAnzahl = `${numBilder <= 12 ? (numBilder === 1 ? "ein Bild" : numToWords(numBilder) + " Bilder") : numBilder + " Bilder"} im gesamten Buch`;
+			} else if (randomNumber <= 90) {
+				const numBilder = Math.floor(Math.random() * 11) + 2;
+				bildAnzahl = `${numBilder <= 12 ? (numBilder === 1 ? "ein Bild" : numToWords(numBilder) + " Bilder") : numBilder + " Bilder"} im gesamten Buch`;
+			} else if (randomNumber <= 95) {
+				const numBilder = Math.floor(Math.random() * 16) + 3;
+				bildAnzahl = `${numBilder <= 12 ? (numToWords(numBilder) + " Bilder") : numBilder + " Bilder"} im gesamten Buch`;
+			} else {
+				bildAnzahl = "Bilder auf jeder Seite";
+			}
+
+			return bildAnzahl;
+			}
+
+			// Hilfsfunktion zur Umwandlung von Zahlen in Wörter bis zur Zahl 12
+			function numToWords(number) {
+			const words = ["null", "eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwölf"];
+			return words[number];
+			}
+
+			//Bestimmt die Farbe der Bilder
+			function generateImageColor() {
+			const randomNumber = Math.random() * 100 + 1;
+			let bildFarbe;
+
+			const bildFarbeTon = ["achatgrau", "altrosa", "anthrazitgrau", "azurblau", "basaltgrau", "beige", "beigebraun", "beigegrau", "beigerot", "blassbraun", "blassgrün", "blau", "blaugrau", "blaugrün", "blaulila", "blutorange", "bordeauxviolett", "braungrau", "braungrün", "braunoliv", "braunrot", "brillantblau", "capriblau", "cremeweiß", "currygelb", "cyan", "dahliengelb", "dunkelblau", "dunkelcyan", "dunkelgelb", "dunkelgrün", "dunkelmagenta", "dunkelrot", "eisengrau", "elfenbein", "enzianblau", "erdbeerrot", "farngrün", "feuerrot", "flaschengrün", "gelb", "gelbgrau", "gelbgrün", "gelboliv", "gelborange", "ginstergelb", "goldgelb", "granitgrau", "graphitgrau", "graphitschwarz", "grasgrün", "grau", "graubeige", "graublau", "graubraun", "grauoliv", "grauweiß", "grün", "grünbeige", "grünblau", "grüngrau", "hellelfenbein", "hellrosa", "hellrotorange", "himbeerrot", "himmelblau", "honiggelb", "karminrot", "kastanienbraun", "khakigrau", "kieferngrün", "kieselgrau", "kobaltblau", "korallenrot", "kupferbraun", "lachsorange", "lachsrot", "laubgrün", "lehmbraun", "leuchtgelb", "leuchtgrün", "leuchthellorange", "leuchthellrot", "leuchtorange", "leuchtrot", "lichtblau", "lichtgrau", "lichtgrün", "magenta", "mahagonibraun", "maigrün", "maisgelb", "mausgrau", "melonengelb", "minttürkis", "minzgrün", "moosgrau", "moosgrün", "nachtblau", "narzissengelb", "nussbraun", "ockerbraun", "ockergelb", "olivbraun", "olivgelb", "olivgrau", "olivgrün", "opalgrün", "orange", "orangebraun", "orientrot", "ozeanblau", "papyrusweiß", "pastellblau", "pastellgelb", "pastellorange", "pastelltürkis", "pastellviolett", "perlbeige", "perlbrombeer", "perldunkelgrau", "perlenzian", "perlgold", "perlgrün", "perlhellgrau", "perlkupfer", "perlmausgrau", "perlnachtblau", "perlopalgrün", "perlorange", "perlrosa", "perlrubinrot", "perlviolett", "perlweiß", "platingrau", "purpurrot", "purpurviolett", "quarzgrau", "rapsgelb", "rehbraun", "reingrün", "reinorange", "reinrot", "reinweiß", "rosé", "rot", "rotbraun", "rotlila", "rotorange", "rotviolett", "rubinrot", "safrangelb", "sandgelb", "saphirblau", "schiefergrau", "schilfgrün", "schokoladenbraun", "schwarz", "schwarzblau", "schwarzbraun", "schwarzgrau", "schwarzgrün", "schwarzoliv", "schwarzrot", "schwefelgelb", "seidengrau", "sepiabraun", "silbergrau", "smaragdgrün", "sonnengelb", "stahlblau", "staubgrau", "steingrau", "tannengrün", "taubenblau", "tieforange", "tiefschwarz", "tomatenrot", "türkisblau", "türkisgrün", "ultramarinblau", "umbragrau", "violett", "violettblau", "wasserblau", "weinrot", "weiß", "weißgrün", "zinkgelb", "zitronengelb"];
+
+			if (randomNumber <= 55) {
+				bildFarbe = "einfarbig in schwarz und weiß";
+			} else if (randomNumber <= 80) {
+				const zufaelligeBildfarbe = bildFarbeTon[Math.floor(Math.random() * bildFarbeTon.length)];
+				bildFarbe = `einfarbig in ${zufaelligeBildfarbe}`;
+			} else if (randomNumber <= 90) {
+				const zufaelligeFarbe1 = bildFarbeTon[Math.floor(Math.random() * bildFarbeTon.length)];
+				let zufaelligeFarbe2 = zufaelligeFarbe1;
+				while (zufaelligeFarbe2 === zufaelligeFarbe1) {
+				zufaelligeFarbe2 = bildFarbeTon[Math.floor(Math.random() * bildFarbeTon.length)];
+				}
+				bildFarbe = `zweifarbig in ${zufaelligeFarbe1} und ${zufaelligeFarbe2}`;
+			} else if (randomNumber <= 95) {
+				bildFarbe = "Halbton";
+			} else {
+				bildFarbe = "Vollton";
+			}
+
+			return bildFarbe;
+			}
+
+			//Bestimmt die Größe der Bilder
+			function generateImageSize() {
+			const randomNumber = Math.random() * 100 + 1;
+			let bildGroesse;
+
+			if (randomNumber <= 5) {
+				bildGroesse = "gesamte Seite bis zum Rand";
+			} else if (randomNumber <= 15) {
+				bildGroesse = "fast die gesamte Seite";
+			} else if (randomNumber <= 35) {
+				bildGroesse = "ein Viertel der Seite";
+			} else if (randomNumber <= 55) {
+				bildGroesse = "die Hälfte der Seite";
+			} else if (randomNumber <= 75) {
+				bildGroesse = "zwei Drittel der Seite";
+			} else {
+				bildGroesse = "weniger als ein Viertel der Seite";
+			}
+
+			return bildGroesse;
+			}
+
+			// Bestimmt den Stil der Bilder
+			function generateImageStyle() {
+			const randomNumber = Math.random() * 100 + 1;
+			let bildStil;
+
+			if (randomNumber <= 5) {
+				bildStil = "dreidimensional";
+			} else if (randomNumber <= 10) {
+				bildStil = "abstrakt";
+			} else if (randomNumber <= 15) {
+				bildStil = "antik";
+			} else if (randomNumber <= 20) {
+				bildStil = "jugendstilistisch";
+			} else if (randomNumber <= 25) {
+				bildStil = "karikaturistisch";
+			} else if (randomNumber <= 30) {
+				bildStil = "konstruktivistisch";
+			} else if (randomNumber <= 35) {
+				bildStil = "kubistisch";
+			} else if (randomNumber <= 40) {
+				bildStil = "überzeichnet";
+			} else if (randomNumber <= 45) {
+				bildStil = "expressionistisch";
+			} else if (randomNumber <= 50) {
+				bildStil = "impressionistisch";
+			} else if (randomNumber <= 55) {
+				bildStil = "strichartig";
+			} else if (randomNumber <= 60) {
+				bildStil = "minimalistisch";
+			} else if (randomNumber <= 65) {
+				bildStil = "petroglyphisch";
+			} else if (randomNumber <= 70) {
+				bildStil = "punktartig";
+			} else if (randomNumber <= 75) {
+				bildStil = "urtümlich";
+			} else if (randomNumber <= 80) {
+				bildStil = "realistisch";
+			} else if (randomNumber <= 85) {
+				bildStil = "simplistisch";
+			} else if (randomNumber <= 90) {
+				bildStil = "surrealistisch";
+			} else if (randomNumber <= 95) {
+				bildStil = "symbolistisch";
+			} else {
+				const randomStyles = generateUniqueRandomStyles(2);
+				bildStil = `${randomStyles[0]} und ${randomStyles[1]}`;
+			}
+
+			return bildStil;
+			}
+
+			// Hilfsfunktion zur Generierung von einzigartigen zufälligen Stilen
+			function generateUniqueRandomStyles(count) {
+			const availableStyles = [
+				"dreidimensional", "abstrakt", "antik", "jugendstilistisch", "karikaturistisch", "konstruktivistisch",
+				"kubistisch", "überzeichnet", "expressionistisch", "impressionistisch", "strichartig", "minimalistisch",
+				"petroglyphisch", "punktartig", "urtümlich", "realistisch", "simplistisch", "surrealistisch", "symbolistisch"
+			];
+
+			const selectedStyles = [];
+			while (selectedStyles.length < count) {
+				const randomIndex = Math.floor(Math.random() * availableStyles.length);
+				const selectedStyle = availableStyles.splice(randomIndex, 1)[0];
+				selectedStyles.push(selectedStyle);
+			}
+
+			return selectedStyles;
+			}
+
+			// Bestimmt den Qualität der Bilder
+			function generateImageQuality() {
+			const randomNumber = Math.random() * 100 + 1;
+			let bildQualität;
+
+			if (randomNumber <= 5) {
+				bildQualität = "wertlos";
+			} else if (randomNumber <= 10) {
+				bildQualität = "unbrauchbar";
+			} else if (randomNumber <= 20) {
+				bildQualität = "schlecht";
+			} else if (randomNumber <= 30) {
+				bildQualität = "mäßig";
+			} else if (randomNumber <= 40) {
+				bildQualität = "unterdurchschnittlich";
+			} else if (randomNumber <= 60) {
+				bildQualität = "durchschnittlich";
+			} else if (randomNumber <= 75) {
+				bildQualität = "überdurchschnittlich";
+			} else if (randomNumber <= 85) {
+				bildQualität = "sehr gut";
+			} else if (randomNumber <= 90) {
+				bildQualität = "ausgezeichnet";
+			} else if (randomNumber <= 95) {
+				bildQualität = "unglaublich";
+			} else {
+				bildQualität = "unübertrefflich";
+			}
+
+			return bildQualität;
+			}
+
+			//Bestimmt das Lesezeichen des Buches
+			function generateBookmark() {
+			const randomNumber = Math.random() * 100 + 1;
+			let lesezeichen;
+
+			if (randomNumber <= 5) {
+				lesezeichen = "ein Eselsohr";
+			} else if (randomNumber <= 10) {
+				lesezeichen = "eine kleiner Riss in der Seite";
+			} else if (randomNumber <= 15) {
+				lesezeichen = "ein Stück Schnur";
+			} else if (randomNumber <= 20) {
+				lesezeichen = "eine Buchklammer";
+			} else if (randomNumber <= 25) {
+				lesezeichen = "ein Ecklesezeichen";
+			} else if (randomNumber <= 30) {
+				lesezeichen = "der Schutzumschlag des Buches";
+			} else if (randomNumber <= 35) {
+				lesezeichen = "ein Stück Papier";
+			} else if (randomNumber <= 40) {
+				lesezeichen = "eine dehnbare Schnur";
+			} else if (randomNumber <= 50) {
+				lesezeichen = "ein Streifen aus Stoff";
+			} else if (randomNumber <= 55) {
+				lesezeichen = "ein dünnes Stück Metall";
+			} else if (randomNumber <= 85) {
+				lesezeichen = "ein Streifen aus lederähnlichem Material";
+			} else if (randomNumber <= 95) {
+				lesezeichen = "ein klebender Notizzettel";
+			} else {
+				lesezeichen = "eine Ansammlung unterschiedlicher, kleiner, dünner Gegenstände";
+			}
+
+			return lesezeichen;
+			}
+
+
 			// Funktion zum Generieren und Anzeigen der Sätze
 			btnGenerate.addEventListener('click', (event) => {
 				event.preventDefault();
@@ -1666,7 +1937,15 @@
 					const buchBindung = generateBookBinding();
 					const buchEinbandMaterial = generateBookCoverMaterial();
 					const buchEinbandDetail = generateBookCoverDetails();
+					const buchEinbandFarbe = generateBookCoverColor();
 					const textQualität = generateTextQuality();
+					const textProduktion = generateTextProduction();
+					const bildAnzahl = generateImageQuantity();
+					const bildFarbe = generateImageColor();
+					const bildGroesse = generateImageSize();
+					const bildStil = generateImageStyle();
+					const bildQualität = generateImageQuality();
+					const lesezeichen = generateBookmark();
 					const li = document.createElement('li');
 					
 					// Funktion zum Großschreiben des ersten Buchstabens
@@ -1674,7 +1953,7 @@
 						return string.charAt(0).toUpperCase() + string.slice(1);
 					}
 					
-					li.innerHTML = `<b>${capitalizeFirstLetter(bookTitle)}</b>\nvon ${author}, ${autorGeschlecht}er ${autorVolk}\nAuflage: ${buchAuflage}\nSeitenzahl: ${seitenZahl} Seiten\nAlter: ${buchAlter} ${buchZeiteinheit}\nGröße: ${buchHöhe} x ${buchBreite} cm\nZustand: ${buchZustand}\nBindung: ${buchBindung}\nEinbandmaterial: ${buchEinbandMaterial}\nEinbandetail: ${buchEinbandDetail}\nTextqualität: ${textQualität}\n\n`;
+					li.innerHTML = `<b>${capitalizeFirstLetter(bookTitle)}</b>\nvon ${author}, ${autorGeschlecht}er ${autorVolk}\nAuflage: ${buchAuflage}\nSeitenzahl: ${seitenZahl} Seiten\nAlter: ${buchAlter} ${buchZeiteinheit}\nGröße: ${buchHöhe} x ${buchBreite} cm\nZustand: ${buchZustand}\nBindung: ${buchBindung}\nEinbandmaterial: ${buchEinbandMaterial}, ${buchEinbandFarbe}\nEinbandetail: ${buchEinbandDetail}\nTextqualität: ${textQualität}\nTextproduktion: ${textProduktion}\nBilder: ${bildAnzahl}, ${bildFarbe}\nBildergröße: ${bildGroesse}\nBildstil: ${bildStil}\nBildqualität: ${bildQualität}\n\n`;
 					container.appendChild(li);
 				}
 			});
