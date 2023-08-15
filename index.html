@@ -1316,6 +1316,7 @@
 				buchAlter = Math.floor(Math.random() * 200) + 201;
 				buchZeiteinheit = "Jahre";
 			}
+
 			return `${buchAlter} ${buchZeiteinheit}`;
 			}
 			
@@ -1343,6 +1344,7 @@
 			} else {
 				buchAuflage = "Unbekannte Auflage";
 			}
+
 			return buchAuflage;
 			}
 			
@@ -1370,6 +1372,7 @@
 			} else {
 				seitenZahl = `${Math.floor(Math.random() * (520 - 421 + 1)) + 421}`;
 			}
+
 			return seitenZahl;
 			}
 
@@ -1397,6 +1400,7 @@
 				const height = randomMultiplier * 2.5;
 				buchHöhe = height % 1 === 0 ? height.toString() : height.toFixed(1).replace('.', ',');
 			}
+
 			return buchHöhe;
 			}
 
@@ -1424,6 +1428,7 @@
 				const height = randomMultiplier * 2.5;
 				buchBreite = height % 1 === 0 ? height.toString() : height.toFixed(1).replace('.', ',');
 			}
+
 			return buchBreite;
 			}
 			
@@ -1453,6 +1458,7 @@
 			} else {
 				buchZustand = "neuwertig";
 			}
+
 			return buchZustand;
 			}
 
@@ -1488,7 +1494,156 @@
 			}  else {
 				buchBindung = "umwickelt mit Schnüren";
 			}
+
 			return buchBindung;
+			}
+
+			// Bestimmt das Material des Einbands
+			function generateBookCoverMaterial() {
+			const randomNumber = Math.random() * 100 + 1;
+			let buchEinbandMaterial;
+
+			if (randomNumber <= 25) {
+				buchEinbandMaterial = "Kartonpapier";
+			} else if (randomNumber <= 50) {
+				buchEinbandMaterial = "Hartpapier";
+			} else if (randomNumber <= 65) {
+				buchEinbandMaterial = "Leder";
+			} else if (randomNumber <= 68) {
+				buchEinbandMaterial = "unbehandelter Stoff";
+			} else if (randomNumber <= 70) {
+				buchEinbandMaterial = "behandelter Stoff";
+			} else if (randomNumber <= 72) {
+				buchEinbandMaterial = "Bambus";
+			} else if (randomNumber <= 74) {
+				buchEinbandMaterial = "glattes Metall";
+			} else if (randomNumber <= 75) {
+				buchEinbandMaterial = "glattes Edelmetall";
+			} else if (randomNumber <= 77) {
+				buchEinbandMaterial = "gepolstertes Metall";
+			} else if (randomNumber <= 78) {
+				buchEinbandMaterial = "gepolstertes Edelmetall";
+			} else if (randomNumber <= 80) {
+				buchEinbandMaterial = "glatter Schiefer";
+			} else if (randomNumber <= 82) {
+				buchEinbandMaterial = "rauer Schiefer";
+			} else if (randomNumber <= 86) {
+				buchEinbandMaterial = "gepolstertes Holz";
+			} else if (randomNumber <= 90) {
+				buchEinbandMaterial = "glattes Holz";
+			} else if (randomNumber <= 92) {
+				buchEinbandMaterial = "gepolstertes Edelholz";
+			} else if (randomNumber <= 94) {
+				buchEinbandMaterial = "glattes Edelholz";
+			} else if (randomNumber <= 95) {
+				buchEinbandMaterial = "Hülle einer Kreatur";
+			} else if (randomNumber <= 97) {
+				buchEinbandMaterial = "Tierfell";
+			} else if (randomNumber <= 99) {
+				buchEinbandMaterial = "Monsterfell";
+			} else {
+				buchEinbandMaterial = "Humanoidenhaut";
+			}
+
+			return buchEinbandMaterial;
+			}
+
+			// Bestimmt die Details des Einbands
+			function generateBookCoverDetails() {
+			const randomNumber = Math.random() * 100 + 1;
+			let buchEinbandDetail;
+
+			const details = [
+				"geprägter Rand",
+				"abgeflachter Rand",
+				"Auflagennummer",
+				"Bild",
+				"hochgeprägtes Bild",
+				"Bild des Autors",
+				"Zitat aus dem Buch",
+				"Verlagssymbol",
+				"Signatur des Autors",
+				"geometrisches Symbol",
+				"Schlagwort",
+				"hochgeprägter Buchtitel",
+				"Buchtitel",
+				"Autorenname"
+			];
+
+			if (randomNumber <= 7) {
+				buchEinbandDetail = "geprägter Rand";
+			} else if (randomNumber <= 14) {
+				buchEinbandDetail = "abgeflachter Rand";
+			} else if (randomNumber <= 21) {
+				buchEinbandDetail = "Auflagennummer";
+			} else if (randomNumber <= 28) {
+				buchEinbandDetail = "Bild";
+			} else if (randomNumber <= 35) {
+				buchEinbandDetail = "hochgeprägtes Bild";
+			} else if (randomNumber <= 42) {
+				buchEinbandDetail = "Bild des Autors";
+			} else if (randomNumber <= 49) {
+				buchEinbandDetail = "Zitat aus dem Buch";
+			} else if (randomNumber <= 56) {
+				buchEinbandDetail = "Verlagssymbol";
+			} else if (randomNumber <= 63) {
+				buchEinbandDetail = "Signatur des Autors";
+			} else if (randomNumber <= 70) {
+				buchEinbandDetail = "geometrisches Symbol";
+			} else if (randomNumber <= 77) {
+				buchEinbandDetail = "Schlagwort";
+			} else if (randomNumber <= 85) {
+				buchEinbandDetail = "hochgeprägter Buchtitel";
+			} else if (randomNumber <= 91) {
+				buchEinbandDetail = "Buchtitel";
+			} else if (randomNumber <= 98) {
+				buchEinbandDetail = "Autorenname";
+			} else {
+				const numDetails = Math.floor(Math.random() * 2) + 2; // Zwei bis drei Details auswählen
+				const selectedDetails = [];
+
+				for (let i = 0; i < numDetails; i++) {
+				const randomIndex = Math.floor(Math.random() * details.length);
+				const selectedDetail = details.splice(randomIndex, 1)[0]; // Detail aus der Liste entfernen
+				selectedDetails.push(selectedDetail);
+				}
+
+				buchEinbandDetail = selectedDetails.join(', '); // Details mit einem Komma und Leerzeichen trennen
+			}
+
+			return buchEinbandDetail;
+			}	
+
+			// Bestimmt den Qualität des Textes
+			function generateTextQuality() {
+			const randomNumber = Math.random() * 100 + 1;
+			let textQualität;
+
+			if (randomNumber <= 5) {
+				textQualität = "wertlos";
+			} else if (randomNumber <= 10) {
+				textQualität = "unbrauchbar";
+			} else if (randomNumber <= 20) {
+				textQualität = "schlecht";
+			} else if (randomNumber <= 30) {
+				textQualität = "mäßig";
+			} else if (randomNumber <= 40) {
+				textQualität = "unterdurchschnittlich";
+			} else if (randomNumber <= 60) {
+				textQualität = "durchschnittlich";
+			} else if (randomNumber <= 75) {
+				textQualität = "überdurchschnittlich";
+			} else if (randomNumber <= 85) {
+				textQualität = "sehr gut";
+			} else if (randomNumber <= 90) {
+				textQualität = "ausgezeichnet";
+			} else if (randomNumber <= 95) {
+				textQualität = "unglaublich";
+			} else {
+				textQualität = "unübertrefflich";
+			}
+
+			return textQualität;
 			}
 
 			// Funktion zum Generieren und Anzeigen der Sätze
@@ -1509,6 +1664,9 @@
 					const buchBreite = generateBookWidth();
 					const buchZustand = generateBookCondition();
 					const buchBindung = generateBookBinding();
+					const buchEinbandMaterial = generateBookCoverMaterial();
+					const buchEinbandDetail = generateBookCoverDetails();
+					const textQualität = generateTextQuality();
 					const li = document.createElement('li');
 					
 					// Funktion zum Großschreiben des ersten Buchstabens
@@ -1516,7 +1674,7 @@
 						return string.charAt(0).toUpperCase() + string.slice(1);
 					}
 					
-					li.innerHTML = `<b>${capitalizeFirstLetter(bookTitle)}</b>\nvon ${author}, ${autorGeschlecht}er ${autorVolk}\nAuflage: ${buchAuflage}\nSeitenzahl: ${seitenZahl} Seiten\nAlter: ${buchAlter} ${buchZeiteinheit}\nGröße: ${buchHöhe} x ${buchBreite} cm \nZustand: ${buchZustand}\nBindung: ${buchBindung}\n\n`;
+					li.innerHTML = `<b>${capitalizeFirstLetter(bookTitle)}</b>\nvon ${author}, ${autorGeschlecht}er ${autorVolk}\nAuflage: ${buchAuflage}\nSeitenzahl: ${seitenZahl} Seiten\nAlter: ${buchAlter} ${buchZeiteinheit}\nGröße: ${buchHöhe} x ${buchBreite} cm\nZustand: ${buchZustand}\nBindung: ${buchBindung}\nEinbandmaterial: ${buchEinbandMaterial}\nEinbandetail: ${buchEinbandDetail}\nTextqualität: ${textQualität}\n\n`;
 					container.appendChild(li);
 				}
 			});
