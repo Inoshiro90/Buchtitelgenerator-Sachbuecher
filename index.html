@@ -58,14 +58,191 @@
 			ul {
 				list-style-type: none;
 			}
+
+			li {
+				padding-top: 10px;
+			}
+
+			button#btnSelectAll
+			{
+				margin-top: 10px;
+				margin-bottom: 10px;				
+			}
+
+			button#btnDeselectAll
+			{
+				margin-top: 10px;
+				margin-bottom: 10px;
+				margin-left: 10px;
+			}
+
+
 		</style>
 	</head>
 	<body>
 		<h1>Buchtitelgenerator</h1>
 		<h2>Sachbücher</h2>
 		<p>Dieser Generator generiert Titel für Sachbücher</p>
+		<!-- Titel mit Button -->
+		<button class="collapsible">
+			<b>Aspekte der Beschreibung</b>
+		</button>
+		<!-- Inhaltsbereich -->
+		<div  class="content">
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxAutor" checked> Autor</label><br>
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxAuflage" checked> Auflage</label><br>
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxSeitenzahl" checked> Seitenzahl</label><br>
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxAlter" checked> Alter</label><br>
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxGröße" checked> Größe</label><br>
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxZustand" checked> Zustand</label><br>
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxBindung" checked> Bindung</label><br>
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxEinbandMaterial" checked> Material des Einbandes</label><br>
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxEinbandDetail" checked> Details auf dem Einband</label><br>
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxTextQualität" checked> Qualität des Textes</label><br>
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxTextProduktion" checked> Produktionsart des Textes</label><br>
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxBilderAnzahl" checked> Anzahl der Bilder</label><br>
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxBilderFarbe" checked> Farbe der Bilder</label><br>
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxBilderGröße" checked> Größe der Bilder</label><br>
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxBilderStil" checked> Stil der Bilder</label><br>
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxBilderQualität" checked> Qualität der Bilder</label><br>
+			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxLesezeichen" checked> Lesezeichen </label><br>
+			<button class = inCollapsible id="btnSelectAll">Alle auswählen</button>   <button class = inCollapsible id="btnDeselectAll">Alle abwählen</button>
+		</div>
 		<script>
+			// JavaScript zum Ein- und Ausklappen des Inhalts
+			var coll = document.getElementsByClassName("collapsible");
+			var i;
+			
+			for (i = 0; i < coll.length; i++) {
+			coll[i].addEventListener("click", function() {
+				this.classList.toggle("active");
+				var content = this.nextElementSibling;
+				if (content.style.maxHeight) {
+				content.style.maxHeight = null;
+				} else {
+				content.style.maxHeight = content.scrollHeight + "px";
+				}
+			});
+			}
+			// Event Listener für den "Alle auswählen"-Button
+			document.getElementById("btnSelectAll").addEventListener("click", function() {
+			// Alle Checkboxen auswählen
+			const checkboxes = document.querySelectorAll("input[type='checkbox']");
+			checkboxes.forEach(function(checkbox) {
+				checkbox.checked = true;
+				toggleDetails(checkbox.id, checkbox.dataset.details); // Details anzeigen
+			});
+			});
 
+			// Event Listener für den "Alle abwählen"-Button
+			document.getElementById("btnDeselectAll").addEventListener("click", function() {
+			// Alle Checkboxen abwählen und Details ausblenden
+			const checkboxes = document.querySelectorAll("input[type='checkbox']");
+			checkboxes.forEach(function(checkbox) {
+				checkbox.checked = false;
+				toggleDetails(checkbox.id, checkbox.dataset.details); // Details ausblenden
+			});
+			});
+
+			// Funktion zum Anzeigen oder Ausblenden von Details basierend auf Checkbox-Zustand
+			function toggleDetails(checkboxId, detailsText) {
+			const checkbox = document.getElementById(checkboxId);
+			const details = document.createElement('li');
+
+			if (checkbox.checked) {
+				details.textContent = "";
+				container.appendChild(details);
+			} else {
+				details.remove();
+			}
+			}
+
+			// Event Listener für die Checkboxen
+			document.getElementById("checkboxAutor").addEventListener("change", function() {
+			toggleDetails("checkboxAutor", "autorDetails");
+			});
+			document.getElementById("checkboxAuflage").addEventListener("change", function() {
+			toggleDetails("checkboxAuflage", "auflageDetails");
+			});
+			document.getElementById("checkboxSeitenzahl").addEventListener("change", function() {
+			toggleDetails("checkboxSeitenzahl", "seitenzahlDetails");
+			});
+			document.getElementById("checkboxAlter").addEventListener("change", function() {
+			toggleDetails("checkboxAlter", "alterDetails");
+			});
+			document.getElementById("checkboxGröße").addEventListener("change", function() {
+			toggleDetails("checkboxGröße", "größeDetails");
+			});
+			document.getElementById("checkboxZustand").addEventListener("change", function() {
+			toggleDetails("checkboxZustand", "zustandDetails");
+			});
+			document.getElementById("checkboxBindung").addEventListener("change", function() {
+			toggleDetails("checkboxBindung", "bindungDetails");
+			});
+			document.getElementById("checkboxEinbandMaterial").addEventListener("change", function() {
+			toggleDetails("checkboxEinbandMaterial", "einbandMaterialDetails");
+			});
+			document.getElementById("checkboxEinbandDetail").addEventListener("change", function() {
+			toggleDetails("checkboxEinbandDetail", "einbandDetailDetails");
+			});
+			document.getElementById("checkboxTextQualität").addEventListener("change", function() {
+			toggleDetails("checkboxTextQualität", "textQualitätDetails");
+			});
+			document.getElementById("checkboxTextProduktion").addEventListener("change", function() {
+			toggleDetails("checkboxTextProduktion", "textProduktionDetails");
+			});
+			document.getElementById("checkboxBilderAnzahl").addEventListener("change", function() {
+			toggleDetails("checkboxBilder", "bilderAnzahlDetails");
+			});
+			document.getElementById("checkboxBilderGröße").addEventListener("change", function() {
+			toggleDetails("checkboxBilderGröße", "bilderGrößeDetails");
+			});
+			document.getElementById("checkboxBilderStil").addEventListener("change", function() {
+			toggleDetails("checkboxBilderStil", "bilderStilDetails");
+			});
+			document.getElementById("checkboxBilderQualität").addEventListener("change", function() {
+			toggleDetails("checkboxBilderQualität", "bilderQualitätDetails");
+			});
+			document.getElementById("checkboxLesezeichen").addEventListener("change", function() {
+			toggleDetails("checkboxLesezeichen", "lesezeichenDetails");
+			});
+
+			// Überprüfen, ob mindestens eine Checkbox ausgewählt wurde
+			const checkboxes = document.querySelectorAll("input[type='checkbox']");
+			let isAnyCheckboxSelected = false;
+
+			checkboxes.forEach(function(checkbox) {
+			if (checkbox.checked) {
+				isAnyCheckboxSelected = true;
+				return; // Wir können die Schleife vorzeitig verlassen, da mindestens eine Checkbox ausgewählt wurde
+			}
+			});
+
+			// Füge einen Zeilenumbruch hinzu, wenn mindestens eine Checkbox ausgewählt wurde
+			const lineBreak = isAnyCheckboxSelected ? "\n" : "";
+
+			//Prüft, ob das jeweilige Detail, das letzte Detail ist
+			function isLastSelectedCheckbox(checkboxId) {
+				const checkboxes = [
+					"checkboxAutor", "checkboxAuflage", "checkboxSeitenzahl", "checkboxAlter", "checkboxGröße",
+					"checkboxZustand", "checkboxBindung", "checkboxEinbandMaterial", "checkboxEinbandDetail",
+					"checkboxTextQualität", "checkboxTextProduktion", "checkboxBilderAnzahl", "checkboxBilderGröße",
+					"checkboxBilderStil", "checkboxBilderQualität"
+				];
+				
+				const lastSelectedIndex = checkboxes.findIndex(checkbox => checkbox === checkboxId);
+				if (lastSelectedIndex === -1) {
+					return false;
+				}
+				
+				for (let i = lastSelectedIndex + 1; i < checkboxes.length; i++) {
+					if (document.getElementById(checkboxes[i]).checked) {
+						return false;
+					}
+				}
+				
+				return true;
+			}
 			// Eingabefelder und Buttons
 			const numAnzahlField = document.createElement('input');
 			numAnzahlField.type = 'number';
@@ -1917,46 +2094,48 @@
 			}
 
 
-			// Funktion zum Generieren und Anzeigen der Sätze
-			btnGenerate.addEventListener('click', (event) => {
-				event.preventDefault();
-				const container = document.getElementById('container');
-				container.querySelectorAll('li').forEach((li) => li.remove());
-				const numAnzahl = parseInt(numAnzahlField.value);
-				for (let i = 0; i < numAnzahl; i++) {
-					const bookTitle = generateBookTitle();
-					const autorGeschlechtRoll = Math.floor(Math.random() * 100) + 1;
-					const autorVolkRoll = Math.floor(Math.random() * 100) + 1;
-					const author = generateAuthorName(autorGeschlechtRoll, autorVolkRoll);
-					const buchAlter = generateBookAge();
-					const buchAuflage = generateBookEdition();
-					const seitenZahl = generateBookPageNumber();
-					const buchHöhe = generateBookHeight();
-					const buchBreite = generateBookWidth();
-					const buchZustand = generateBookCondition();
-					const buchBindung = generateBookBinding();
-					const buchEinbandMaterial = generateBookCoverMaterial();
-					const buchEinbandDetail = generateBookCoverDetails();
-					const buchEinbandFarbe = generateBookCoverColor();
-					const textQualität = generateTextQuality();
-					const textProduktion = generateTextProduction();
-					const bildAnzahl = generateImageQuantity();
-					const bildFarbe = generateImageColor();
-					const bildGroesse = generateImageSize();
-					const bildStil = generateImageStyle();
-					const bildQualität = generateImageQuality();
-					const lesezeichen = generateBookmark();
-					const li = document.createElement('li');
-					
-					// Funktion zum Großschreiben des ersten Buchstabens
-					function capitalizeFirstLetter(string) {
-						return string.charAt(0).toUpperCase() + string.slice(1);
-					}
-					
-					li.innerHTML = `<b>${capitalizeFirstLetter(bookTitle)}</b>\nvon ${author}, ${autorGeschlecht}er ${autorVolk}\nAuflage: ${buchAuflage}\nSeitenzahl: ${seitenZahl} Seiten\nAlter: ${buchAlter} ${buchZeiteinheit}\nGröße: ${buchHöhe} x ${buchBreite} cm\nZustand: ${buchZustand}\nBindung: ${buchBindung}\nEinbandmaterial: ${buchEinbandMaterial}, ${buchEinbandFarbe}\nEinbandetail: ${buchEinbandDetail}\nTextqualität: ${textQualität}\nTextproduktion: ${textProduktion}\nBilder: ${bildAnzahl}, ${bildFarbe}\nBildergröße: ${bildGroesse}\nBildstil: ${bildStil}\nBildqualität: ${bildQualität}\n\n`;
-					container.appendChild(li);
-				}
-			});
+// Funktion zum Generieren und Anzeigen der Sätze
+btnGenerate.addEventListener('click', (event) => {
+  event.preventDefault();
+  const container = document.getElementById('container');
+  container.querySelectorAll('li').forEach((li) => li.remove());
+  const numAnzahl = parseInt(numAnzahlField.value);
+  
+  for (let i = 0; i < numAnzahl; i++) {
+    const bookTitle = generateBookTitle();
+    const autorGeschlechtRoll = Math.floor(Math.random() * 100) + 1;
+    const autorVolkRoll = Math.floor(Math.random() * 100) + 1;
+    const author = generateAuthorName(autorGeschlechtRoll, autorVolkRoll);
+    const buchAlter = generateBookAge();
+    const buchAuflage = generateBookEdition();
+    const seitenZahl = generateBookPageNumber();
+    const buchHöhe = generateBookHeight();
+    const buchBreite = generateBookWidth();
+    const buchZustand = generateBookCondition();
+    const buchBindung = generateBookBinding();
+    const buchEinbandMaterial = generateBookCoverMaterial();
+    const buchEinbandDetail = generateBookCoverDetails();
+    const buchEinbandFarbe = generateBookCoverColor();
+    const textQualität = generateTextQuality();
+    const textProduktion = generateTextProduction();
+    const bildAnzahl = generateImageQuantity();
+    const bildFarbe = generateImageColor();
+    const bildGroesse = generateImageSize();
+    const bildStil = generateImageStyle();
+    const bildQualität = generateImageQuality();
+    const lesezeichen = generateBookmark();
+    const li = document.createElement('li');
+    
+    // Funktion zum Großschreiben des ersten Buchstabens
+    function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+	const output = isAnyCheckboxSelected ? `<b>${capitalizeFirstLetter(bookTitle)}</b>\n${document.getElementById("checkboxAutor").checked ? "von " + author + ", " + autorGeschlecht + "er " + autorVolk + "\n" : ""}${document.getElementById("checkboxAuflage").checked ? "Auflage: " + buchAuflage + "\n" : ""}${document.getElementById("checkboxSeitenzahl").checked ? "Seitenzahl: " + seitenZahl + " Seiten\n" : ""}${document.getElementById("checkboxAlter").checked ? "Alter: " + buchAlter + " " + buchZeiteinheit + "\n" : ""}${document.getElementById("checkboxGröße").checked ? "Größe: " + buchHöhe + " x " + buchBreite + " cm\n" : ""}${document.getElementById("checkboxZustand").checked ? "Zustand: " + buchZustand + "\n" : ""}${document.getElementById("checkboxBindung").checked ? "Bindung: " + buchBindung + "\n" : ""}${document.getElementById("checkboxEinbandMaterial").checked ? "Einbandmaterial: " + buchEinbandMaterial + ", " + buchEinbandFarbe + "\n" : ""}${document.getElementById("checkboxEinbandDetail").checked ? "Einbanddetail: " + buchEinbandDetail + "\n" : ""}${document.getElementById("checkboxTextQualität").checked ? "Textqualität: " + textQualität + "\n" : ""}${document.getElementById("checkboxTextProduktion").checked ? "Textproduktion: " + textProduktion + "\n" : ""}${document.getElementById("checkboxBilderAnzahl").checked ? "Bilder: " + bildAnzahl + (document.getElementById("checkboxBilderFarbe").checked ? ", " + bildFarbe + "\n" : "") : ""}${document.getElementById("checkboxBilderGröße").checked ? "Bildergröße: " + bildGroesse + "\n" : ""}${document.getElementById("checkboxBilderStil").checked ? "Bildstil: " + bildStil + "\n" : ""}${document.getElementById("checkboxBilderQualität").checked ? "Bildqualität: " + bildQualität + "\n" : ""}${document.getElementById("checkboxLesezeichen").checked ? "Lesezeichen: " + lesezeichen + "\n" : ""}` : `<b>${capitalizeFirstLetter(bookTitle)}</b>`;   
+    li.innerHTML = output;
+    container.appendChild(li);
+  }
+});
 
 			// Erstellt die Funktion zum Kopieren der generierten Ergebnisse in die Zwischenablage
 			function copyToClipboard(text) {
