@@ -43,7 +43,7 @@
 			.content {
 				max-height: 0;
 				overflow: hidden;
-				padding: 0 10px;
+				/*padding: 0 10px;*/
 				background: #F1F1F1;
 				transition: max-height 0.2s ease-out;
 			}
@@ -57,6 +57,7 @@
 			/* Stil für die Auflistung, damit keine Aufzählungszeichen angezeigt werden */
 			ul {
 				list-style-type: none;
+				margin-top: 0px;
 			}
 
 			li {
@@ -66,16 +67,55 @@
 			button#btnSelectAll
 			{
 				margin-top: 10px;
-				margin-bottom: 10px;				
+				margin-bottom: 10px;
+				margin-left: 10px;				
 			}
 
 			button#btnDeselectAll
 			{
 				margin-top: 10px;
 				margin-bottom: 10px;
+				margin-left: 15px;
+			}
+
+			button#btnGenerate
+			{
+				margin-top: 10px;
+				margin-bottom: 10px;
 				margin-left: 10px;
 			}
 
+			button#btnCopy
+			{
+				margin-top: 10px;
+				margin-bottom: 10px;
+				margin-left: 10px;
+			}
+
+			button#btnClear
+			{
+				margin-top: 10px;
+				margin-bottom: 10px;
+				margin-left: 10px;
+			}
+
+			input#numAnzahlField
+			{
+				width: 50px;
+				margin-top: 10px;
+				margin-bottom: 10px;
+				margin-left: 10px;
+			}
+
+			label{
+				margin-top: 5px;
+				margin-left: 10px;
+			}
+
+			input
+			{
+				margin-top: 10px;
+				}
 
 		</style>
 	</head>
@@ -106,8 +146,15 @@
 			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxBilderStil" checked> Stil der Bilder</label><br>
 			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxBilderQualität" checked> Qualität der Bilder</label><br>
 			<label style="white-space: nowrap;"><input type="checkbox" id="checkboxLesezeichen" checked> Lesezeichen </label><br>
-			<button class = inCollapsible id="btnSelectAll">Alle auswählen</button>   <button class = inCollapsible id="btnDeselectAll">Alle abwählen</button>
+			<button class = inCollapsible id="btnSelectAll">Alle auswählen</button><button class = inCollapsible id="btnDeselectAll">Alle abwählen</button>
 		</div>
+		<div class="buttons">
+			<label style="margin-top: 10px; margin-bottom: 10px; margin-left: 10px;" for="numAnzahlField">Anzahl:</label>
+			<input type="number" id="numAnzahlField">
+			<button id="btnGenerate">Generieren</button>
+			<button id="btnCopy">In Zwischenablage kopieren</button>
+			<button id="btnClear">Löschen</button>
+		  </div>
 		<script>
 			// JavaScript zum Ein- und Ausklappen des Inhalts
 			var coll = document.getElementsByClassName("collapsible");
@@ -244,19 +291,7 @@
 				return true;
 			}
 			// Eingabefelder und Buttons
-			const numAnzahlField = document.createElement('input');
-			numAnzahlField.type = 'number';
-			numAnzahlField.style.margin = '10px';
-			numAnzahlField.style.width = '50px';
-			const btnGenerate = document.createElement('button');
-			btnGenerate.style.margin = '10px';
-			btnGenerate.textContent = 'Generieren';
-			const btnClear = document.createElement('button');
-			btnClear.textContent = 'Löschen';
-			btnClear.style.margin = '10px';
-			const btnCopy = document.createElement('button'); 
-			btnCopy.textContent = 'In Zwischenablage kopieren'; 
-			btnCopy.style.margin = '10px';
+
 			
 			//#region  Begriffe und Abschnitte für den Buchtitelgenerator
 			const präfixe = ["","aberrante", "abgewandelte", "abnormale", "abweichende", "akroamatische", "aktuelle", "allgemeine", "alltägliche", "ältere", "alternative", "andere", "anerkannte", "anspruchsvolle", "aufgedeckte", "ausgefallene", "außergewöhnliche", "banale", "beliebte", "berüchtigte", "berühmt-berüchtigte", "berühmte", "besondere", "betörende", "bizarre", "dilettantische", "dissonante", "divergente", "durchschnittliche", "eigenartige", "einfache", "eingeschränkte", "einzigartige", "eklektische", "elegante", "erhabene", "erwähnenswerte", "esoterische", "falsche", "frühe", "gefeierte", "gegensätzliche", "gegenwärtige", "gemischte", "generelle", "geringe", "große", "größere", "herausragende", "hervorragende", "heterogene", "klassische", "kleinere", "knappe", "komische", "komplexe", "legendäre", "letztere", "mäßige", "moderne", "modische", "neoterische", "neuzeitliche", "normale", "obskure", "orphische", "orthodoxe", "quintessenzielle", "radikale", "reguläre", "seltene", "seltsame", "sonstige", "späte", "spezielle", "tiefgründige", "transzendente", "trennende", "triviale", "typische", "überlegene", "ultimative", "umständliche", "unbedeutende", "unbekannte", "unentdeckte", "ungeordnete", "ungewöhnliche", "unpopuläre", "unstimmige", "unverzichtbare", "verfeinerte", "verlorene", "verschiedene", "verschleierte", "versteckte", "vertraute", "vielfältige", "wiedergefundene", "zeitgenössische"];
@@ -1842,18 +1877,18 @@
 			const tinteFarbe = ["achatgrau", "altrosa", "anthrazitgrau", "azurblau", "basaltgrau", "beige", "beigebraun", "beigegrau", "beigerot", "blassbraun", "blassgrün", "blau", "blaugrau", "blaugrün", "blaulila", "blutorange", "bordeauxviolett", "braungrau", "braungrün", "braunoliv", "braunrot", "brillantblau", "capriblau", "cremeweiß", "currygelb", "cyan", "dahliengelb", "dunkelblau", "dunkelcyan", "dunkelgelb", "dunkelgrün", "dunkelmagenta", "dunkelrot", "eisengrau", "elfenbein", "enzianblau", "erdbeerrot", "farngrün", "feuerrot", "flaschengrün", "gelb", "gelbgrau", "gelbgrün", "gelboliv", "gelborange", "ginstergelb", "goldgelb", "granitgrau", "graphitgrau", "graphitschwarz", "grasgrün", "grau", "graubeige", "graublau", "graubraun", "grauoliv", "grauweiß", "grün", "grünbeige", "grünblau", "grüngrau", "hellelfenbein", "hellrosa", "hellrotorange", "himbeerrot", "himmelblau", "honiggelb", "karminrot", "kastanienbraun", "khakigrau", "kieferngrün", "kieselgrau", "kobaltblau", "korallenrot", "kupferbraun", "lachsorange", "lachsrot", "laubgrün", "lehmbraun", "leuchtgelb", "leuchtgrün", "leuchthellorange", "leuchthellrot", "leuchtorange", "leuchtrot", "lichtblau", "lichtgrau", "lichtgrün", "magenta", "mahagonibraun", "maigrün", "maisgelb", "mausgrau", "melonengelb", "minttürkis", "minzgrün", "moosgrau", "moosgrün", "nachtblau", "narzissengelb", "nussbraun", "ockerbraun", "ockergelb", "olivbraun", "olivgelb", "olivgrau", "olivgrün", "opalgrün", "orange", "orangebraun", "orientrot", "ozeanblau", "papyrusweiß", "pastellblau", "pastellgelb", "pastellorange", "pastelltürkis", "pastellviolett", "perlbeige", "perlbrombeer", "perldunkelgrau", "perlenzian", "perlgold", "perlgrün", "perlhellgrau", "perlkupfer", "perlmausgrau", "perlnachtblau", "perlopalgrün", "perlorange", "perlrosa", "perlrubinrot", "perlviolett", "perlweiß", "platingrau", "purpurrot", "purpurviolett", "quarzgrau", "rapsgelb", "rehbraun", "reingrün", "reinorange", "reinrot", "reinweiß", "rosé", "rot", "rotbraun", "rotlila", "rotorange", "rotviolett", "rubinrot", "safrangelb", "sandgelb", "saphirblau", "schiefergrau", "schilfgrün", "schokoladenbraun", "schwarz", "schwarzblau", "schwarzbraun", "schwarzgrau", "schwarzgrün", "schwarzoliv", "schwarzrot", "schwefelgelb", "seidengrau", "sepiabraun", "silbergrau", "smaragdgrün", "sonnengelb", "stahlblau", "staubgrau", "steingrau", "tannengrün", "taubenblau", "tieforange", "tiefschwarz", "tomatenrot", "türkisblau", "türkisgrün", "ultramarinblau", "umbragrau", "violett", "violettblau", "wasserblau", "weinrot", "weiß", "weißgrün", "zinkgelb", "zitronengelb"];
 
 			if (randomNumber <= 45) {
-				textProduktion = "hangeschrieben mit regulärer Tinte, schwarz";
+				textProduktion = "hangeschrieben mit gewöhnlicher Tinte, schwarz";
 			} else if (randomNumber <= 60) {
-				textProduktion = "hangeschrieben mit regulärer Tinte, blau";
+				textProduktion = "hangeschrieben mit gewöhnlicher Tinte, blau";
 			} else if (randomNumber <= 65) {
 				const zufaelligeTintenfarbe = tinteFarbe[Math.floor(Math.random() * tinteFarbe.length)];
-				textProduktion = `hangeschrieben mit regulärer Tinte, ${zufaelligeTintenfarbe}`;
+				textProduktion = `handgeschrieben mit gewöhnlicher Tinte, ${zufaelligeTintenfarbe}`;
 			} else if (randomNumber <= 70) {
-				textProduktion = "handgeschrieben mit dem Blut eines Humanoiden";
+				textProduktion = "handgeschrieben mit Humanoidenblut";
 			} else if (randomNumber <= 80) {
-				textProduktion = "handgeschrieben mit dem Blut eines Tieres";
+				textProduktion = "handgeschrieben mit Tierblut";
 			} else if (randomNumber <= 85) {
-				textProduktion = "handgeschrieben mit dem Blut eines Monster";
+				textProduktion = "handgeschrieben mit Monsterblut";
 			} else if (randomNumber <= 90) {
 				textProduktion = "handgeschrieben mit magischer Tinte";
 			} else if (randomNumber <= 95) {
@@ -2131,7 +2166,7 @@ btnGenerate.addEventListener('click', (event) => {
       return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
-	const output = isAnyCheckboxSelected ? `<b>${capitalizeFirstLetter(bookTitle)}</b>\n${document.getElementById("checkboxAutor").checked ? "von " + author + ", " + autorGeschlecht + "er " + autorVolk + "\n" : ""}${document.getElementById("checkboxAuflage").checked ? "Auflage: " + buchAuflage + "\n" : ""}${document.getElementById("checkboxSeitenzahl").checked ? "Seitenzahl: " + seitenZahl + " Seiten\n" : ""}${document.getElementById("checkboxAlter").checked ? "Alter: " + buchAlter + " " + buchZeiteinheit + "\n" : ""}${document.getElementById("checkboxGröße").checked ? "Größe: " + buchHöhe + " x " + buchBreite + " cm\n" : ""}${document.getElementById("checkboxZustand").checked ? "Zustand: " + buchZustand + "\n" : ""}${document.getElementById("checkboxBindung").checked ? "Bindung: " + buchBindung + "\n" : ""}${document.getElementById("checkboxEinbandMaterial").checked ? "Einbandmaterial: " + buchEinbandMaterial + ", " + buchEinbandFarbe + "\n" : ""}${document.getElementById("checkboxEinbandDetail").checked ? "Einbanddetail: " + buchEinbandDetail + "\n" : ""}${document.getElementById("checkboxTextQualität").checked ? "Textqualität: " + textQualität + "\n" : ""}${document.getElementById("checkboxTextProduktion").checked ? "Textproduktion: " + textProduktion + "\n" : ""}${document.getElementById("checkboxBilderAnzahl").checked ? "Bilder: " + bildAnzahl + (document.getElementById("checkboxBilderFarbe").checked ? ", " + bildFarbe + "\n" : "") : ""}${document.getElementById("checkboxBilderGröße").checked ? "Bildergröße: " + bildGroesse + "\n" : ""}${document.getElementById("checkboxBilderStil").checked ? "Bildstil: " + bildStil + "\n" : ""}${document.getElementById("checkboxBilderQualität").checked ? "Bildqualität: " + bildQualität + "\n" : ""}${document.getElementById("checkboxLesezeichen").checked ? "Lesezeichen: " + lesezeichen + "\n" : ""}` : `<b>${capitalizeFirstLetter(bookTitle)}</b>`;   
+	const output = isAnyCheckboxSelected ? `<b>${capitalizeFirstLetter(bookTitle)}</b>\n${document.getElementById("checkboxAutor").checked ? "von " + author + ", " + autorGeschlecht + "er " + autorVolk + "\n" : ""}${document.getElementById("checkboxAuflage").checked ? "Auflage: " + buchAuflage + "\n" : ""}${document.getElementById("checkboxSeitenzahl").checked ? "Seitenzahl: " + seitenZahl + " Seiten\n" : ""}${document.getElementById("checkboxAlter").checked ? "Alter: " + buchAlter + " " + buchZeiteinheit + "\n" : ""}${document.getElementById("checkboxGröße").checked ? "Größe: " + buchHöhe + " x " + buchBreite + " cm\n" : ""}${document.getElementById("checkboxZustand").checked ? "Zustand: " + buchZustand + "\n" : ""}${document.getElementById("checkboxBindung").checked ? "Bindung: " + buchBindung + "\n" : ""}${document.getElementById("checkboxEinbandMaterial").checked ? "Einbandmaterial: " + buchEinbandMaterial + ", " + buchEinbandFarbe + "\n" : ""}${document.getElementById("checkboxEinbandDetail").checked ? "Einbanddetail: " + buchEinbandDetail + "\n" : ""}${document.getElementById("checkboxTextQualität").checked ? "Textqualität: " + textQualität + "\n" : ""}${document.getElementById("checkboxTextProduktion").checked ? "Textproduktion: " + textProduktion + "\n" : ""}${document.getElementById("checkboxBilderAnzahl").checked ? "Bildanzahl: " + bildAnzahl + "\n": ""}${document.getElementById("checkboxBilderFarbe").checked ? "Bildfarbe: " + bildFarbe + "\n" : ""}${document.getElementById("checkboxBilderGröße").checked ? "Bildgröße: " + bildGroesse + "\n" : ""}${document.getElementById("checkboxBilderStil").checked ? "Bildstil: " + bildStil + "\n" : ""}${document.getElementById("checkboxBilderQualität").checked ? "Bildqualität: " + bildQualität + "\n" : ""}${document.getElementById("checkboxLesezeichen").checked ? "Lesezeichen: " + lesezeichen + "\n" : ""}` : `<b>${capitalizeFirstLetter(bookTitle)}</b>`;   
     li.innerHTML = output;
     container.appendChild(li);
   }
@@ -2167,15 +2202,8 @@ btnGenerate.addEventListener('click', (event) => {
 				event.preventDefault();
 				const container = document.getElementById('container');
 				container.querySelectorAll('li').forEach((li) => li.remove());
-			});
-			
-			// Fügt einen Textknoten 'Anzahl der Buchtitel: ' sowie die Felder 'numAnzalField', den Button 'btnGenerate' und den Button 'btnClear' dem Dokumentkörper hinzu.
-			document.body.appendChild(document.createTextNode('Anzahl der Buchtitel: '));
-			document.body.appendChild(numAnzahlField);
-			document.body.appendChild(btnGenerate);
-			document.body.appendChild(btnCopy);
-			document.body.appendChild(btnClear);
-			
+			});			
+	
 			// Fügt einen Container für die Ergebnisse hinzu
 			const container = document.createElement('ul');
 			container.id = 'container';
