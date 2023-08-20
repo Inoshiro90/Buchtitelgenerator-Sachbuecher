@@ -3,6 +3,11 @@
 	<head>
 		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
 		<style>
+			/*Aktiviert sanftes Scrollen im gesamten Dokument*/
+			html {
+				scroll-behavior: smooth;
+			}
+
 			/* Stil für die Breite des Body-Elements und die Schriftart */
 			body {
 				max-width: 80%;
@@ -12,7 +17,7 @@
 				font-family: 'Arial', sans-serif;
 			}
 
-			/* Stil für den Button */
+			/* Stil für den Button "Aspekte der Beschreibung"*/
 			.collapsible {
 				background-color: #E1E1E1;
 				color: #444;
@@ -25,6 +30,7 @@
 				font-size: 16px;
 			}
 
+			/* Stil für den Bereich nach dem Button "Aspekte der Beschreibung"*/
 			.collapsible:after {
 				content: '\02795';
 				/* Unicode Zeichen für "plus"-Zeichen (+) */
@@ -34,6 +40,7 @@
 				margin-left: 5px;
 			}
 
+			/* Stil für den Bereich nach dem Button "Aspekte der Beschreibung", wenn dieser geöffnet ist*/
 			.active:after {
 				content: "\2796";
 				/* Unicode Zeichen für "minus"-Zeichen (-) */
@@ -60,10 +67,12 @@
 				margin-top: 0px;
 			}
 
+			/*Stil für die Auflistungselemente*/
 			li {
 				padding-top: 10px;
 			}
 
+			/*Stil für den "Alle auswählen"-Button*/
 			button#btnSelectAll
 			{
 				margin-top: 10px;
@@ -71,6 +80,7 @@
 				margin-left: 10px;				
 			}
 
+			/*Stil für den "Alle abwählen"-Button*/
 			button#btnDeselectAll
 			{
 				margin-top: 10px;
@@ -78,6 +88,7 @@
 				margin-left: 15px;
 			}
 
+			/*Stil für den "Generieren"-Button*/
 			button#btnGenerate
 			{
 				margin-top: 10px;
@@ -85,6 +96,7 @@
 				margin-left: 10px;
 			}
 
+			/*Stil für den "In Zwischenablage kopieren"-Button*/
 			button#btnCopy
 			{
 				margin-top: 10px;
@@ -92,6 +104,7 @@
 				margin-left: 10px;
 			}
 
+			/*Stil für den "Löschen"-Button*/
 			button#btnClear
 			{
 				margin-top: 10px;
@@ -99,6 +112,7 @@
 				margin-left: 10px;
 			}
 
+			/*Stil für das Inputfeld "Anzahl:"*/
 			input#numAnzahlField
 			{
 				width: 50px;
@@ -107,15 +121,39 @@
 				margin-left: 10px;
 			}
 
+			/*Stil für die Label der Checkboxen*/
 			label{
 				margin-top: 5px;
 				margin-left: 10px;
 			}
 
-			input
-			{
+			/*Stil für das Inputfeld*/
+			input{
 				margin-top: 10px;
 				}
+
+			/*Stil für den "Nach oben Scrollen"-Button*/	
+			#myBtn {
+			display: none; /* Hidden by default */
+			position: fixed; /* Fixed/sticky position */
+			bottom: 20px; /* Place the button at the bottom of the page */
+			right: 30px; /* Place the button 30px from the right */
+			z-index: 99; /* Make sure it does not overlap */
+			border: none; /* Remove borders */
+			outline: none; /* Remove outline */
+			/*background-color: red; /* Set a background color */
+			/*color: white; /* Text color */
+			cursor: pointer; /* Add a mouse pointer on hover */
+			padding: 15px; /* Some padding */
+			border-radius: 10px; /* Rounded corners */
+			font-size: 20px; /* Increase font size */
+			font-style: bold;
+			}
+			
+			/*Stil für den "Nach oben Scrollen"-Button beim Hovern*/
+			#myBtn:hover {
+			background-color: #555; /* Add a dark-grey background on hover */
+			}	
 
 		</style>
 	</head>
@@ -155,6 +193,7 @@
 			<button id="btnCopy">In Zwischenablage kopieren</button>
 			<button id="btnClear">Löschen</button>
 		  </div>
+		  <button onclick="topFunction()" id="myBtn" title="Go to top">▲</button>
 		<script>
 			// JavaScript zum Ein- und Ausklappen des Inhalts
 			var coll = document.getElementsByClassName("collapsible");
@@ -12018,6 +12057,28 @@
 			container.id = 'container';
 			document.body.appendChild(container); // This is just a sample script. Paste your real code (javascript or HTML) here.
 
+
+		</script>
+		<script>
+					// Get the button:
+		let mybutton = document.getElementById("myBtn");
+
+		// When the user scrolls down 20px from the top of the document, show the button
+		window.onscroll = function() {scrollFunction()};
+
+		function scrollFunction() {
+		if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+			mybutton.style.display = "block";
+		} else {
+			mybutton.style.display = "none";
+		}
+		}
+
+		// When the user clicks on the button, scroll to the top of the document
+		function topFunction() {
+		document.body.scrollTop = 0; // For Safari
+		document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+		}
 
 		</script>
 	</body>
