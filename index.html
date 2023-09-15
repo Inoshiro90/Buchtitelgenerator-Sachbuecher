@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href ="styles/body.css">
 		<link rel="stylesheet" href ="styles/collapsible.css">
 		<link rel="stylesheet" href ="styles/style.css">
+        <script src="scripts/collapsible.js"></script>
 	</head>
 	<body>
 		<h1>Buchtitelgenerator</h1>
@@ -85,57 +86,15 @@
 			<button id="btnClear">Löschen</button>
 		</div>
 		<button onclick="topFunction()" id="scrollTop" title="Go to top">▲</button>
-		<script src="scripts/script.js"></script>
-        <script src="scripts/scrollBackToTop.js"></script>
         <script src="scripts/collapsible.js"></script>
-		<script src="scripts/setting.js"></script>
+        <script src="scripts/scrollBackToTop.js"></script>
+        <script src="scripts/getRandomText.js"></script>
+		<script src="scripts/getRandomElementFromArray.js"></script>
+        <script src="scripts/setting.js"></script>
 		<script src="scripts/genre.js"></script>
 		<script src="scripts/beschreibung.js"></script>
-		<!-- <script src="scripts/generateBookTitle.js"></script>
-		<script src="scripts/getRandomText.js"></script>
-		<script src="scripts/getRandomElementFromArray.js"></script>
-		<script src="scripts/const_praefixe.js"></script>
-		<script src="scripts/const_handwerkSingular.js"></script>
-		<script src="scripts/const_handwerkPlural.js"></script>
-		<script src="scripts/const_voelkerSingular.js"></script>
-		<script src="scripts/const_VoelkerPlural.js"></script>
-		<script src="scripts/const_monsterSingular.js"></script>
-		<script src="scripts/const_monsterPlural.js"></script>
-		<script src="scripts/const_klassenSingular.js"></script>
-		<script src="scripts/const_klassenPlural.js"></script>
-		<script src="scripts/const_gegenstaendeSingular.js"></script>
-		<script src="scripts/const_gegenstaendePlural.js"></script>
-		<script src="scripts/const_domaene.js"></script>
-		<script src="scripts/const_schulenDerMagie.js"></script>
-		<script src="scripts/const_religionSingular.js"></script>
-		<script src="scripts/const_windrichtungen.js"></script>
-		<script src="scripts/const_waffenSingular.js"></script>
-		<script src="scripts/const_waffenPlural.js"></script>
-		<script src="scripts/const_kleidungsstueckeSingular.js"></script>
-		<script src="scripts/const_kleidungsstueckePlural.js"></script>
-		<script src="scripts/const_gottheit.js"></script>
-		<script src="scripts/const_ereignisSingular.js"></script>
-		<script src="scripts/const_ereignisPlural.js"></script>
-		<script src="scripts/const_kontinent.js"></script>
-		<script src="scripts/const_land.js"></script>
-		<script src="scripts/const_region.js"></script>
-		<script src="scripts/const_gebiet.js"></script>
-		<script src="scripts/const_siedlung.js"></script>
-		<script src="scripts/const_fluss.js"></script>
-		<script src="scripts/const_berg.js"></script>
-		<script src="scripts/const_wahrzeichen.js"></script>
-		<script src="scripts/const_gewaesser.js"></script>
-		<script src="scripts/const_strasse.js"></script>
-		<script src="scripts/const_wald.js"></script>
-		<script src="scripts/const_geschichtsereignis.js"></script>
-		<script src="scripts/const_nomenSchwacheDeklination.js"></script>
-		<script src="scripts/const_nomenAdjektivSubstantiviert.js"></script>
-		<script src="scripts/deklination.js"></script>
-		<script src="scripts/generatedTitles.js"></script>
-		<script src="scripts/const_begriffe.js"></script>
-		<script src="scripts/const_declinedNouns.js"></script>
-		<script src="scripts/const_bookTitleIdeas.js"></script>
-		<script src="scripts/generateAuthorName.js"></script>
+        <script src="scripts/generateBookTitle.js"></script>
+        <script src="scripts/generateAuthorName.js"></script>
 		<script src="scripts/generateAutorVornameForAutorGeschlechtAndAutorVolk.js"></script>
 		<script src="scripts/generateAutorNachnameForAutorVolk.js"></script>
 		<script src="scripts/const_namenMensch.js"></script>
@@ -199,6 +158,47 @@
 		<script src="scripts/copyToClipboard.js"></script>
 		<script src="scripts/btnCopy.js"></script>
 		<script src="scripts/btnClear.js"></script>
-		<script src="scripts/container.js"></script> -->
+		<script src="scripts/container.js"></script>
+        <script src="scripts/const_praefixe.js"></script>
+		<script src="scripts/const_handwerkSingular.js"></script>
+		<script src="scripts/const_handwerkPlural.js"></script>
+		<script src="scripts/const_voelkerSingular.js"></script>
+		<script src="scripts/const_VoelkerPlural.js"></script>
+		<script src="scripts/const_monsterSingular.js"></script>
+		<script src="scripts/const_monsterPlural.js"></script>
+		<script src="scripts/const_klassenSingular.js"></script>
+		<script src="scripts/const_klassenPlural.js"></script>
+		<script src="scripts/const_gegenstaendeSingular.js"></script>
+		<script src="scripts/const_gegenstaendePlural.js"></script>
+		<script src="scripts/const_domaene.js"></script>
+		<script src="scripts/const_schulenDerMagie.js"></script>
+		<script src="scripts/const_religionSingular.js"></script>
+		<script src="scripts/const_windrichtungen.js"></script>
+		<script src="scripts/const_waffenSingular.js"></script>
+		<script src="scripts/const_waffenPlural.js"></script>
+		<script src="scripts/const_kleidungsstueckeSingular.js"></script>
+		<script src="scripts/const_kleidungsstueckePlural.js"></script>
+		<script src="scripts/const_gottheit.js"></script>
+		<script src="scripts/const_ereignisSingular.js"></script>
+		<script src="scripts/const_ereignisPlural.js"></script>
+		<script src="scripts/const_kontinent.js"></script>
+		<script src="scripts/const_land.js"></script>
+		<script src="scripts/const_region.js"></script>
+		<script src="scripts/const_gebiet.js"></script>
+		<script src="scripts/const_siedlung.js"></script>
+		<script src="scripts/const_fluss.js"></script>
+		<script src="scripts/const_berg.js"></script>
+		<script src="scripts/const_wahrzeichen.js"></script>
+		<script src="scripts/const_gewaesser.js"></script>
+		<script src="scripts/const_strasse.js"></script>
+		<script src="scripts/const_wald.js"></script>
+		<script src="scripts/const_geschichtsereignis.js"></script>		
+        <script src="scripts/const_nomenSchwacheDeklination.js"></script>
+		<script src="scripts/const_nomenAdjektivSubstantiviert.js"></script>
+        <script src="scripts/deklination.js"></script>
+        <script src="scripts/const_declinedNouns.js"></script>
+        <!--<script src="scripts/generatedTitles.js"></script>
+		<script src="scripts/const_begriffe.js"></script>
+		<script src="scripts/const_bookTitleIdeas.js"></script> -->
 	</body>
 </html>
