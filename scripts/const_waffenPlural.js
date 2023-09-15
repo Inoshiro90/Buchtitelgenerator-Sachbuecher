@@ -1,0 +1,60 @@
+const waffenPlural = [
+    {"name":"Anderthalbhänder","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Beile","genus":"neutrum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Blasrohre","genus":"neutrum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Boomerangs","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Dolche","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Dreizacke","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Flegel","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Gleven","genus":"femininum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Kurzspeere","genus":"maskulinum","numerus":"plural","adjektiv":"hakenförmige","präfix":"","suffix":""},
+    {"name":"Handarmbrüste","genus":"femininum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Hellebarden","genus":"femininum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Hoopaks","genus":"neutrum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Waffen","genus":"femininum","numerus":"plural","adjektiv":"improvisierte","präfix":"","suffix":""},
+    {"name":"Kampfstäbe","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Knüppel","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Kriegshacken","genus":"femininum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Kriegshämmer","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Krummsäbel","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Kurzbogen","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Kurzschwerter","genus":"neutrum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Langbogen","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Langschwerter","genus":"neutrum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Lanzen","genus":"femininum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Armbrüste","genus":"femininum","numerus":"plural","adjektiv":"leichte","präfix":"","suffix":""},
+    {"name":"Repetierarmbrüste","genus":"femininum","numerus":"plural","adjektiv":"leichte","präfix":"","suffix":""},
+    {"name":"Hämmer","genus":"maskulinum","numerus":"plural","adjektiv":"leichte","präfix":"","suffix":""},
+    {"name":"Morgensterne","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Netze","genus":"neutrum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Peitschen","genus":"femininum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Piken","genus":"femininum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Rapiere","genus":"neutrum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Schlagringe","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Schleudern","genus":"femininum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Armbrüste","genus":"femininum","numerus":"plural","adjektiv":"schwere","präfix":"","suffix":""},
+    {"name":"Sensen","genus":"femininum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Sicheln","genus":"femininum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Speere","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Stachelketten","genus":"femininum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Streitäxte","genus":"femininum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Streitkolben","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Tonfas","genus":"neutrum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Langbögen","genus":"maskulinum","numerus":"plural","adjektiv":"übergroße","präfix":"","suffix":""},
+    {"name":"Wurfpfeile","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Wurfspeere","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Ylkwae","genus":"neutrum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Zweihandäxte","genus":"femininum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Zweihandhämmer","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Zweihandknüppel","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Zweihandschwerter","genus":"neutrum","numerus":"plural","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Krummsäbel","genus":"maskulinum","numerus":"plural","adjektiv":"","präfix":"","suffix":""}
+   ]
+  
+   const waffenPluralData = getRandomText(waffenPlural);
+   const waffenPluralName = waffenPluralData.name;
+   const waffenPluralGeschlecht = waffenPluralData.genus;
+   const waffenPluralAnzahl = waffenPluralData.numerus;
+   const waffenPluralAdjektiv = waffenPluralData.adjektiv;
+   const waffenPluralPräfix = waffenPluralData.präfix;
+   const waffenPluralSuffix = waffenPluralData.suffix;

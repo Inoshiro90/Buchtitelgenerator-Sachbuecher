@@ -1,0 +1,60 @@
+const waffenSingular = [
+    {"name":"Anderthalbhänder","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Beil","genus":"neutrum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Blasrohr","genus":"neutrum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Boomerang","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Dolch","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Dreizack","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Flegel","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Gleve","genus":"femininum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Kurzspeer","genus":"maskulinum","numerus":"singular","adjektiv":"hakenförmige","präfix":"","suffix":""},
+    {"name":"Handarbrust","genus":"femininum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Hellebarde","genus":"femininum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Hoopak","genus":"neutrum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Waffe","genus":"femininum","numerus":"singular","adjektiv":"improvisierte","präfix":"","suffix":""},
+    {"name":"Kampfstab","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Knüppel","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Kriegshacke","genus":"femininum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Kriegshammer","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Krummsäbel","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Kurzbogen","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Kurzschwert","genus":"neutrum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Langbogen","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Langschwert","genus":"neutrum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Lanze","genus":"femininum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Armbrust","genus":"femininum","numerus":"singular","adjektiv":"leichte","präfix":"","suffix":""},
+    {"name":"Repetierarmbrust","genus":"femininum","numerus":"singular","adjektiv":"leichte","präfix":"","suffix":""},
+    {"name":"Hammer","genus":"maskulinum","numerus":"singular","adjektiv":"leichte","präfix":"","suffix":""},
+    {"name":"Morgenstern","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Netz","genus":"neutrum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Peitsche","genus":"femininum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Pike","genus":"femininum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Rapier","genus":"neutrum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Schlagring","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Schleuder","genus":"femininum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Armbrust","genus":"femininum","numerus":"singular","adjektiv":"schwere","präfix":"","suffix":""},
+    {"name":"Sense","genus":"femininum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Sichel","genus":"femininum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Speer","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Stachelkette","genus":"femininum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Streitaxt","genus":"femininum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Streitkolben","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Tonfa","genus":"neutrum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Langbogen","genus":"maskulinum","numerus":"singular","adjektiv":"übergroße","präfix":"","suffix":""},
+    {"name":"Wurfpfeil","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Wurfspeer","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Ylkwa","genus":"neutrum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Zweihandaxt","genus":"femininum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Zweihandhammer","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Zweihandknüppel","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Zweihandschwert","genus":"neutrum","numerus":"singular","adjektiv":"","präfix":"","suffix":""},
+    {"name":"Krummsäbel","genus":"maskulinum","numerus":"singular","adjektiv":"","präfix":"","suffix":""}
+   ]
+  
+   const waffenSingularData = getRandomText(waffenSingular);
+   const waffenSingularName = waffenSingularData.name;
+   const waffenSingularGeschlecht = waffenSingularData.genus;
+   const waffenSingularAnzahl = waffenSingularData.numerus;
+   const waffenSingularAdjektiv = waffenSingularData.adjektiv;
+   const waffenSingularPräfix = waffenSingularData.präfix;
+   const waffenSingularSuffix = waffenSingularData.suffix;

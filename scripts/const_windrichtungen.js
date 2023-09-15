@@ -1,0 +1,1 @@
+const windrichtungen = ['nördlich', 'nordöstlich', 'nordwestlich', "südlich", "südöstlich", "südöstlich", 'östlich', 'westlich'];
