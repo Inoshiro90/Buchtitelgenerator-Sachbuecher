@@ -1,0 +1,8 @@
+/* Stil für die Breite des Body-Elements und die Schriftart */
+body {
+	max-width: 80%;
+	display: inline-block;
+	margin-left: 10%;
+	margin-right: 10%;
+	font-family: 'Arial', sans-serif;
+	}

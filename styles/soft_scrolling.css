@@ -1,0 +1,4 @@
+		/*Aktiviert sanftes Scrollen im gesamten Dokument*/
+		html {
+            scroll-behavior: smooth;
+            }

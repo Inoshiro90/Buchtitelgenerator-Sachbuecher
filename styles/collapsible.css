@@ -1,0 +1,25 @@
+.collapsible {
+	/*background-color: #E1E1E1;*/
+	color: #444;
+	cursor: pointer;
+	padding: 10px;
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	font-size: 16px;
+}
+
+.collapsible:after {
+	content: '\02795';
+	/* Unicode Zeichen für "plus"-Zeichen (+) */
+	font-size: 13px;
+	color: white;
+	float: right;
+	margin-left: 5px;
+}
+
+.active:after {
+	content: "\2796";
+	/* Unicode Zeichen für "minus"-Zeichen (-) */
+}
