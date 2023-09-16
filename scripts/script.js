@@ -4520,5 +4520,3 @@
 		const container = document.createElement('ul');
 		container.id = 'container';
 		document.body.appendChild(container);
-		
-	
